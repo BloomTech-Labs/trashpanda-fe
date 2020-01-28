@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import CategoryGridCard from "../atoms/CategoryGridCard";
 import placeholderImg from "../images/category_placeholder.svg";
@@ -12,21 +12,28 @@ const GridContainer = styled.div`
 `;
 
 const CategoryGrid = () => {
+  const [categories, setCategories] = useState([
+    { image: placeholderImg, name: "Batteries" }
+  ]);
+
+  //Temporary population
+  useEffect(() => {
+    const newCategories = [];
+    for (let i = 0; i < 13; i++) {
+      newCategories.push({ image: placeholderImg, name: "Batteries" });
+    }
+    setCategories(newCategories);
+  }, []);
+
   return (
     <GridContainer>
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
-      <CategoryGridCard image={placeholderImg} name="Batteries" />
+      {categories.map((category, key) => (
+        <CategoryGridCard
+          image={category.image}
+          name={category.name}
+          key={key}
+        />
+      ))}
     </GridContainer>
   );
 };
