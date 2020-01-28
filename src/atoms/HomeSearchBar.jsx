@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import lensImg from "../images/lens.svg";
 
@@ -30,10 +30,16 @@ const Img = styled.img`
 `;
 
 const HomeSearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <SearchContainer>
       <Img src={lensImg} alt="lens" />
-      <InputField type="text" placeholder="enter search term" />
+      <InputField
+        type="text"
+        placeholder="enter search term"
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
     </SearchContainer>
   );
 };
