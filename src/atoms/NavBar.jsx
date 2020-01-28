@@ -30,7 +30,6 @@ const NavBar = () => {
   const location = useLocation();
   const history = useHistory();
 
-  console.log("rendered");
   useEffect(() => {
     if (location.pathname === "/") {
       setIsHome(true);
