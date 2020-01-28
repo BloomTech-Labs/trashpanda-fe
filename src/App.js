@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import { Switch, Route } from "react-router-dom";
-import NavBar from "./atoms/NavBar";
+import NavBar from "./molecules/NavBar";
 
 const App = () => {
   return (
