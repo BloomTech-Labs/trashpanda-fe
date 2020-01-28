@@ -1,5 +1,4 @@
 import React from "react";
-import HomeHeader from "../atoms/HomeHeader";
 import HomeSearchBar from "../atoms/HomeSearchBar";
 import HomeIntro from "../molecules/HomeIntro";
 import CategoryGrid from "../molecules/CategoryGrid";
@@ -13,7 +12,6 @@ const Container = styled.div`
 const HomePage = () => {
   return (
     <Container>
-      <HomeHeader />
       <HomeSearchBar />
       <HomeIntro />
       <CategoryGrid />

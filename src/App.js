@@ -2,12 +2,14 @@ import React from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import { Switch, Route } from "react-router-dom";
+import NavBar from "./atoms/NavBar";
 
 const App = () => {
   return (
     <div className="App">
+      <NavBar />
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           <HomePage />
         </Route>
       </Switch>
