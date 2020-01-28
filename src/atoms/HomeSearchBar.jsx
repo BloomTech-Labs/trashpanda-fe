@@ -20,6 +20,8 @@ const InputField = styled.input`
   color: #847d7d;
   font-size: 18px;
   line-height: 25px;
+  width: 100%;
+  margin-right: 10px;
   /* identical to box height */
 `;
 
