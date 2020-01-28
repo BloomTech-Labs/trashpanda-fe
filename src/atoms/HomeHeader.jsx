@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import trashPandaImg from "../images/trashpanda.png";
+import trashPandaImg from "../images/trashpanda.svg";
 
 const Header = styled.header`
   display: flex;

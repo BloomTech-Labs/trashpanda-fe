@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import HomeHeader from "./atoms/HomeHeader";
+import HomePage from "./organisms/HomePage";
 
 const App = () => {
   return (
     <div className="App">
-      <HomeHeader />
+      <HomePage />
     </div>
   );
 };
