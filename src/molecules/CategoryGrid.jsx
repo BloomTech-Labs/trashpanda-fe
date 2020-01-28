@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import CategoryGridCard from "../atoms/CategoryGridCard";
+import CategoryGridCard from "./CategoryGridCard";
 import placeholderImg from "../images/category_placeholder.svg";
 
 const GridContainer = styled.div`

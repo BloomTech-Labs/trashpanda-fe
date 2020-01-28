@@ -1,5 +1,5 @@
 import React from "react";
-import HomeSearchBar from "../atoms/HomeSearchBar";
+import HomeSearchBar from "../molecules/HomeSearchBar";
 import HomeIntro from "../molecules/HomeIntro";
 import CategoryGrid from "../molecules/CategoryGrid";
 
