@@ -7,6 +7,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const Img = styled.img`
@@ -21,9 +22,9 @@ const Name = styled.p`
   color: rgba(0, 0, 0, 0.6);
 `;
 
-const CategoryGridCard = ({ image, name }) => {
+const CategoryGridCard = ({ image, name, onClick }) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <Img src={image} alt={`${name} category`} />
       <Name>{name}</Name>
     </Container>
