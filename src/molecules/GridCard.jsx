@@ -22,7 +22,20 @@ const Name = styled.p`
   color: rgba(0, 0, 0, 0.6);
 `;
 
-const CategoryGridCard = ({ image, name, onClick }) => {
+const CategoryGridCard = ({ image, name, onClick, bold }) => {
+  const Name = styled.p`
+    font-size: 18px;
+    margin: 0;
+    margin-top: 9px;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.6);
+    ${bold
+      ? `font-weight: bold;
+      color: black;
+      `
+      : ""}
+  `;
+
   return (
     <Container onClick={onClick}>
       <Img src={image} alt={`${name} category`} />
