@@ -4,11 +4,19 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
+
+const client = new ApolloClient({
+  uri: "https://trashpanda-be.herokuapp.com"
+});
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <ApolloProvider client={client}>
+    <Router>
+      <App />
+    </Router>
+  </ApolloProvider>,
   document.getElementById("root")
 );
 

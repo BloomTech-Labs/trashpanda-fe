@@ -26,22 +26,36 @@ const MaterialGrid = styled.div`
   margin: 39px 24px;
 `;
 
-const CategoryPage = () => {
+const CategoryPage = ({ categorylist, materiallist }) => {
   const [materials, setMaterials] = useState([]);
-  //Setup for future requests from backend.
   const { id } = useParams();
-
   const history = useHistory();
+  const [currentFamily, setCurrentFamily] = useState({ description: "" });
 
-  //Temporary population of materials list.
+  //Find the family(category) with id in params.
   useEffect(() => {
-    const newMaterials = [
-      { name: "Lithium", image: placeholderImg, id: 1 },
-      { name: "Alkaline", image: placeholderImg, id: 1 },
-      { name: "Laptop", image: placeholderImg, id: 1 }
-    ];
-    setMaterials(newMaterials);
-  }, []);
+    if (categorylist.length > 0) {
+      const newFamily = categorylist.find(fam => {
+        return fam.family_id == id;
+      });
+      setCurrentFamily(newFamily);
+    }
+  }, [id, categorylist]);
+
+  //Then change our list of materials everytime the family(category) changes
+  useEffect(() => {
+    if (currentFamily && currentFamily.material_ids) {
+      if (materiallist && materiallist.length > 0) {
+        const newMaterials = currentFamily.material_ids.map(matId => {
+          return materiallist.find(mat => {
+            return mat.material_id == matId;
+          });
+        });
+
+        setMaterials(newMaterials);
+      }
+    }
+  }, [currentFamily, materiallist]);
 
   //Getting image url from backend.
   //Temporary image imported.
@@ -62,13 +76,13 @@ const CategoryPage = () => {
   return (
     <Root>
       <Header>
-        <HeaderTitle>Batteries</HeaderTitle>
+        <HeaderTitle>{currentFamily.description}</HeaderTitle>
       </Header>
       <MaterialGrid>
         {materials.map((mat, key) => (
           <CategoryGridCard
-            image={mat.image}
-            name={mat.name}
+            image={placeholderImg}
+            name={mat.description}
             key={key}
             onClick={() => onClick(mat.id)}
           />
