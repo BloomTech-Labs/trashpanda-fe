@@ -36,7 +36,7 @@ const Button = styled.button`
   cursor: pointer;
   text-transform: uppercase;
 
-  margin-top: 60px;
+  margin-top: 70px;
   margin-bottom: 60px;
   margin-right: 15px;
   margin-left: 15px;
@@ -51,7 +51,7 @@ const ButtonContainer = styled.div`
 `;
 
 const CardContainer = styled.div`
-  margin-top: 42px;
+  margin-top: 50px;
 `;
 
 const MaterialPage = () => {
@@ -59,7 +59,7 @@ const MaterialPage = () => {
   return (
     <Container>
       <CardContainer>
-        <GridCard name="Lithium" image={placeholderImg} />
+        <GridCard bold name="Lithium" image={placeholderImg} />
       </CardContainer>
       <MaterialsDisplay compost landfill recycle />
       <LongDescription>
