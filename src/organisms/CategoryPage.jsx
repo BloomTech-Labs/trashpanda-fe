@@ -38,11 +38,13 @@ const CategoryPage = ({ categorylist, materiallist }) => {
       const newFamily = categorylist.find(fam => {
         return fam.family_id == id;
       });
+
+      console.log("Found fam: ", newFamily);
       setCurrentFamily(newFamily);
     }
   }, [id, categorylist]);
 
-  //Then change our list of materials everytime the family(category) changes
+  // Then change our list of materials everytime the family(category) changes
   useEffect(() => {
     if (currentFamily && currentFamily.material_ids) {
       if (materiallist && materiallist.length > 0) {
@@ -52,10 +54,14 @@ const CategoryPage = ({ categorylist, materiallist }) => {
           });
         });
 
-        setMaterials(newMaterials);
+        //Filter any undefineds (could not find material from the materiallist )
+        const filteredList = newMaterials.filter(mat => mat !== undefined);
+
+        console.log("Filtered list:", filteredList);
+        setMaterials(filteredList);
       }
     }
-  }, [currentFamily, materiallist]);
+  }, [currentFamily]);
 
   //Getting image url from backend.
   //Temporary image imported.
@@ -70,7 +76,7 @@ const CategoryPage = ({ categorylist, materiallist }) => {
   `;
 
   const onClick = materialId => {
-    history.push(`/category/${id}/${materialId}`);
+    history.push(`/material/${materialId}`);
   };
 
   return (
@@ -84,7 +90,7 @@ const CategoryPage = ({ categorylist, materiallist }) => {
             image={placeholderImg}
             name={mat.description}
             key={key}
-            onClick={() => onClick(mat.id)}
+            onClick={() => onClick(mat.material_id)}
           />
         ))}
       </MaterialGrid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import GridCard from "../molecules/GridCard";
@@ -54,18 +54,27 @@ const CardContainer = styled.div`
   margin-top: 50px;
 `;
 
-const MaterialPage = () => {
+const MaterialPage = ({ materials }) => {
+  const [material, setMaterial] = useState({
+    description: "",
+    long_description: ""
+  });
   const { id, materialId } = useParams();
+
+  useEffect(() => {
+    if (materials && materials.length > 0) {
+      const foundMat = materials.find(mats => mats.material_id == materialId);
+      setMaterial(foundMat);
+    }
+  }, [id, materialId, materials]);
+
   return (
     <Container>
       <CardContainer>
-        <GridCard bold name="Lithium" image={placeholderImg} />
+        <GridCard bold name={material.description} image={placeholderImg} />
       </CardContainer>
       <MaterialsDisplay recycle />
-      <LongDescription>
-        Single-use batteries do not contain heavy metals, which limits their
-        recycling market. You may have to pay for recycling
-      </LongDescription>
+      <LongDescription>{material.long_description}</LongDescription>
       <ButtonContainer>
         <Button>How can i recycle this in my area?</Button>
       </ButtonContainer>

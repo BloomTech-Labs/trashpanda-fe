@@ -57,8 +57,8 @@ const App = () => {
         <Route exact path="/category/:id">
           <CategoryPage categorylist={categories} materiallist={materials} />
         </Route>
-        <Route exact path="/category/:id/:materialId">
-          <MaterialPage categorylist={categories} materials={materials} />
+        <Route exact path="/material/:materialId">
+          <MaterialPage materials={materials} />
         </Route>
       </Switch>
     </div>
