@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import bgImg from "../images/batteries.jpg";
 import CategoryGridCard from "../molecules/GridCard";
 import placeholderImg from "../images/category_placeholder.svg";
@@ -31,12 +31,14 @@ const CategoryPage = () => {
   //Setup for future requests from backend.
   const { id } = useParams();
 
+  const history = useHistory();
+
   //Temporary population of materials list.
   useEffect(() => {
     const newMaterials = [
-      { name: "Lithium", image: placeholderImg },
-      { name: "Alkaline", image: placeholderImg },
-      { name: "Laptop", image: placeholderImg }
+      { name: "Lithium", image: placeholderImg, id: 1 },
+      { name: "Alkaline", image: placeholderImg, id: 1 },
+      { name: "Laptop", image: placeholderImg, id: 1 }
     ];
     setMaterials(newMaterials);
   }, []);
@@ -53,6 +55,10 @@ const CategoryPage = () => {
     position: relative;
   `;
 
+  const onClick = materialId => {
+    history.push(`/category/${id}/${materialId}`);
+  };
+
   return (
     <Root>
       <Header>
@@ -60,7 +66,12 @@ const CategoryPage = () => {
       </Header>
       <MaterialGrid>
         {materials.map((mat, key) => (
-          <CategoryGridCard image={mat.image} name={mat.name} key={key} />
+          <CategoryGridCard
+            image={mat.image}
+            name={mat.name}
+            key={key}
+            onClick={() => onClick(mat.id)}
+          />
         ))}
       </MaterialGrid>
     </Root>
