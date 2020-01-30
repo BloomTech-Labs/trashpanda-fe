@@ -61,7 +61,7 @@ const MaterialPage = () => {
       <CardContainer>
         <GridCard bold name="Lithium" image={placeholderImg} />
       </CardContainer>
-      <MaterialsDisplay compost landfill recycle />
+      <MaterialsDisplay recycle />
       <LongDescription>
         Single-use batteries do not contain heavy metals, which limits their
         recycling market. You may have to pay for recycling
