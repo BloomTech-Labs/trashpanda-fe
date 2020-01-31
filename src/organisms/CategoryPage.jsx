@@ -28,7 +28,7 @@ const MaterialGrid = styled.div`
 
 const CategoryPage = ({ categorylist, materiallist }) => {
   const [materials, setMaterials] = useState([]);
-  const { id } = useParams();
+  const { categoryId } = useParams();
   const history = useHistory();
   const [currentFamily, setCurrentFamily] = useState({ description: "" });
 
@@ -36,13 +36,13 @@ const CategoryPage = ({ categorylist, materiallist }) => {
   useEffect(() => {
     if (categorylist.length > 0) {
       const newFamily = categorylist.find(fam => {
-        return fam.family_id == id;
+        return fam.family_id == categoryId;
       });
 
       console.log("Found fam: ", newFamily);
       setCurrentFamily(newFamily);
     }
-  }, [id, categorylist]);
+  }, [categoryId, categorylist]);
 
   // Then change our list of materials everytime the family(category) changes
   useEffect(() => {
@@ -56,7 +56,6 @@ const CategoryPage = ({ categorylist, materiallist }) => {
 
         //Filter any undefineds (could not find material from the materiallist )
         const filteredList = newMaterials.filter(mat => mat !== undefined);
-
         console.log("Filtered list:", filteredList);
         setMaterials(filteredList);
       }
