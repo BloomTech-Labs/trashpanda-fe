@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ZipSearchBar from "../molecules/ZipSearchBar";
 
 import walkingImage from "../images/walking_graphic.svg";
+import LocationCard from "../molecules/LocationCard";
 
 const Container = styled.div`
   display: flex;
@@ -32,6 +33,12 @@ const LocationsPage = () => {
       <ZipSearchBar />
 
       <Img src={walkingImage} />
+      <LocationCard
+        title="Something Recycling Center"
+        address="567 Yolo Ave El Cerrito CA 94568"
+        hours="M-F 8am - 5pm"
+        phone="510-879-5678"
+      />
     </Container>
   );
 };
