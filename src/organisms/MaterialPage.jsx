@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import GridCard from "../molecules/GridCard";
@@ -55,6 +56,7 @@ const CardContainer = styled.div`
 `;
 
 const MaterialPage = ({ materials }) => {
+  const history = useHistory();
   const [material, setMaterial] = useState({
     description: "",
     long_description: ""
@@ -76,7 +78,11 @@ const MaterialPage = ({ materials }) => {
       <MaterialsDisplay recycle />
       <LongDescription>{material.long_description}</LongDescription>
       <ButtonContainer>
-        <Button>How can i recycle this in my area?</Button>
+        <Button
+          onClick={() => history.push(`/material/${materialId}/locations`)}
+        >
+          How can i recycle this in my area?
+        </Button>
       </ButtonContainer>
     </Container>
   );

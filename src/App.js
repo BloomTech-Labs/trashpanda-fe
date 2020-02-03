@@ -8,6 +8,7 @@ import MaterialPage from "./organisms/MaterialPage";
 
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import LocationsPage from "./organisms/LocationsPage";
 
 const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -59,6 +60,9 @@ const App = () => {
         </Route>
         <Route exact path="/material/:materialId">
           <MaterialPage materials={materials} />
+        </Route>
+        <Route exact path="/material/:materialId/locations">
+          <LocationsPage />
         </Route>
       </Switch>
     </div>
