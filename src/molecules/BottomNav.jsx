@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import arrowImg from "../images/arrow_back.svg";
 import homeImg from "../images/home.svg";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
 import cameraImg from "../images/camera.svg";
 
-import { Link } from "react-router-dom";
-
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 56px;
 
   background: #336b68;
-  position: sticky;
+  position: fixed;
   bottom: 0;
 
   display: flex;
@@ -22,6 +21,8 @@ const Container = styled.div`
 
 const Img = styled.img`
   height: 24px;
+
+  cursor: pointer;
 `;
 
 const InnerContainer = styled.div`
@@ -47,15 +48,33 @@ const CameraButton = styled.button`
   left: 50%;
 
   transform: translate(-50%, -15%);
+
+  cursor: pointer;
 `;
 
 const CameraImage = styled.img``;
 
 const BottomNav = () => {
+  const [isHome, setIsHome] = useState(true);
+  const location = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setIsHome(true);
+    } else {
+      setIsHome(false);
+    }
+  }, [location.pathname]);
+
+  const handleBackClick = () => {
+    history.goBack();
+  };
+
   return (
     <Container>
       <InnerContainer>
-        <Img src={arrowImg} />
+        <Img onClick={handleBackClick} src={arrowImg} />
 
         <CameraButton>
           <CameraImage src={cameraImg} alt="camera" />
