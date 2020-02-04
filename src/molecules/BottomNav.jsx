@@ -60,11 +60,7 @@ const BottomNav = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (location.pathname === "/") {
-      setIsHome(true);
-    } else {
-      setIsHome(false);
-    }
+    setIsHome(location.pathname === "/");
   }, [location.pathname]);
 
   const handleBackClick = () => {

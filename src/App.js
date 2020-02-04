@@ -3,7 +3,6 @@ import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
 import { Switch, Route } from "react-router-dom";
-import NavBar from "./molecules/NavBar";
 import MaterialPage from "./organisms/MaterialPage";
 
 import { useQuery } from "@apollo/react-hooks";
@@ -51,7 +50,6 @@ const App = () => {
 
   return (
     <div className="App">
-      {/* <NavBar /> */}
       <Switch>
         <Route exact path="/">
           <HomePage categorylist={categories} />
