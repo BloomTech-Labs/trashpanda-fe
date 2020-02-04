@@ -58,7 +58,7 @@ const ZipSearchBar = props => {
     <Container>
       <Img src={searchImage} />
       <Input {...props} placeholder="enter zip code" />
-      <Button onClick={props.onClick}>GO</Button>
+      <Button onClick={props.handleClick}>GO</Button>
     </Container>
   );
 };

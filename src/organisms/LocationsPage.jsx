@@ -8,6 +8,7 @@ import walkingImage from "../images/walking_graphic.svg";
 import LocationCard from "../molecules/LocationCard";
 import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import Spinner from "../atoms/Spinner";
 
 const GET_LOCATIONS = gql`
   query getLocations($material_id: Int, $latitude: Float!, $longitude: Float!) {
@@ -66,6 +67,10 @@ const Blurb = styled.h2`
   pading: 0;
 `;
 
+const CardsContainer = styled.div`
+  margin-bottom: 50px;
+`;
+
 const Img = styled.img`
   margin-top: 100px;
 `;
@@ -73,6 +78,7 @@ const Img = styled.img`
 const LocationsPage = () => {
   const { materialId } = useParams();
   const [zip, setZip] = useState("");
+  const [loading, setLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const [getLocations, locationInfo] = useLazyQuery(GET_LOCATIONS);
   const [getPostal, postalInfo] = useLazyQuery(GET_POSTAL);
@@ -94,6 +100,7 @@ const LocationsPage = () => {
     if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
       console.log(locationInfo.data);
       setLocations(locationInfo.data.locations);
+      setLoading(false);
     }
   }, [locationInfo.data]);
 
@@ -102,6 +109,7 @@ const LocationsPage = () => {
   };
 
   const handleClick = () => {
+    setLoading(true);
     getPostal({
       variables: {
         postal_code: zip
@@ -113,20 +121,24 @@ const LocationsPage = () => {
     <Container>
       <Blurb>Where can I bring this?</Blurb>
       <ZipSearchBar
-        onClick={handleClick}
+        handleClick={handleClick}
         value={zip}
         onChange={handleZipChange}
       />
-      {locations.length > 0 ? (
-        locations.map((loc, key) => (
-          <LocationCard
-            title={loc.description}
-            address={loc.full_address}
-            hours={loc.hours}
-            phone={loc.phone}
-            key={key}
-          />
-        ))
+      {loading ? (
+        <Spinner />
+      ) : locations.length > 0 ? (
+        <CardsContainer>
+          {locations.map((loc, key) => (
+            <LocationCard
+              title={loc.description}
+              address={loc.full_address}
+              hours={loc.hours}
+              phone={loc.phone}
+              key={key}
+            />
+          ))}
+        </CardsContainer>
       ) : (
         <Img src={walkingImage} />
       )}
