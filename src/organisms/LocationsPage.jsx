@@ -17,26 +17,11 @@ const GET_LOCATIONS = gql`
       longitude: $longitude
       material_id: $material_id
     ) {
-      curbside
-      municipal
       description
-      longitude
-      latitude
       address
-      city
-      province
-      country
-      postal_code
-      region
       full_address
-      national
-      location_type_id
-      event_only
-      fax
       hours
       phone
-      notes_public
-      url
     }
   }
 `;
@@ -124,6 +109,7 @@ const LocationsPage = () => {
         handleClick={handleClick}
         value={zip}
         onChange={handleZipChange}
+        btnDisabled={zip.length < 5 || loading}
       />
       {loading ? (
         <Spinner />

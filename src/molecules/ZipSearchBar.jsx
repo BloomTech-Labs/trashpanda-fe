@@ -9,7 +9,7 @@ const Container = styled.div`
   margin: 31px 16px;
   margin-bottom: 40px;
   height: 40px;
-  border: 0.5px solid #336b68;
+  border: 0.5px solid #404040;
   border-radius: 50px;
 `;
 
@@ -34,10 +34,10 @@ const Img = styled.img`
 `;
 
 const Button = styled.button`
-  height: 100%;
+  height: 99%;
   background: #336b68;
   border-radius: 0px 50px 50px 0px;
-
+  margin-right: 1px;
   font-family: Muli;
   font-style: normal;
   font-weight: 500;
@@ -51,14 +51,22 @@ const Button = styled.button`
 
   padding: 0px 38px;
   cursor: pointer;
+
+  &:disabled {
+    background-color: #d9d9d9;
+    cursor: auto;
+  }
 `;
 
 const ZipSearchBar = props => {
+  console.log("Disss", props.btnDisabled);
   return (
     <Container>
       <Img src={searchImage} />
       <Input {...props} placeholder="enter zip code" />
-      <Button onClick={props.handleClick}>GO</Button>
+      <Button disabled={props.btnDisabled} onClick={props.handleClick}>
+        GO
+      </Button>
     </Container>
   );
 };
