@@ -7,14 +7,14 @@ const Container = styled.div`
   align-items: center;
 
   margin: 31px 16px;
-
+  margin-bottom: 40px;
   height: 40px;
   border: 0.5px solid #336b68;
   border-radius: 50px;
 `;
 
 const Input = styled.input`
-  font-family: Open Sans;
+  font-family: Muli;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
@@ -38,7 +38,7 @@ const Button = styled.button`
   background: #336b68;
   border-radius: 0px 50px 50px 0px;
 
-  font-family: Roboto;
+  font-family: Muli;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -53,12 +53,12 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const ZipSearchBar = () => {
+const ZipSearchBar = props => {
   return (
     <Container>
       <Img src={searchImage} />
-      <Input placeholder="enter zip code" />
-      <Button>GO</Button>
+      <Input {...props} placeholder="enter zip code" />
+      <Button onClick={props.onClick}>GO</Button>
     </Container>
   );
 };

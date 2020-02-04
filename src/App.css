@@ -1,5 +1,5 @@
 .App {
   margin: 0 auto;
-  max-width: 375px;
+  max-width: 575px;
   /* ^^ Temporary constraint so it's mobile view all the time, will remove for tablet/desktop view once we get it */
 }

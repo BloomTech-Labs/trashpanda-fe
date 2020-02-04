@@ -8,7 +8,9 @@ const Container = styled.div`
   box-sizing: border-box;
   border-radius: 5px;
 
-  margin: 30px 16px;
+  margin-bottom: 30px;
+  margin-left: 16px;
+  margin-right: 16px;
 `;
 
 const Title = styled.h2`
@@ -49,6 +51,11 @@ const Hours = styled.div`
   margin-bottom: 16px;
   margin-top: 8px;
 `;
+
+const InfoContainer = styled.div`
+  // width: 50%;
+  width: 155px;
+`;
 const LocationCard = ({ title, address, hours, phone }) => {
   return (
     <Container>
@@ -57,12 +64,12 @@ const LocationCard = ({ title, address, hours, phone }) => {
         <Address>
           <PText>{address}</PText>
         </Address>
-        <div>
+        <InfoContainer>
           <Hours>
             <PText>Hours: {hours}</PText>
           </Hours>
           <PText>Phone: {phone}</PText>
-        </div>
+        </InfoContainer>
       </FlexContainer>
     </Container>
   );
