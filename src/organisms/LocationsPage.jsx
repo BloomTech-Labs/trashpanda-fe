@@ -102,6 +102,14 @@ const LocationsPage = () => {
     });
   };
 
+  const handleKeyDown = e => {
+    if (e.key === "Enter") {
+      if (zip.length >= 5) {
+        handleClick();
+      }
+    }
+  };
+
   return (
     <Container>
       <Blurb>Where can I bring this?</Blurb>
@@ -110,6 +118,7 @@ const LocationsPage = () => {
         value={zip}
         onChange={handleZipChange}
         btnDisabled={zip.length < 5 || loading}
+        onKeyDown={handleKeyDown}
       />
       {loading ? (
         <Spinner />

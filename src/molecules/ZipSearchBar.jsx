@@ -59,7 +59,6 @@ const Button = styled.button`
 `;
 
 const ZipSearchBar = props => {
-  console.log("Disss", props.btnDisabled);
   return (
     <Container>
       <Img src={searchImage} />
