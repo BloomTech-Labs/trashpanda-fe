@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/dd50a720d4e42bf1b47d/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/trashpanda-fe/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/dd50a720d4e42bf1b47d/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/trashpanda-fe/test_coverage)
+
 🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline, feel free to add your own flare to it.
 
 🚫 The numbers 1️⃣ through 5️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
