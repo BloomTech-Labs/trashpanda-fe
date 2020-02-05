@@ -95,6 +95,13 @@ const LocationsPage = () => {
   };
 
   const handleClick = () => {
+    const zipValidator = /^\d{5}$/;
+
+    if (!zipValidator.test(zip)) {
+      alert("Please enter a valid US zip code");
+      return;
+    }
+
     setLoading(true);
     getPostal({
       variables: {
