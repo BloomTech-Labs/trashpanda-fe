@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import Badge from "../molecules/Badge";
+import Spinner from "../atoms/Spinner";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -65,6 +66,12 @@ const GET_MATERIAL = gql`
   }
 `;
 
+const SpinnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const LocationButton = styled.button`
   outline: none;
   border: none;
@@ -117,6 +124,13 @@ const MaterialPage = ({ materials }) => {
       setMaterial(matInfo.data.material);
     }
   }, [matInfo.data]);
+
+  if (matInfo.loading)
+    return (
+      <SpinnerContainer>
+        <Spinner />
+      </SpinnerContainer>
+    );
 
   return (
     <Container>

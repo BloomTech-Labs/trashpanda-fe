@@ -83,7 +83,6 @@ const LocationsPage = () => {
 
   useEffect(() => {
     if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
-      console.log(locationInfo.data);
       setLocations(locationInfo.data.locations);
       setLoading(false);
     }

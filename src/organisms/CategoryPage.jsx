@@ -38,8 +38,6 @@ const CategoryPage = ({ categorylist, materiallist }) => {
       const newFamily = categorylist.find(fam => {
         return fam.family_id == categoryId;
       });
-
-      console.log("Found fam: ", newFamily);
       setCurrentFamily(newFamily);
     }
   }, [categoryId, categorylist]);
@@ -56,7 +54,6 @@ const CategoryPage = ({ categorylist, materiallist }) => {
 
         //Filter any undefineds (could not find material from the materiallist )
         const filteredList = newMaterials.filter(mat => mat !== undefined);
-        console.log("Filtered list:", filteredList);
         setMaterials(filteredList);
       }
     }
