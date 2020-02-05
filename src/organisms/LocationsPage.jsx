@@ -69,7 +69,7 @@ const LocationsPage = () => {
   const [getPostal, postalInfo] = useLazyQuery(GET_POSTAL);
 
   useEffect(() => {
-    if (postalInfo.called && postalInfo.data && !postalInfo.loading) {
+    if (postalInfo.called && postalInfo.data) {
       const { longitude, latitude } = postalInfo.data.postal_code;
       getLocations({
         variables: {
@@ -82,24 +82,17 @@ const LocationsPage = () => {
   }, [postalInfo.data]);
 
   useEffect(() => {
-    if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
+    if (locationInfo.called && locationInfo.data) {
       setLocations(locationInfo.data.locations);
       setLoading(false);
     }
   }, [locationInfo.data]);
 
-  const handleZipChange = e => {
-    setZip(e.target.value);
-  };
-
   const handleClick = () => {
-    const zipValidator = /^\d{5}$/;
-
-    if (!zipValidator.test(zip)) {
+    if (!/^\d{5}$/.test(zip)) {
       alert("Please enter a valid US zip code");
       return;
     }
-
     setLoading(true);
     getPostal({
       variables: {
@@ -122,7 +115,7 @@ const LocationsPage = () => {
       <ZipSearchBar
         handleClick={handleClick}
         value={zip}
-        onChange={handleZipChange}
+        onChange={e => setZip(e.target.value)}
         btnDisabled={zip.length < 5 || loading}
         onKeyDown={handleKeyDown}
       />
