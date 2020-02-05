@@ -12,7 +12,7 @@ const HomePage = ({ categorylist }) => {
   return (
     <Container>
       <HomeSearchBar />
-      <HomeIntro />
+      {/* <HomeIntro /> */}
       <CategoryGrid categorylist={categorylist} />
     </Container>
   );

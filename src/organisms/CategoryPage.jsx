@@ -23,8 +23,8 @@ const HeaderTitle = styled.h2`
 const MaterialGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 33px;
-  margin: 39px 24px;
+  gap: 26px 22px;
+  margin: 39px 13px;
   margin-bottom: 105px;
 `;
 
