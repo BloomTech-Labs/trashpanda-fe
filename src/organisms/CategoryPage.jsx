@@ -4,24 +4,6 @@ import { useParams, useHistory } from "react-router-dom";
 import GridCard from "../molecules/GridCard";
 import placeholderImg from "../images/category_placeholder.svg";
 
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-
-const GET_MATERIAL = gql`
-  query getMaterial($materialId: Int!) {
-    material(id: $materialId) {
-      description
-      long_description
-      bin_trash
-      bin_recycle
-      bin_compost
-      dropoff
-      pickup
-      notes
-    }
-  }
-`;
-
 const Root = styled.div``;
 
 const HeaderTitle = styled.h2`
