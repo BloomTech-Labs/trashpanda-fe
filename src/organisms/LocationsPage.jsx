@@ -60,6 +60,28 @@ const Img = styled.img`
   margin-top: 100px;
 `;
 
+function validateZip(zip) {
+  return /^\d{5}$/.test(zip);
+}
+
+function renderLocations(locations) {
+  return locations.length > 0 ? (
+    <CardsContainer>
+      {locations.map((loc, key) => (
+        <LocationCard
+          title={loc.description}
+          address={loc.full_address}
+          hours={loc.hours}
+          phone={loc.phone}
+          key={key}
+        />
+      ))}
+    </CardsContainer>
+  ) : (
+    <Img src={walkingImage} />
+  );
+}
+
 const LocationsPage = () => {
   const { materialId } = useParams();
   const [zip, setZip] = useState("");
@@ -89,24 +111,18 @@ const LocationsPage = () => {
   }, [locationInfo.data]);
 
   const handleClick = () => {
-    if (!/^\d{5}$/.test(zip)) {
-      alert("Please enter a valid US zip code");
-      return;
-    }
-    setLoading(true);
-    getPostal({
-      variables: {
-        postal_code: zip
-      }
-    });
+    if (validateZip(zip)) {
+      setLoading(true);
+      getPostal({
+        variables: {
+          postal_code: zip
+        }
+      });
+    } else alert("Please enter a valid 5-digit US zip code");
   };
 
   const handleKeyDown = e => {
-    if (e.key === "Enter") {
-      if (zip.length >= 5) {
-        handleClick();
-      }
-    }
+    if (e.key === "Enter") if (zip.length >= 5) handleClick();
   };
 
   return (
@@ -119,23 +135,8 @@ const LocationsPage = () => {
         btnDisabled={zip.length < 5 || loading}
         onKeyDown={handleKeyDown}
       />
-      {loading ? (
-        <Spinner />
-      ) : locations.length > 0 ? (
-        <CardsContainer>
-          {locations.map((loc, key) => (
-            <LocationCard
-              title={loc.description}
-              address={loc.full_address}
-              hours={loc.hours}
-              phone={loc.phone}
-              key={key}
-            />
-          ))}
-        </CardsContainer>
-      ) : (
-        <Img src={walkingImage} />
-      )}
+
+      {loading ? <Spinner /> : renderLocations(locations)}
     </Container>
   );
 };
