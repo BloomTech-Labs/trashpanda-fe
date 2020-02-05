@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import GridCard from "../molecules/GridCard";
-import placeholderImg from "../images/category_placeholder.svg";
-import MaterialsDisplay from "../molecules/MaterialsDisplay";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+import Badge from "../molecules/Badge";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -12,38 +12,25 @@ const Container = styled.div`
 `;
 
 const LongDescription = styled.p`
-  font-family: Roboto;
+  font-family: Muli;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
-  line-height: 21px;
+  line-height: 23px;
   margin: 0px 28px;
   color: #000000;
 `;
 
-const Button = styled.button`
-  height: 39px;
-  background: #525252;
-  width: 90%;
-  border-radius: 20px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
+const Title = styled.h2`
+  font-weight: bold;
+  font-size: 24px;
   text-align: center;
-  color: #ffffff;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  text-transform: uppercase;
-
-  margin-top: 70px;
-  margin-bottom: 60px;
-  margin-right: 15px;
-  margin-left: 15px;
+  line-height: 30px;
 `;
 
 const ButtonContainer = styled.div`
+  font-family: Muli;
+
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -51,39 +38,90 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const CardContainer = styled.div`
-  margin-top: 50px;
+const GET_MATERIAL = gql`
+  query getMaterial($materialId: Int!) {
+    material(id: $materialId) {
+      description
+      long_description
+      bin_trash
+      bin_recycle
+      bin_compost
+      dropoff
+      pickup
+    }
+  }
 `;
+
+const LocationButton = styled.button`
+  outline: none;
+  border: none;
+  font-family: Muli;
+
+  font-size: 18px;
+  color: #ffffff;
+  // font-weight: 600;
+  padding: 9px 14px;
+  width: 156px;
+
+  border: 0.5px solid #336b68;
+  box-sizing: border-box;
+  border-radius: 100px;
+
+  background: #336b68;
+  margin-bottom: 48px;
+  cursor: pointer;
+`;
+
+function getTypeString(recycle, compost, landfill) {
+  if (recycle) return "recycle";
+  if (compost) return "compost";
+  if (landfill) return "landfill";
+  return "offsite";
+}
 
 const MaterialPage = ({ materials }) => {
   const history = useHistory();
+  const { materialId } = useParams();
+
+  const matInfo = useQuery(GET_MATERIAL, {
+    variables: {
+      materialId: parseInt(materialId)
+    }
+  });
   const [material, setMaterial] = useState({
     description: "",
-    long_description: ""
+    long_description: "",
+    bin_trash: false,
+    bin_recycle: false,
+    bin_compost: false,
+    dropoff: null,
+    pickup: null
   });
-  const { id, materialId } = useParams();
 
   useEffect(() => {
-    if (materials && materials.length > 0) {
-      const foundMat = materials.find(mats => mats.material_id == materialId);
-      setMaterial(foundMat);
+    if (matInfo.data && !matInfo.loading) {
+      setMaterial(matInfo.data.material);
     }
-  }, [id, materialId, materials]);
+  }, [matInfo.data]);
 
   return (
     <Container>
-      <CardContainer>
-        <GridCard bold name={material.description} image={placeholderImg} />
-      </CardContainer>
-      <MaterialsDisplay recycle />
-      <LongDescription>{material.long_description}</LongDescription>
+      <Title>{material.description}</Title>
+      <Badge
+        type={getTypeString(
+          material.bin_recycle,
+          material.bin_compost,
+          material.bin_trash
+        )}
+      />
       <ButtonContainer>
-        <Button
+        <LocationButton
           onClick={() => history.push(`/material/${materialId}/locations`)}
         >
-          How can i recycle this in my area?
-        </Button>
+          Locate Centers
+        </LocationButton>
       </ButtonContainer>
+      <LongDescription>{material.long_description}</LongDescription>
     </Container>
   );
 };

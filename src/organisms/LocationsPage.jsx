@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import walkingImage from "../images/walking_graphic.svg";
 import LocationCard from "../molecules/LocationCard";
-import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import Spinner from "../atoms/Spinner";
 
@@ -22,6 +22,7 @@ const GET_LOCATIONS = gql`
       full_address
       hours
       phone
+      url
     }
   }
 `;
