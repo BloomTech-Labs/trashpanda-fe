@@ -21,6 +21,18 @@ const LongDescription = styled.p`
   color: #000000;
 `;
 
+const SpecialText = styled.p`
+  font-family: Muli;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  margin-left: 28px;
+  margin-right: 28px;
+  margin-top: 90px;
+  color: #000000;
+`;
+
 const Title = styled.h2`
   font-weight: bold;
   font-size: 24px;
@@ -48,6 +60,7 @@ const GET_MATERIAL = gql`
       bin_compost
       dropoff
       pickup
+      notes
     }
   }
 `;
@@ -95,7 +108,8 @@ const MaterialPage = ({ materials }) => {
     bin_recycle: false,
     bin_compost: false,
     dropoff: null,
-    pickup: null
+    pickup: null,
+    notes: null
   });
 
   useEffect(() => {
@@ -122,6 +136,8 @@ const MaterialPage = ({ materials }) => {
         </LocationButton>
       </ButtonContainer>
       <LongDescription>{material.long_description}</LongDescription>
+
+      <SpecialText>{material.notes}</SpecialText>
     </Container>
   );
 };

@@ -52,7 +52,6 @@ const Blurb = styled.h2`
   margin-top: 10px;
   pading: 0;
 `;
-
 const CardsContainer = styled.div`
   margin-bottom: 50px;
 `;
