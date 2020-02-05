@@ -12,7 +12,6 @@ const HomePage = ({ categorylist }) => {
   return (
     <Container>
       <HomeSearchBar />
-      <HomeIntro />
       <CategoryGrid categorylist={categorylist} />
     </Container>
   );
