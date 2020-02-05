@@ -3,11 +3,12 @@ import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
 import { Switch, Route } from "react-router-dom";
-import NavBar from "./molecules/NavBar";
 import MaterialPage from "./organisms/MaterialPage";
 
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import LocationsPage from "./organisms/LocationsPage";
+import BottomNav from "./molecules/BottomNav";
 
 const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -49,7 +50,6 @@ const App = () => {
 
   return (
     <div className="App">
-      <NavBar />
       <Switch>
         <Route exact path="/">
           <HomePage categorylist={categories} />
@@ -60,7 +60,11 @@ const App = () => {
         <Route exact path="/material/:materialId">
           <MaterialPage materials={materials} />
         </Route>
+        <Route exact path="/material/:materialId/locations">
+          <LocationsPage />
+        </Route>
       </Switch>
+      <BottomNav />
     </div>
   );
 };
