@@ -24,6 +24,7 @@ const GridContainer = styled.div`
   width: 100%;
   gap: 40px;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  margin-bottom: 100px;
 `;
 
 const CategoryGrid = ({ categorylist }) => {

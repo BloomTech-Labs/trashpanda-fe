@@ -24,6 +24,7 @@ const MaterialGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 33px;
   margin: 39px 24px;
+  margin-bottom: 105px;
 `;
 
 const CategoryPage = ({ categorylist, materiallist }) => {
