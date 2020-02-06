@@ -39,6 +39,7 @@ function isLandingFirstTime() {
 
 function onLocationSuccess(position, setUserLocation) {
   console.log("Position: ", position);
+  setUserLocation(position.coords);
 }
 
 function onLocationError(err) {
