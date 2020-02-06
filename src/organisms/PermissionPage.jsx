@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Button from "../atoms/Button";
 
+import { useHistory } from "react-router-dom";
+
 const Container = styled.div`
   margin: 35px 18px;
 `;
@@ -39,13 +41,17 @@ const BtnInvertedContainer = styled.div`
   margin-top: 45px;
 `;
 
-const PermissionPage = () => {
+const PermissionPage = ({ getLocation, handleLocation }) => {
+  const history = useHistory();
+
   const handleAccept = () => {
     localStorage.setItem("firstTime", true);
+    getLocation(handleLocation);
   };
 
   const handleReject = () => {
     localStorage.setItem("firstTime", true);
+    history.push("/");
   };
   return (
     <Container>

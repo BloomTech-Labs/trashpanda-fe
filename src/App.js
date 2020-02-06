@@ -37,10 +37,31 @@ function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
+function onLocationSuccess(position, setUserLocation) {
+  console.log("Position: ", position);
+}
+
+function onLocationError(err) {
+  console.log("Unable to retrieve position, error: ", err);
+}
+
+function getUserLocation(handleLocation) {
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported by your browser");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    position => onLocationSuccess(position, handleLocation),
+    onLocationError
+  );
+}
+
 const App = () => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [materials, setMaterials] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
 
@@ -51,6 +72,7 @@ const App = () => {
       history.push("/intro");
     } else {
       console.log("It's NOT my first time here!");
+      getUserLocation(setUserLocation);
     }
   }, []);
 
@@ -81,14 +103,17 @@ const App = () => {
           <BottomNav />
         </Route>
         <Route exact path="/material/:materialId/locations">
-          <LocationsPage />
+          <LocationsPage location={userLocation} />
           <BottomNav />
         </Route>
         <Route exact path="/intro">
           <LandingPage />
         </Route>
         <Route exact path="/intro/permission">
-          <PermissionPage />
+          <PermissionPage
+            handleLocation={setUserLocation}
+            getLocation={getUserLocation}
+          />
         </Route>
       </Switch>
     </div>
