@@ -10,6 +10,7 @@ import { gql } from "apollo-boost";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
+import PermissionPage from "./organisms/PermissionPage";
 
 const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -85,6 +86,9 @@ const App = () => {
         </Route>
         <Route exact path="/intro">
           <LandingPage />
+        </Route>
+        <Route exact path="/intro/permission">
+          <PermissionPage />
         </Route>
       </Switch>
     </div>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import introImg from "../images/man_trash.svg";
 import raccoonImg from "../images/raccoon.svg";
 import Button from "../atoms/Button";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
   margin: 35px 19px 50px 19px;
@@ -60,6 +61,7 @@ const BtnContainer = styled.div`
 `;
 
 const LandingPage = () => {
+  const history = useHistory();
   return (
     <Container>
       <div>
@@ -81,7 +83,9 @@ const LandingPage = () => {
       <CenteredContainer>
         <IntroImage src={introImg} />
         <BtnContainer>
-          <Button>Get Started</Button>
+          <Button onClick={() => history.push("/intro/permission")}>
+            Get Started
+          </Button>
         </BtnContainer>
       </CenteredContainer>
     </Container>
