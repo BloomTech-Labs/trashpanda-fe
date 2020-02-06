@@ -8,7 +8,7 @@ const GridContainer = styled.div`
   display: grid;
   margin-top: 36px;
   width: 100%;
-  gap: 40px;
+  gap: 26px 25px;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   margin-bottom: 100px;
 `;

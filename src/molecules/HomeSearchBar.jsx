@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import lensImg from "../images/lens.svg";
+import lensImg from "../images/lens_dark.svg";
 
 const SearchContainer = styled.div`
   display: flex;
   align-items: center;
-  border: 1px solid black;
+  border: 0.5px solid #404040;
+
   width: 100%;
   box-sizing: border-box;
   border-radius: 20px;
