@@ -91,8 +91,12 @@ const HomeSearchBar = () => {
   }, [searchTerm]);
 
   // sets the selected suggestion to be the search term
-  const suggestionSelected = value => {
-    setSearchTerm(value);
+  const search = value => {
+    const foundMaterial = data.materials.filter(mat =>
+      mat.description.toLowerCase().includes(value.toLowerCase())
+    )[0];
+    console.log(foundMaterial);
+    history.push(`/material/${foundMaterial.material_id}`);
   };
 
   // displays the filtered suggestions
@@ -105,7 +109,7 @@ const HomeSearchBar = () => {
           {filtered.map(mat => (
             <DropListItem
               key={mat.material_id}
-              onClick={() => suggestionSelected(mat.description)}
+              onClick={() => search(mat.description)}
             >
               {mat.description}
             </DropListItem>
@@ -115,19 +119,10 @@ const HomeSearchBar = () => {
     }
   };
 
-  // const onEnteredText = () => {
-  //   if (filtered > 0) {
-  //     element.classList.add("dropdown");
-  //   }
-  // };
-
   // submits and continues to the material page.
   const handleSubmit = e => {
     e.preventDefault();
-    const foundMaterial = filtered.find(mat => {
-      return searchTerm.toLowerCase() == mat.description.toLowerCase();
-    });
-    history.push(`/material/${foundMaterial.material_id}`);
+    search(searchTerm);
   };
 
   return (
