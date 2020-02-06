@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
-import bgImg from "../images/batteries.jpg";
 import CategoryGridCard from "../molecules/GridCard";
 import placeholderImg from "../images/category_placeholder.svg";
 
