@@ -1,6 +1,5 @@
 import React from "react";
 import HomeSearchBar from "../molecules/HomeSearchBar";
-import HomeIntro from "../molecules/HomeIntro";
 import CategoryGrid from "../molecules/CategoryGrid";
 import styled from "styled-components";
 
