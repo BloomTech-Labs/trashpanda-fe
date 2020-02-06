@@ -38,7 +38,6 @@ function isLandingFirstTime() {
 }
 
 function onLocationSuccess(position, setUserLocation, history) {
-  console.log("Position: ", position);
   setUserLocation(position.coords);
   history.push("/");
 }
@@ -71,23 +70,18 @@ const App = () => {
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
     if (isLandingFirstTime()) {
-      console.log("It's my first time here!");
       history.push("/intro");
     } else {
-      console.log("It's NOT my first time here!");
       getUserLocation(setUserLocation, history);
     }
   }, []);
 
   useEffect(() => {
     if (cat.data) setCategories(cat.data.families);
-    console.log("Data Cat: ", cat.data);
   }, [cat.data]);
 
   useEffect(() => {
     if (mat.data) setMaterials(mat.data.materials);
-
-    console.log("Data Mat: ", mat.data);
   }, [mat.data]);
 
   return (
