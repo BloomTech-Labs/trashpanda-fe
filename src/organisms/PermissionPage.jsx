@@ -46,7 +46,7 @@ const PermissionPage = ({ getLocation, handleLocation }) => {
 
   const handleAccept = () => {
     localStorage.setItem("firstTime", true);
-    getLocation(handleLocation);
+    getLocation(handleLocation, history);
   };
 
   const handleReject = () => {

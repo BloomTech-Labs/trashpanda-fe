@@ -37,23 +37,25 @@ function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
-function onLocationSuccess(position, setUserLocation) {
+function onLocationSuccess(position, setUserLocation, history) {
   console.log("Position: ", position);
   setUserLocation(position.coords);
+  history.push("/");
 }
 
 function onLocationError(err) {
   console.log("Unable to retrieve position, error: ", err);
+  alert("There was an error getting location");
 }
 
-function getUserLocation(handleLocation) {
+function getUserLocation(handleLocation, history) {
   if (!navigator.geolocation) {
     alert("Geolocation is not supported by your browser");
     return;
   }
 
   navigator.geolocation.getCurrentPosition(
-    position => onLocationSuccess(position, handleLocation),
+    position => onLocationSuccess(position, handleLocation, history),
     onLocationError
   );
 }
@@ -73,7 +75,7 @@ const App = () => {
       history.push("/intro");
     } else {
       console.log("It's NOT my first time here!");
-      getUserLocation(setUserLocation);
+      getUserLocation(setUserLocation, history);
     }
   }, []);
 
