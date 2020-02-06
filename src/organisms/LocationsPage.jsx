@@ -58,6 +58,7 @@ const CardsContainer = styled.div`
 
 const Img = styled.img`
   margin-top: 100px;
+  margin-bottom: 150px;
 `;
 
 function validateZip(zip) {

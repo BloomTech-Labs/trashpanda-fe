@@ -6,29 +6,26 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   cursor: pointer;
 `;
 
 const Img = styled.img`
   border-radius: 50px;
-`;
-
-const Name = styled.p`
-  font-size: 18px;
-  margin: 0;
-  margin-top: 9px;
-  padding: 0;
-  color: rgba(0, 0, 0, 0.6);
+  width: 100px;
 `;
 
 const CategoryGridCard = ({ image, name, onClick, bold }) => {
   const Name = styled.p`
+    font-family: Muli;
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
     font-size: 18px;
+    line-height: 23px;
     margin: 0;
     margin-top: 9px;
     padding: 0;
-    color: rgba(0, 0, 0, 0.6);
+    color: #737373;
     ${bold
       ? `font-weight: bold;
       color: black;
