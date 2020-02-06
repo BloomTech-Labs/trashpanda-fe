@@ -12,9 +12,6 @@ const SearchPageContainer = styled.div`
   align-items: center;
   margin-top: 0;
   width: 100%;
-  /* border: 1px solid black;
-  border-radius: 20px; */
-  /* box-sizing: border-box;  */
 `;
 const SearchContainer = styled.form`
   display: flex;
@@ -22,7 +19,6 @@ const SearchContainer = styled.form`
   border: 1px solid black;
   width: 100%;
   box-sizing: border-box;
-  /* border-radius: 20px; */
   border-radius: ${props =>
     props.searchTerm !== "" ? "20px 20px 0 0" : "20px"};
   height: 36px;
