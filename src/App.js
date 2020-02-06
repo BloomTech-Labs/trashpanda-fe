@@ -44,12 +44,12 @@ function onLocationSuccess(position, setUserLocation, history) {
 
 function onLocationError(err) {
   console.log("Unable to retrieve position, error: ", err);
-  alert("There was an error getting location");
 }
 
 function getUserLocation(handleLocation, history) {
   if (!navigator.geolocation) {
     alert("Geolocation is not supported by your browser");
+    history.push("/");
     return;
   }
 
