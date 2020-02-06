@@ -19,6 +19,7 @@ const LongDescription = styled.p`
   font-size: 18px;
   line-height: 23px;
   margin: 0px 28px;
+  margin-bottom: 120px;
   color: #000000;
 `;
 
@@ -30,7 +31,7 @@ const SpecialText = styled.p`
   line-height: 23px;
   margin-left: 28px;
   margin-right: 28px;
-  margin-top: 90px;
+  margin-bottom: 120px;
   color: #000000;
 `;
 
