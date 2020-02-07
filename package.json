@@ -34,6 +34,9 @@
     "transform": {
       "^.+\\.svg$": "<rootDir>/svgTransform.js",
       "^.+\\.(js|jsx)$": "babel-jest"
-    }
+    },
+    "testPathIgnorePatterns": [
+      "/mock_data/"
+    ]
   }
 }
