@@ -13,16 +13,7 @@ const mocksQuery = [
     },
     response: {
       data: {
-        material: {
-          description: "first",
-          long_description: "teh primary",
-          bin_trash: false,
-          bin_recycle: true,
-          bin_compost: true,
-          dropoff: "event",
-          pickup: "no",
-          notes: "The first mocked material"
-        }
+        material: mockMaterials[0]
       }
     }
   }
