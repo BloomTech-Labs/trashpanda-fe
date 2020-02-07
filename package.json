@@ -8,32 +8,13 @@
     "apollo-client": "^2.6.8",
     "autoprefixer": "^9.7.4",
     "graphql": "^14.6.0",
+    "parcel-bundler": "^1.12.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts-parcel": "0.0.38",
     "styled-components": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts-parcel start",
-    "build": "react-scripts-parcel build",
-    "test": "react-scripts-parcel test --env=jsdom",
-    "eject": "react-scripts-parcel eject"
-  },
-  "browserslist": {
-    "development": [
-      "last 2 chrome versions",
-      "last 2 firefox versions",
-      "last 2 edge versions"
-    ],
-    "production": [
-      ">1%",
-      "last 4 versions",
-      "Firefox ESR",
-      "not ie < 11"
-    ]
-  },
-  "devDependencies": {
-    "babel-core": "^6.26.3"
+    "start": "parcel public/index.html"
   }
 }
