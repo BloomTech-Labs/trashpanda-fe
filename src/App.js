@@ -10,7 +10,7 @@ import { gql } from "apollo-boost";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 
-const GET_CATEGORIES = gql`
+export const GET_CATEGORIES = gql`
   query getAllFamilies {
     families {
       material_ids
@@ -21,7 +21,7 @@ const GET_CATEGORIES = gql`
   }
 `;
 
-const GET_MATERIALS = gql`
+export const GET_MATERIALS = gql`
   query getAllMaterials {
     materials {
       description

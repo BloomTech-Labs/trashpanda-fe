@@ -52,7 +52,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const GET_MATERIAL = gql`
+export const GET_MATERIAL = gql`
   query getMaterial($materialId: Int!) {
     material(id: $materialId) {
       description
