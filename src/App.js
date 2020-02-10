@@ -12,7 +12,7 @@ import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
 
-const GET_CATEGORIES = gql`
+export const GET_CATEGORIES = gql`
   query getAllFamilies {
     families {
       material_ids
@@ -23,7 +23,7 @@ const GET_CATEGORIES = gql`
   }
 `;
 
-const GET_MATERIALS = gql`
+export const GET_MATERIALS = gql`
   query getAllMaterials {
     materials {
       description

@@ -10,7 +10,7 @@ import { useLazyQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import Spinner from "../atoms/Spinner";
 
-const GET_LOCATIONS = gql`
+export const GET_LOCATIONS = gql`
   query getLocations($material_id: Int, $latitude: Float!, $longitude: Float!) {
     locations(
       latitude: $latitude
@@ -27,7 +27,7 @@ const GET_LOCATIONS = gql`
   }
 `;
 
-const GET_POSTAL = gql`
+export const GET_POSTAL = gql`
   query getPostal($postal_code: String!) {
     postal_code(postal_code: $postal_code, country: "US") {
       postal_code
