@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import lensImg from "../images/lens_dark.svg";
 
-import { gql } from "apollo-boost";
+import gql from 'graphql-tag';
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 

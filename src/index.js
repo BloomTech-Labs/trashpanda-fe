@@ -1,14 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
-import ApolloClient from "apollo-boost";
+import ApolloClient from "apollo-client";
 import { ApolloProvider } from "@apollo/react-hooks";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { createHttpLink } from "apollo-link-http";
+
+import App from "./App";
+import "./index.css";
+import * as serviceWorker from "./serviceWorker";
+
+const link = createHttpLink({ uri: "https://trashpanda-be.herokuapp.com" });
+
+const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  uri: "https://trashpanda-be.herokuapp.com"
+  link,
+  cache
 });
 
 ReactDOM.render(

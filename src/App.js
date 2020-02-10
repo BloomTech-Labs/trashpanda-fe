@@ -6,7 +6,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import MaterialPage from "./organisms/MaterialPage";
 
 import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import gql from 'graphql-tag';
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";

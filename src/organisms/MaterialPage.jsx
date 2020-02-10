@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import gql from 'graphql-tag';
 import Badge from "../molecules/Badge";
 import Spinner from "../atoms/Spinner";
 
