@@ -12,7 +12,18 @@ import * as serviceWorker from "./serviceWorker";
 
 const link = createHttpLink({ uri: "https://trashpanda-be.herokuapp.com" });
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  dataIdFromObject: object => {
+    switch (object.__typename) {
+      case "Material":
+        return `Material: ${object.material_id}`;
+      case "Family":
+        return `Family: ${object.family_id}`;
+      default:
+        return defaultDataIdFromObject(object);
+    }
+  }
+});
 
 const client = new ApolloClient({
   link,
