@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import ZipSearchBar from "../molecules/ZipSearchBar";
-
 import { useParams } from "react-router-dom";
+import gql from 'graphql-tag';
+import { useLazyQuery } from "@apollo/react-hooks";
+import styled from "styled-components";
 
+import ZipSearchBar from "../molecules/ZipSearchBar";
 import walkingImage from "../images/walking_graphic.svg";
 import LocationCard from "../molecules/LocationCard";
-import { useLazyQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
 import Spinner from "../atoms/Spinner";
 
 export const GET_LOCATIONS = gql`
