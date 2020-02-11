@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 
@@ -35,6 +35,15 @@ export const GET_POSTAL = gql`
     }
   }
 `;
+
+export const GET_ZIP = gql`
+  query getZip($latitude: String!, $longitude: String!) {
+    getZip(latitude: $latitude, longitude: $longitude) {
+      postal_code
+    }
+  }
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,7 +61,7 @@ const Blurb = styled.h2`
   pading: 0;
 `;
 const CardsContainer = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 `;
 
 const Img = styled.img`
@@ -82,13 +91,43 @@ function renderLocations(locations) {
   );
 }
 
-const LocationsPage = () => {
+const LocationsPage = ({ location }) => {
   const { materialId } = useParams();
   const [zip, setZip] = useState("");
   const [loading, setLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const [getLocations, locationInfo] = useLazyQuery(GET_LOCATIONS);
   const [getPostal, postalInfo] = useLazyQuery(GET_POSTAL);
+  const [getZip, zipInfo] = useLazyQuery(GET_ZIP);
+
+  useEffect(() => {
+    if (location) {
+      const { latitude, longitude } = location;
+      //Set zip code field to contain current users zip code location
+      getZip({
+        variables: {
+          latitude: latitude.toString(),
+          longitude: longitude.toString()
+        }
+      });
+
+      //Search for nearby centers automatically
+      setLoading(true);
+      getLocations({
+        variables: {
+          latitude,
+          longitude,
+          material_id: parseInt(materialId)
+        }
+      });
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (zipInfo.called && zipInfo.data) {
+      setZip(zipInfo.data.getZip.postal_code);
+    }
+  }, [zipInfo]);
 
   useEffect(() => {
     if (postalInfo.called && postalInfo.data) {
