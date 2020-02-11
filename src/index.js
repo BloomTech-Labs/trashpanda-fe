@@ -23,6 +23,10 @@ const cache = new InMemoryCache({
         return `Family: ${object.family_id}`;
       case "GPS":
         return "GPS";
+      case "PostalCode":
+        return `PostalCode: ${object.postal_code}`;
+      case "Location":
+        return `Location: ${object.address}`;
       default:
         return defaultDataIdFromObject(object);
     }
