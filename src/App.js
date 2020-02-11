@@ -39,11 +39,17 @@ function isLandingFirstTime() {
 
 function onLocationSuccess(position, setUserLocation, history) {
   setUserLocation(position.coords);
+  console.log("position: ", position);
   history.push("/");
 }
 
 function onLocationError(err) {
-  console.log("Unable to retrieve position, error: ", err);
+  if (err.message === "User denied Geolocation") {
+    history.push("/");
+  } else {
+    console.log("Unable to retrieve position, error: ", err);
+    alert("Error: ", err.message);
+  }
 }
 
 function getUserLocation(handleLocation, history) {
