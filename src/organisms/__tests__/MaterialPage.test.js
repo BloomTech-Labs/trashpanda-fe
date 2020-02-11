@@ -1,7 +1,12 @@
 import React from "react";
 import MaterialPage, { GET_MATERIAL } from "../MaterialPage";
 import { MockedProvider } from "@apollo/react-testing";
-import { render, cleanup } from "@testing-library/react";
+import {
+  render,
+  cleanup,
+  waitForElement,
+  getByText
+} from "@testing-library/react";
 // import renderer from "react-test-renderer"; //renderer.create does the same error as render
 // import wait from "waait";
 // import { useQuery } from "@apollo/react-hooks";
@@ -108,18 +113,24 @@ describe("MaterialPage", () => {
   afterEach(cleanup);
 
   it("renders MaterialPage without error", async () => {
-    // const feature = () => {
-    const { debug } = render(
+    const page = render(
       <MockedProvider>
         <MaterialPage />
       </MockedProvider>
     );
-    // };
-    debug();
-    // expect(getByText("first")).toBeInTheDocument();
-    // console.log(feature());
     await Promise.resolve();
-    debug();
+
+    page.debug();
+    const useQuery = jest.fn();
+    expect(page).toEqual(
+      expect.objectContaining({
+        baseElement: expect.anything()
+      })
+    );
+    console.log(page.baseElement.HTMLBodyElement);
+
+    await waitForElement(() => page.getByText(/Locate Centers/i));
+    // expect(page.baseElement.body).toMatch("Locate Centers");
   });
 });
 
