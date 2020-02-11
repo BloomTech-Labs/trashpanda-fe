@@ -8,33 +8,6 @@ import {
   getByText
 } from "@testing-library/react";
 
-import { mockMaterials } from "./mock_data/mockOrganismState";
-
-// const mockMaterials = [
-//   {
-//     materialId: 1,
-//     description: "first",
-//     long_description: "teh primary",
-//     bin_trash: false,
-//     bin_recycle: true,
-//     bin_compost: true,
-//     dropoff: "event",
-//     pickup: "no",
-//     notes: "The first mocked material"
-//   },
-//   {
-//     materialId: 2,
-//     description: "second",
-//     long_description: "the secondary",
-//     bin_trash: false,
-//     bin_recycle: false,
-//     bin_compost: false,
-//     dropoff: "event",
-//     pickup: "no",
-//     notes: "The second mocked material"
-//   }
-// ];
-
 const mocksQuery = [
   {
     request: {
@@ -61,25 +34,11 @@ const mocksQuery = [
   }
 ];
 
+//the second argument of jest.mock must be an inline function
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useHistory: () => ({
-    replace: jest.fn(),
-    length: 0,
-    location: {
-      pathname: "",
-      search: "",
-      state: "",
-      hash: ""
-    },
-    action: jest.fn(),
-    push: jest.fn(),
-    go: jest.fn(),
-    goBack: jest.fn(),
-    goForward: jest.fn(),
-    block: jest.fn(),
-    listen: jest.fn(),
-    createHref: jest.fn()
+    push: jest.fn()
   }),
   useParams: () => ({
     materialId: 1
