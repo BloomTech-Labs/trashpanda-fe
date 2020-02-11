@@ -7,50 +7,56 @@ import {
   waitForElement,
   getByText
 } from "@testing-library/react";
-// import renderer from "react-test-renderer"; //renderer.create does the same error as render
-// import wait from "waait";
-// import { useQuery } from "@apollo/react-hooks";
 
-// const mockMaterials = [
-//   {
-//     materialId: 1,
-//     description: "first",
-//     long_description: "teh primary",
-//     bin_trash: false,
-//     bin_recycle: true,
-//     bin_compost: true,
-//     dropoff: "event",
-//     pickup: "no",
-//     notes: "The first mocked material"
-//   },
-//   {
-//     materialId: 2,
-//     description: "second",
-//     long_description: "the secondary",
-//     bin_trash: false,
-//     bin_recycle: false,
-//     bin_compost: false,
-//     dropoff: "event",
-//     pickup: "no",
-//     notes: "The second mocked material"
-//   }
-// ];
+const mockMaterials = [
+  {
+    materialId: 1,
+    description: "first",
+    long_description: "teh primary",
+    bin_trash: false,
+    bin_recycle: true,
+    bin_compost: true,
+    dropoff: "event",
+    pickup: "no",
+    notes: "The first mocked material"
+  },
+  {
+    materialId: 2,
+    description: "second",
+    long_description: "the secondary",
+    bin_trash: false,
+    bin_recycle: false,
+    bin_compost: false,
+    dropoff: "event",
+    pickup: "no",
+    notes: "The second mocked material"
+  }
+];
 
-// const mocksQuery = [
-//   {
-//     request: {
-//       query: GET_MATERIAL,
-//       variables: {
-//         materialId: 1
-//       }
-//     },
-//     response: {
-//       data: {
-//         material: mockMaterials[0]
-//       }
-//     }
-//   }
-// ];
+const mocksQuery = [
+  {
+    request: {
+      query: GET_MATERIAL,
+      variables: {
+        materialId: 1
+      }
+    },
+    result: {
+      data: {
+        material: {
+          description: "first",
+          long_description: "teh primary",
+          bin_trash: false,
+          bin_recycle: true,
+          bin_compost: true,
+          dropoff: "event",
+          pickup: "no",
+          notes: "The first mocked material"
+        }
+      }
+    }
+  }
+];
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -77,62 +83,44 @@ jest.mock("react-router-dom", () => ({
   })
 }));
 
-// jest.mock("styled-components", () => ({
-//   div: () => jest.fn(),
-//   h2: () => jest.fn(),
-//   h3: () => jest.fn(),
-//   keyframes: jest.fn(),
-//   img: () => jest.fn(),
-//   p: () => jest.fn(),
-//   button: () => jest.fn()
-// }));
-
-// jest.mock("@apollo/react-hooks", () => ({
-//   ...jest.requireActual("@apollo/react-hooks"),
-//   useQuery: () => mocksQuery[0].response
-// }));
-
-// jest.mock("react", () => ({
-//   ...jest.requireActual("react")
-//   // useState: () => ({
-//   //   material: {
-//   //     description: mockMaterials[0].description,
-//   //     long_description: mockMaterials[0].long_description,
-//   //     bin_trash: mockMaterials[0].bin_trash,
-//   //     bin_recycle: mockMaterials[0].bin_recycle,
-//   //     bin_compost: mockMaterials[0].bin_compost,
-//   //     dropoff: mockMaterials[0].dropoff,
-//   //     pickup: mockMaterials[0].pickup,
-//   //     notes: mockMaterials[0].notes
-//   //   }
-//   // }),
-//   // useEffect: () => jest.fn()
-// }));
-
 describe("MaterialPage", () => {
   afterEach(cleanup);
 
-  it("renders MaterialPage without error", async () => {
+  it("renders MaterialPage without error and checks for the existence of an element with the text 'Locate Centers'", async () => {
     const page = render(
       <MockedProvider>
         <MaterialPage />
       </MockedProvider>
     );
-    await Promise.resolve();
-
-    page.debug();
-    const useQuery = jest.fn();
+    //some useful methods commented out below
+    // await Promise.resolve();
+    // page.debug();
     expect(page).toEqual(
       expect.objectContaining({
         baseElement: expect.anything()
       })
     );
-    console.log(page.baseElement.HTMLBodyElement);
 
     await waitForElement(() => page.getByText(/Locate Centers/i));
-    // expect(page.baseElement.body).toMatch("Locate Centers");
+  });
+
+  it("renders MaterialPage and checks for the existence of an element with the text 'Off-Site Recycling'", async () => {
+    const page = render(
+      <MockedProvider mocks={mocksQuery} addTypename={false}>
+        <MaterialPage materials={mockMaterials} />
+      </MockedProvider>
+    );
+
+    await waitForElement(() => page.getByText(/Off-Site Recycle/i));
+  });
+
+  it("renders MaterialPage and calls an Actual query that checks mock response against mock materials, then checks the page for an element that contains the text that would be rendered if that query was satisfied", async () => {
+    const page = render(
+      <MockedProvider mocks={mocksQuery} addTypename={false}>
+        <MaterialPage />
+      </MockedProvider>
+    );
+
+    await waitForElement(() => page.getByText(/The first mocked material/i));
   });
 });
-
-//mocks={mocksQuery} addTypename={false}
-// materials={mockMaterials}
