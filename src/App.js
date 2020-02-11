@@ -42,7 +42,7 @@ function onLocationSuccess(position, setUserLocation, history) {
   history.push("/");
 }
 
-function onLocationError(err) {
+function onLocationError(err, history) {
   if (err.message === "User denied Geolocation") {
     history.push("/");
   } else {
@@ -60,7 +60,7 @@ function getUserLocation(handleLocation, history) {
 
   navigator.geolocation.getCurrentPosition(
     position => onLocationSuccess(position, handleLocation, history),
-    onLocationError
+    err => onLocationError(err, history)
   );
 }
 
