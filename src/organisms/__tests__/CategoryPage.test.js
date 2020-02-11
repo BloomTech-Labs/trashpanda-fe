@@ -37,7 +37,7 @@ jest.mock("react-router-dom", () => ({
 describe("CategoryPage", () => {
   afterEach(cleanup);
 
-  it("renders CategoryPage and title based on description of mock Category 1", async () => {
+  it("renders CategoryPage and title based on description of mock Category 1(using params argument)", async () => {
     const page = render(
       <MockedProvider addTypename={false}>
         <CategoryPage
@@ -46,5 +46,20 @@ describe("CategoryPage", () => {
         />
       </MockedProvider>
     );
+    await waitForElement(() => page.getByText(/first family/i));
+  });
+
+  it("renders CategoryPage and, after iterating over mocked catergory 1 material_ids, it renders grid cards with names of mocked material instances 1, 2 and 4", async () => {
+    const page = render(
+      <MockedProvider addTypename={false}>
+        <CategoryPage
+          categorylist={mockCategoryList}
+          materiallist={mockMaterials}
+        />
+      </MockedProvider>
+    );
+    await waitForElement(() => page.getByText(/first material/i));
+    await waitForElement(() => page.getByText(/second material/i));
+    await waitForElement(() => page.getByText(/fourth material/i));
   });
 });

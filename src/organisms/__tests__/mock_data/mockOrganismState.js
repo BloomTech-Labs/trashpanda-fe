@@ -17,7 +17,7 @@ const mockMaterials = [
   {
     id: 1,
     material_id: 1,
-    description: "first",
+    description: "first material",
     long_description: "the primary",
     bin_trash: false,
     bin_recycle: true,
@@ -29,7 +29,7 @@ const mockMaterials = [
   {
     id: 2,
     material_id: 2,
-    description: "second",
+    description: "second material",
     long_description: "the secondary",
     bin_trash: false,
     bin_recycle: false,
@@ -41,7 +41,7 @@ const mockMaterials = [
   {
     id: 3,
     material_id: 3,
-    description: "third",
+    description: "third material",
     long_description: "the teriary",
     bin_trash: false,
     bin_recycle: true,
@@ -53,7 +53,7 @@ const mockMaterials = [
   {
     id: 4,
     material_id: 4,
-    description: "fourth",
+    description: "fourth material",
     long_description: "the fourth",
     bin_trash: false,
     bin_recycle: false,
@@ -65,7 +65,7 @@ const mockMaterials = [
   {
     id: 5,
     material_id: 5,
-    description: "fifth",
+    description: "fifth material",
     long_description: "the fifth",
     bin_trash: false,
     bin_recycle: true,
@@ -77,7 +77,7 @@ const mockMaterials = [
   {
     id: 6,
     material_id: 6,
-    description: "sixth",
+    description: "sixth material",
     long_description: "the sixth",
     bin_trash: false,
     bin_recycle: false,
@@ -89,7 +89,7 @@ const mockMaterials = [
   {
     id: 7,
     material_id: 7,
-    description: "seventh",
+    description: "seventh material",
     long_description: "the seventh",
     bin_trash: false,
     bin_recycle: true,
@@ -101,7 +101,7 @@ const mockMaterials = [
   {
     id: 8,
     material_id: 8,
-    description: "eigth",
+    description: "eigth material",
     long_description: "the eigth",
     bin_trash: false,
     bin_recycle: false,
