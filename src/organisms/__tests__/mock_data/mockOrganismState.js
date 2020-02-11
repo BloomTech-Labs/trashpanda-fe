@@ -61,54 +61,6 @@ const mockMaterials = [
     dropoff: "event",
     pickup: "no",
     notes: "The fourth mocked material"
-  },
-  {
-    id: 5,
-    material_id: 5,
-    description: "fifth material",
-    long_description: "the fifth",
-    bin_trash: false,
-    bin_recycle: true,
-    bin_compost: true,
-    dropoff: "event",
-    pickup: "no",
-    notes: "The fifth mocked material"
-  },
-  {
-    id: 6,
-    material_id: 6,
-    description: "sixth material",
-    long_description: "the sixth",
-    bin_trash: false,
-    bin_recycle: false,
-    bin_compost: false,
-    dropoff: "event",
-    pickup: "no",
-    notes: "The sixth mocked material"
-  },
-  {
-    id: 7,
-    material_id: 7,
-    description: "seventh material",
-    long_description: "the seventh",
-    bin_trash: false,
-    bin_recycle: true,
-    bin_compost: true,
-    dropoff: "event",
-    pickup: "no",
-    notes: "The seventh mocked material"
-  },
-  {
-    id: 8,
-    material_id: 8,
-    description: "eigth material",
-    long_description: "the eigth",
-    bin_trash: false,
-    bin_recycle: false,
-    bin_compost: false,
-    dropoff: "event",
-    pickup: "no",
-    notes: "The eigth mocked material"
   }
 ];
 
