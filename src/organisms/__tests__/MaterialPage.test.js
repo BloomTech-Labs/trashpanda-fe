@@ -38,22 +38,7 @@ const mocksQuery = [
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useHistory: () => ({
-    replace: jest.fn(),
-    length: 0,
-    location: {
-      pathname: "",
-      search: "",
-      state: "",
-      hash: ""
-    },
-    action: jest.fn(),
-    push: jest.fn(),
-    go: jest.fn(),
-    goBack: jest.fn(),
-    goForward: jest.fn(),
-    block: jest.fn(),
-    listen: jest.fn(),
-    createHref: jest.fn()
+    push: jest.fn()
   }),
   useParams: () => ({
     materialId: 1
