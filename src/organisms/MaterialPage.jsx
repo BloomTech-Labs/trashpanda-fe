@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 import Badge from "../molecules/Badge";
 import Spinner from "../atoms/Spinner";
 
@@ -52,9 +52,10 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const GET_MATERIAL = gql`
+export const GET_MATERIAL = gql`
   query getMaterial($materialId: Int!) {
     material(id: $materialId) {
+      material_id
       description
       long_description
       bin_trash

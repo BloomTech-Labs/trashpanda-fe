@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import ZipSearchBar from "../molecules/ZipSearchBar";
-
 import { useParams } from "react-router-dom";
+import gql from 'graphql-tag';
+import { useLazyQuery } from "@apollo/react-hooks";
+import styled from "styled-components";
 
+import ZipSearchBar from "../molecules/ZipSearchBar";
 import walkingImage from "../images/walking_graphic.svg";
 import LocationCard from "../molecules/LocationCard";
-import { useLazyQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
 import Spinner from "../atoms/Spinner";
 
-const GET_LOCATIONS = gql`
+export const GET_LOCATIONS = gql`
   query getLocations($material_id: Int, $latitude: Float!, $longitude: Float!) {
     locations(
       latitude: $latitude
@@ -27,7 +26,7 @@ const GET_LOCATIONS = gql`
   }
 `;
 
-const GET_POSTAL = gql`
+export const GET_POSTAL = gql`
   query getPostal($postal_code: String!) {
     postal_code(postal_code: $postal_code, country: "US") {
       postal_code

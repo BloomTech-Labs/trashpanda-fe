@@ -5,6 +5,7 @@
 
 # testing
 /coverage
+testing_notes
 
 # production - note this is different from webpack
 /dist

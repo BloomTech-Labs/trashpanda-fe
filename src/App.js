@@ -5,14 +5,14 @@ import CategoryPage from "./organisms/CategoryPage";
 import { Switch, Route, useHistory } from "react-router-dom";
 import MaterialPage from "./organisms/MaterialPage";
 
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import { useQuery, useMutation, useApolloClient } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
 
-const GET_CATEGORIES = gql`
+export const GET_CATEGORIES = gql`
   query getAllFamilies {
     families {
       material_ids
@@ -23,7 +23,7 @@ const GET_CATEGORIES = gql`
   }
 `;
 
-const GET_MATERIALS = gql`
+export const GET_MATERIALS = gql`
   query getAllMaterials {
     materials {
       description
@@ -70,8 +70,48 @@ const App = () => {
   const [categories, setCategories] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
+  const client = useApolloClient();
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
+  const gps = useQuery(
+    gql`
+      {
+        gps @client {
+          GPS {
+            latitude
+            longitude
+          }
+        }
+      }
+    `
+  );
+
+  // const [addGps, { data }] = useMutation(
+  //   gql`
+  //     mutation SetGps($latitude: Float!, $longitude: Float!) {
+  //       setGps(latitude: $latitude, longitude: $longitude) {
+  //         gps {
+  //           latitude
+  //           longitude
+  //         }
+  //       }
+  //     }
+  //   `
+  // );
+
+  // useEffect(() => {
+  //   if (gps.data) {
+  //     console.log(gps.data);
+  //     addGps({
+  //       variables: {
+  //         latitude: 0.0,
+  //         longitude: 1.1
+  //       }
+  //     });
+  //   } else {
+  //   }
+  //   console.log(gps);
+  // }, []);
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
