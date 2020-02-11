@@ -1,5 +1,5 @@
 import React from "react";
-import MaterialPage, { GET_MATERIAL } from "../MaterialPage";
+import MaterialPage from "../MaterialPage";
 import { MockedProvider } from "@apollo/react-testing";
 import {
   render,
@@ -8,31 +8,7 @@ import {
   getByText
 } from "@testing-library/react";
 
-const mocksQuery = [
-  {
-    request: {
-      query: GET_MATERIAL,
-      variables: {
-        materialId: 1
-      }
-    },
-    result: {
-      data: {
-        material: {
-          material_id: 1,
-          description: "first",
-          long_description: "teh primary",
-          bin_trash: false,
-          bin_recycle: true,
-          bin_compost: true,
-          dropoff: "event",
-          pickup: "no",
-          notes: "The first mocked material"
-        }
-      }
-    }
-  }
-];
+import { mockMaterialQuery } from "./mock_data/mockQueries";
 
 //the second argument of jest.mock must be an inline function
 jest.mock("react-router-dom", () => ({
@@ -68,7 +44,7 @@ describe("MaterialPage", () => {
 
   it("renders MaterialPage and checks for the existence of an element with the text 'Off-Site Recycling'", async () => {
     const page = render(
-      <MockedProvider mocks={mocksQuery} addTypename={false}>
+      <MockedProvider mocks={mockMaterialQuery} addTypename={false}>
         <MaterialPage />
       </MockedProvider>
     );
@@ -78,7 +54,7 @@ describe("MaterialPage", () => {
 
   it("renders MaterialPage and calls an Actual query that checks mock response against mock materials, then checks the page for an element that contains the text that would be rendered if that query was satisfied", async () => {
     const page = render(
-      <MockedProvider mocks={mocksQuery} addTypename={false}>
+      <MockedProvider mocks={mockMaterialQuery} addTypename={false}>
         <MaterialPage />
       </MockedProvider>
     );
