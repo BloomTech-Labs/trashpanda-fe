@@ -42,8 +42,13 @@ function onLocationSuccess(position, setUserLocation, history) {
   history.push("/");
 }
 
-function onLocationError(err) {
-  console.log("Unable to retrieve position, error: ", err);
+function onLocationError(err, history) {
+  if (err.message === "User denied Geolocation") {
+    history.push("/");
+  } else {
+    console.log("Unable to retrieve position, error: ", err);
+    alert("Error: ", err.message);
+  }
 }
 
 function getUserLocation(handleLocation, history) {
@@ -55,7 +60,7 @@ function getUserLocation(handleLocation, history) {
 
   navigator.geolocation.getCurrentPosition(
     position => onLocationSuccess(position, handleLocation, history),
-    onLocationError
+    err => onLocationError(err, history)
   );
 }
 

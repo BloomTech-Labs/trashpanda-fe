@@ -25,11 +25,9 @@ const BadgeTitle = styled.h3`
   width: 135px;
 `;
 
-function getBadgeStyling(marginTop) {
-  return styled.img`
-    margin-top: ${marginTop}px;
-  `;
-}
+const BadgeImage = styled.img`
+  margin-top: ${props => props.marginTop}px;
+`;
 
 function getBadgeTitle(type) {
   if (type === "recycle" || type === "landfill" || type === "compost")
@@ -41,19 +39,15 @@ function getBadgeTitle(type) {
 function getBadgeImage(type) {
   switch (type) {
     case "recycle":
-      const RecycleBadge = getBadgeStyling(85);
-      return <RecycleBadge src={recycleImg} />;
+      return <BadgeImage src={recycleImg} marginTop={85} />;
     case "offsite":
-      const OffsiteBadge = getBadgeStyling(40);
-      return <OffsiteBadge src={offsiteImg} />;
+      return <BadgeImage src={offsiteImg} marginTop={40} />;
     case "landfill":
-      const LandfillBadge = getBadgeStyling(74);
-      return <LandfillBadge src={landfillImg} />;
+      return <BadgeImage src={landfillImg} marginTop={74} />;
     case "compost":
-      const CompostBadge = getBadgeStyling(62);
-      return <CompostBadge src={compostImg} />;
+      return <BadgeImage src={compostImg} marginTop={62} />;
     default:
-      return <OffsiteBadge src={offsiteImg} />;
+      return <BadgeImage src={offsiteImg} marginTop={40} />;
   }
 }
 
