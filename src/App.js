@@ -37,7 +37,10 @@ function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
-function onLocationSuccess(position, setUserLocation, history) {
+function onLocationSuccess(position, setUserLocation, history, cacheGps) {
+  const { latitude, longitude } = position.coords;
+  cacheGps({ variables: { latitude, longitude } });
+  console.log(position.coords);
   setUserLocation(position.coords);
   history.push("/");
 }
@@ -51,7 +54,7 @@ function onLocationError(err, history) {
   }
 }
 
-function getUserLocation(handleLocation, history) {
+function getUserLocation(setLocationState, history, cacheGps) {
   if (!navigator.geolocation) {
     alert("Geolocation is not supported by your browser");
     history.push("/");
@@ -59,7 +62,8 @@ function getUserLocation(handleLocation, history) {
   }
 
   navigator.geolocation.getCurrentPosition(
-    position => onLocationSuccess(position, handleLocation, history),
+    position =>
+      onLocationSuccess(position, setLocationState, history, cacheGps),
     err => onLocationError(err, history)
   );
 }
@@ -69,55 +73,36 @@ const App = () => {
   const [categories, setCategories] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
-  const client = useApolloClient();
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
-  const gps = useQuery(
-    gql`
-      {
-        gps @client {
-          GPS {
-            latitude
-            longitude
-          }
+
+  const UPDATE_GPS = gql`
+    mutation setGps($latitude: Float!, $longitude: Float!) {
+      setGps(latitude: $latitude, longitude: $longitude) @client {
+        GPS {
+          latitude
+          longitude
         }
       }
-    `
-  );
+    }
+  `;
+  const [addgps, { data }] = useMutation(UPDATE_GPS);
 
-  // const [addGps, { data }] = useMutation(
-  //   gql`
-  //     mutation SetGps($latitude: Float!, $longitude: Float!) {
-  //       setGps(latitude: $latitude, longitude: $longitude) {
-  //         gps {
-  //           latitude
-  //           longitude
-  //         }
-  //       }
-  //     }
-  //   `
-  // );
-
-  // useEffect(() => {
-  //   if (gps.data) {
-  //     console.log(gps.data);
-  //     addGps({
-  //       variables: {
-  //         latitude: 0.0,
-  //         longitude: 1.1
-  //       }
-  //     });
-  //   } else {
-  //   }
-  //   console.log(gps);
-  // }, []);
+  useEffect(() => {
+    addgps({
+      variables: {
+        latitude: 0.0,
+        longitude: 1.1
+      }
+    });
+  }, []);
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
     if (isLandingFirstTime()) {
       history.push("/intro");
     } else {
-      getUserLocation(setUserLocation, history);
+      getUserLocation(setUserLocation, history, addgps);
     }
   }, []);
 

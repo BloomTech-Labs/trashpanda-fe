@@ -3,17 +3,16 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import ApolloClient from "apollo-client";
 import { ApolloProvider } from "@apollo/react-hooks";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { createHttpLink } from "apollo-link-http";
+import { InMemoryCache, defaultDataIdFromObject } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
 import gql from "graphql-tag";
 
 import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
-const link = createHttpLink({ uri: "https://trashpanda-be.herokuapp.com" });
+const link = new HttpLink({ uri: "https://trashpanda-be.herokuapp.com" });
 
-// const cache = new InMemoryCache();
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
@@ -22,18 +21,20 @@ const cache = new InMemoryCache({
       case "Family":
         return `Family: ${object.family_id}`;
       case "GPS":
-        return "GPS";
+        return `GPS: ${object.latitude}`;
       case "PostalCode":
         return `PostalCode: ${object.postal_code}`;
       case "Location":
         return `Location: ${object.address}`;
-      default:
-        return defaultDataIdFromObject(object);
+        default: return defaultDataIdFromObject(object);
     }
   }
 });
 
 const typeDefs = gql`
+  extend type Mutation {
+    setGps(latitude: Float!, longitude: Float!): GPS
+  }
   extend type Query {
     gps: GPS
   }
@@ -47,8 +48,24 @@ const typeDefs = gql`
 const resolvers = {
   Mutation: {
     setGps: (_root, { latitude, longitude }, { cache }) => {
-      cache.writeData({ gps: { latitude, longitude } });
-      return null;
+      const query = gql`
+        query coordinates {
+          GPS {
+            latitude
+            longitude
+            __typename
+          }
+        }
+      `;
+
+      const currentGps = cache.readQuery({ query });
+      const data = {
+        GPS: { ...currentGps.GPS, latitude, longitude },
+        //mutations are requesting typename from mutation where none exists. Set top level typename to Mutation to clear warning.
+        __typename: "Mutation" 
+      };
+      cache.writeQuery({ query, data });
+      return data;
     }
   },
   Query: {
@@ -64,7 +81,6 @@ const resolvers = {
           }
         `
       });
-      console.log(queryResult);
       return queryResult;
     }
   }
@@ -79,7 +95,7 @@ const client = new ApolloClient({
 
 cache.writeData({
   data: {
-    gps: {
+    GPS: {
       latitude: 2.2,
       longitude: 3.3,
       __typename: "GPS"
@@ -89,7 +105,6 @@ cache.writeData({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    {/* <div /> */}
     <Router>
       <App />
     </Router>
