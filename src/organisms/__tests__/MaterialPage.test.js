@@ -9,7 +9,7 @@ import {
 } from "@testing-library/react";
 
 import { mockMaterialQuery } from "./mock_data/mockQueries";
-
+//jest.requireMock to require a mock module?
 //the second argument of jest.mock must be an inline function
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
