@@ -5,12 +5,13 @@ import CategoryPage from "./organisms/CategoryPage";
 import { Switch, Route, useHistory } from "react-router-dom";
 import MaterialPage from "./organisms/MaterialPage";
 
-import { useQuery, useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
+import location from "./utils/UserLocation";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -37,58 +38,20 @@ function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
-function getUserLocation(setLocation, history) {
-  if (!navigator.geolocation) {
-    alert("Geolocation is not supported by your browser");
-    history.push("/");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    position => {
-      const { latitude, longitude } = position.coords;
-      setLocation({ variables: { latitude, longitude } });
-      // console.log(position.coords);
-      history.push("/");
-    },
-    err => {
-      if (err.message === "User denied Geolocation") {
-        history.push("/");
-      } else {
-        console.log("Unable to retrieve position, error: ", err);
-        alert("Error: ", err.message);
-      }
-    }
-  );
-}
-
 const App = () => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [materials, setMaterials] = useState([]);
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
-
-  const UPDATE_GPS = gql`
-    mutation setGps($latitude: Float!, $longitude: Float!) {
-      setGps(latitude: $latitude, longitude: $longitude) @client {
-        GPS {
-          latitude
-          longitude
-        }
-      }
-    }
-  `;
-
-  const [setGps, { data }] = useMutation(UPDATE_GPS);
+  const [gpsMutation] = location.gpsMutationHook();
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
     if (isLandingFirstTime()) {
       history.push("/intro");
     } else {
-      setGps({ variables: { latitude: 1, longitude: 2 } });
-      getUserLocation(setGps, history);
+      location.setGpsCache(gpsMutation);
     }
   }, []);
 
@@ -123,10 +86,7 @@ const App = () => {
           <LandingPage />
         </Route>
         <Route exact path="/intro/permission">
-          <PermissionPage
-          // handleLocation={setUserLocation}
-          // getLocation={getUserLocation}
-          />
+          <PermissionPage />
         </Route>
       </Switch>
     </div>

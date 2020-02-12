@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../atoms/Button";
 
 import { useHistory } from "react-router-dom";
+import location from "../utils/UserLocation";
 
 const Container = styled.div`
   margin: 35px 18px;
@@ -41,16 +42,20 @@ const BtnInvertedContainer = styled.div`
   margin-top: 45px;
 `;
 
-const PermissionPage = ({ getLocation, handleLocation }) => {
+const PermissionPage = () => {
   const history = useHistory();
+  const [gpsMutation] = location.gpsMutationHook();
 
   const handleAccept = () => {
-    localStorage.setItem("firstTime", true);
-    getLocation(handleLocation, history);
+    location.setGpsCache(gpsMutation);
+    //set current location (mutation)
+    //set rejectedPermissions: false
+    // getLocation(handleLocation, history);
+    history.push("/");
   };
 
   const handleReject = () => {
-    localStorage.setItem("firstTime", true);
+    //set rejectedPermissions: true
     history.push("/");
   };
   return (
