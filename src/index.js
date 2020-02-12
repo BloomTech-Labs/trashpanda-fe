@@ -11,6 +11,16 @@ import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
+const GPS_QUERY = gql`
+  query coordinates {
+    GPS {
+      latitude
+      longitude
+      __typename
+    }
+  }
+`;
+
 const link = new HttpLink({ uri: "https://trashpanda-be.herokuapp.com" });
 
 const cache = new InMemoryCache({
@@ -26,7 +36,8 @@ const cache = new InMemoryCache({
         return `PostalCode: ${object.postal_code}`;
       case "Location":
         return `Location: ${object.address}`;
-        default: return defaultDataIdFromObject(object);
+      default:
+        return defaultDataIdFromObject(object);
     }
   }
 });
@@ -48,23 +59,13 @@ const typeDefs = gql`
 const resolvers = {
   Mutation: {
     setGps: (_root, { latitude, longitude }, { cache }) => {
-      const query = gql`
-        query coordinates {
-          GPS {
-            latitude
-            longitude
-            __typename
-          }
-        }
-      `;
-
-      const currentGps = cache.readQuery({ query });
+      const currentGps = cache.readQuery({ query: GPS_QUERY });
       const data = {
         GPS: { ...currentGps.GPS, latitude, longitude },
         //mutations are requesting typename from mutation where none exists. Set top level typename to Mutation to clear warning.
-        __typename: "Mutation" 
+        __typename: "Mutation"
       };
-      cache.writeQuery({ query, data });
+      cache.writeQuery({ query: GPS_QUERY, data });
       return data;
     }
   },
@@ -93,11 +94,13 @@ const client = new ApolloClient({
   resolvers
 });
 
-cache.writeData({
+//add placeholder for GPS data
+cache.writeQuery({
+  query: GPS_QUERY,
   data: {
     GPS: {
-      latitude: 2.2,
-      longitude: 3.3,
+      latitude: 0,
+      longitude: 0,
       __typename: "GPS"
     }
   }
