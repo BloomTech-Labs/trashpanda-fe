@@ -11,6 +11,7 @@ import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
+import TutorialPage from "./organisms/TutorialPage";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -114,11 +115,12 @@ const App = () => {
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
-    if (isLandingFirstTime()) {
-      history.push("/intro");
-    } else {
-      getUserLocation(setUserLocation, history);
-    }
+    history.push("/intro");
+    // if (isLandingFirstTime()) {
+    //   history.push("/intro");
+    // } else {
+    //   getUserLocation(setUserLocation, history);
+    // }
   }, []);
 
   useEffect(() => {
@@ -149,7 +151,8 @@ const App = () => {
           <BottomNav />
         </Route>
         <Route exact path="/intro">
-          <LandingPage />
+          {/* <LandingPage /> */}
+          <TutorialPage />
         </Route>
         <Route exact path="/intro/permission">
           <PermissionPage
