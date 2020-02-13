@@ -11,6 +11,7 @@ import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
+import CameraPage from "./organisms/CameraPage";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -156,6 +157,9 @@ const App = () => {
             handleLocation={setUserLocation}
             getLocation={getUserLocation}
           />
+        </Route>
+        <Route exact path="/camera">
+          <CameraPage />
         </Route>
       </Switch>
     </div>
