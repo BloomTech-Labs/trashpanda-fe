@@ -21,6 +21,15 @@ const GPS_QUERY = gql`
   }
 `;
 
+const PERMISSIONS = gql`
+  query permissions @client {
+    Permission {
+      rejectedPermission
+      __typename
+    }
+  }
+`;
+
 const link = new HttpLink({ uri: "https://trashpanda-be.herokuapp.com" });
 
 const cache = new InMemoryCache({
@@ -36,6 +45,8 @@ const cache = new InMemoryCache({
         return `PostalCode: ${object.postal_code}`;
       case "Location":
         return `Location: ${object.address}`;
+      case "Permission":
+        return `Permission: This is a test`;
       default:
         return defaultDataIdFromObject(object);
     }
@@ -45,14 +56,20 @@ const cache = new InMemoryCache({
 const typeDefs = gql`
   extend type Mutation {
     setGps(latitude: Float!, longitude: Float!): GPS
+    setRejectedPermissions(rejectedPermission: Boolean!): Permission
   }
   extend type Query {
     gps: GPS
+    permissions: Permission
   }
 
   extend type GPS {
     latitude: Float!
     longitude: Float!
+  }
+
+  extend type Permission {
+    rejectedPermission: Boolean!
   }
 `;
 
@@ -67,23 +84,28 @@ const resolvers = {
       };
       cache.writeQuery({ query: GPS_QUERY, data });
       return data;
+    },
+    setRejectedPermissions: (_root, { rejectedPermission }, { cache }) => {
+      const currentPermissions = cache.readQuery({ query: PERMISSIONS });
+      console.log("currentPermissions", currentPermissions);
+      const data = {
+        Permission: { rejectedPermission, __typename: "Permission" },
+        __typename: "Mutation"
+      };
+      console.log("data", data);
+      // cache.writeQuery({ query: PERMISSIONS, data });
+      return data;
     }
   },
   Query: {
-    gps: (_root, __, { cache }) => {
-      const queryResult = cache.readQuery({
-        query: gql`
-          {
-            GPS {
-              latitude
-              longitude
-              __typename
-            }
-          }
-        `
-      });
-      return queryResult;
-    }
+    gps: (_root, __, { cache }) =>
+      cache.readQuery({
+        query: GPS_QUERY
+      }),
+    permissions: (_root, __, { cache }) =>
+      cache.readQuery({
+        query: PERMISSIONS
+      })
   }
 };
 
@@ -102,6 +124,16 @@ cache.writeQuery({
       latitude: 0,
       longitude: 0,
       __typename: "GPS"
+    }
+  }
+});
+
+cache.writeQuery({
+  query: PERMISSIONS,
+  data: {
+    Permission: {
+      rejectedPermission: null,
+      __typename: "Permission"
     }
   }
 });

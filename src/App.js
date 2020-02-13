@@ -34,6 +34,15 @@ export const GET_MATERIALS = gql`
   }
 `;
 
+const PERMISSIONS = gql`
+  query permissions @client {
+    Permission {
+      rejectedPermission
+      __typename
+    }
+  }
+`;
+
 function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
@@ -42,13 +51,18 @@ const App = () => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [materials, setMaterials] = useState([]);
+  const permissions = useQuery(PERMISSIONS);
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
   const [gpsMutation] = location.gpsMutationHook();
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
-    if (isLandingFirstTime()) {
+    console.log(permissions);
+    if (
+      permissions &&
+      permissions.data.Permission.rejectedPermission === null
+    ) {
       history.push("/intro");
     } else {
       location.setGpsCache(gpsMutation);
