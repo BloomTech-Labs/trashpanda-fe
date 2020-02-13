@@ -104,7 +104,7 @@ function renderPage(step) {
   }
 }
 
-const TutorialPage = () => {
+const TutorialPage = ({ getLocation, handleLocation }) => {
   const [step, setStep] = useState(1);
 
   const handleNext = () => {
@@ -114,12 +114,25 @@ const TutorialPage = () => {
         break;
       case 2:
         //Ask for location permission
+        getLocation(
+          handleLocation,
+          () => {
+            setStep(3);
+          },
+          err => {
+            if (err.message === "User denied Geolocation") {
+              setStep(3);
+            } else {
+              console.log("Unable to retrieve position, error: ", err);
+              alert("Error: ", err.message);
+              setStep(3);
+            }
+          }
+        );
         break;
       default:
         setStep(step + 1);
     }
-
-    // setStep(step + 1);
   };
 
   return (

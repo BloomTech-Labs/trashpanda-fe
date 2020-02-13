@@ -38,21 +38,21 @@ function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
-function onLocationSuccess(position, setUserLocation, history) {
+function onLocationSuccess(position, setUserLocation, cb) {
   setUserLocation(position.coords);
-  history.push("/");
+  cb();
 }
 
-function onLocationError(err, history) {
+function onLocationError(err, cb) {
   if (err.message === "User denied Geolocation") {
-    history.push("/");
+    cb();
   } else {
     console.log("Unable to retrieve position, error: ", err);
     alert("Error: ", err.message);
   }
 }
 
-function getUserLocation(handleLocation, history) {
+function getUserLocation(handleLocation, onSuccess, onError) {
   if (!navigator.geolocation) {
     alert("Geolocation is not supported by your browser");
     history.push("/");
@@ -60,8 +60,8 @@ function getUserLocation(handleLocation, history) {
   }
 
   navigator.geolocation.getCurrentPosition(
-    position => onLocationSuccess(position, handleLocation, history),
-    err => onLocationError(err, history)
+    position => onLocationSuccess(position, handleLocation, onSuccess),
+    err => onError(err)
   );
 }
 
@@ -70,7 +70,7 @@ const App = () => {
   const [categories, setCategories] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
-  const client = useApolloClient();
+  const client = useApolloClient(); //Are we not using this anymore?
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
   const gps = useQuery(
@@ -115,12 +115,11 @@ const App = () => {
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
-    history.push("/intro");
-    // if (isLandingFirstTime()) {
-    //   history.push("/intro");
-    // } else {
-    //   getUserLocation(setUserLocation, history);
-    // }
+    if (isLandingFirstTime()) {
+      history.push("/intro");
+    } else {
+      getUserLocation(setUserLocation, history);
+    }
   }, []);
 
   useEffect(() => {
@@ -152,7 +151,10 @@ const App = () => {
         </Route>
         <Route exact path="/intro">
           {/* <LandingPage /> */}
-          <TutorialPage />
+          <TutorialPage
+            getLocation={getUserLocation}
+            handleLocation={setUserLocation}
+          />
         </Route>
         <Route exact path="/intro/permission">
           <PermissionPage
