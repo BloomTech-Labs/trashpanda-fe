@@ -47,7 +47,7 @@ function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
-const App = () => {
+const App = ({ cache }) => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [materials, setMaterials] = useState([]);
@@ -58,7 +58,8 @@ const App = () => {
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
-    console.log(permissions);
+    console.log(permissions.data);
+
     if (
       permissions &&
       permissions.data.Permission.rejectedPermission === null
@@ -67,7 +68,7 @@ const App = () => {
     } else {
       location.setGpsCache(gpsMutation);
     }
-  }, []);
+  }, [permissions]);
 
   useEffect(() => {
     if (cat.data) setCategories(cat.data.families);
