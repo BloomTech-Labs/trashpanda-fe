@@ -84,7 +84,7 @@ const App = ({ cache }) => {
           <BottomNav />
         </Route>
         <Route exact path="/category/:categoryId">
-          <CategoryPage categorylist={categories} materiallist={materials} />
+          <CategoryPage />
           <BottomNav />
         </Route>
         <Route exact path="/material/:materialId">
