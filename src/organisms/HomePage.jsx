@@ -7,11 +7,11 @@ const Container = styled.div`
   margin: 0px 16px;
 `;
 
-const HomePage = ({ categorylist }) => {
+const HomePage = () => {
   return (
     <Container>
       <HomeSearchBar />
-      <CategoryGrid categorylist={categorylist} />
+      <CategoryGrid />
     </Container>
   );
 };

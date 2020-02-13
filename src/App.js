@@ -80,7 +80,7 @@ const App = ({ cache }) => {
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <HomePage categorylist={categories} />
+          <HomePage />
           <BottomNav />
         </Route>
         <Route exact path="/category/:categoryId">
