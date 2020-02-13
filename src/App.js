@@ -58,8 +58,6 @@ const App = ({ cache }) => {
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
-    console.log(permissions.data);
-
     if (
       permissions &&
       permissions.data.Permission.rejectedPermission === null
