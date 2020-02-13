@@ -52,22 +52,6 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-export const GET_MATERIAL = gql`
-  query getMaterial($materialId: Int!) {
-    material(id: $materialId) {
-      material_id
-      description
-      long_description
-      bin_trash
-      bin_recycle
-      bin_compost
-      dropoff
-      pickup
-      notes
-    }
-  }
-`;
-
 const SpinnerContainer = styled.div`
   display: flex;
   align-items: center;
@@ -94,6 +78,22 @@ const LocationButton = styled.button`
   cursor: pointer;
 `;
 
+export const GET_MATERIAL = gql`
+  query getMaterial($materialId: Int!) {
+    material(id: $materialId) {
+      material_id
+      description
+      long_description
+      bin_trash
+      bin_recycle
+      bin_compost
+      dropoff
+      pickup
+      notes
+    }
+  }
+`;
+
 function getTypeString(recycle, compost, landfill) {
   if (recycle) return "recycle";
   if (compost) return "compost";
@@ -101,7 +101,7 @@ function getTypeString(recycle, compost, landfill) {
   return "offsite";
 }
 
-const MaterialPage = ({ materials }) => {
+const MaterialPage = () => {
   const history = useHistory();
   const { materialId } = useParams();
 

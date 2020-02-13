@@ -5,12 +5,13 @@ import CategoryPage from "./organisms/CategoryPage";
 import { Switch, Route, useHistory } from "react-router-dom";
 import MaterialPage from "./organisms/MaterialPage";
 
-import { useQuery, useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
+import location from "./utils/UserLocation";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -33,93 +34,39 @@ export const GET_MATERIALS = gql`
   }
 `;
 
+const PERMISSIONS = gql`
+  query permissions @client {
+    Permission {
+      rejectedPermission
+      __typename
+    }
+  }
+`;
+
 function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
-function onLocationSuccess(position, setUserLocation, history) {
-  setUserLocation(position.coords);
-  history.push("/");
-}
-
-function onLocationError(err, history) {
-  if (err.message === "User denied Geolocation") {
-    history.push("/");
-  } else {
-    console.log("Unable to retrieve position, error: ", err);
-    alert("Error: ", err.message);
-  }
-}
-
-function getUserLocation(handleLocation, history) {
-  if (!navigator.geolocation) {
-    alert("Geolocation is not supported by your browser");
-    history.push("/");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    position => onLocationSuccess(position, handleLocation, history),
-    err => onLocationError(err, history)
-  );
-}
-
-const App = () => {
+const App = ({ cache }) => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [materials, setMaterials] = useState([]);
-  const [userLocation, setUserLocation] = useState(null);
-  const client = useApolloClient();
+  const permissions = useQuery(PERMISSIONS);
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
-  const gps = useQuery(
-    gql`
-      {
-        gps @client {
-          GPS {
-            latitude
-            longitude
-          }
-        }
-      }
-    `
-  );
-
-  // const [addGps, { data }] = useMutation(
-  //   gql`
-  //     mutation SetGps($latitude: Float!, $longitude: Float!) {
-  //       setGps(latitude: $latitude, longitude: $longitude) {
-  //         gps {
-  //           latitude
-  //           longitude
-  //         }
-  //       }
-  //     }
-  //   `
-  // );
-
-  // useEffect(() => {
-  //   if (gps.data) {
-  //     console.log(gps.data);
-  //     addGps({
-  //       variables: {
-  //         latitude: 0.0,
-  //         longitude: 1.1
-  //       }
-  //     });
-  //   } else {
-  //   }
-  //   console.log(gps);
-  // }, []);
+  const [gpsMutation] = location.gpsMutationHook();
 
   //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
-    if (isLandingFirstTime()) {
+    if (
+      permissions &&
+      permissions.data.Permission.rejectedPermission === null
+    ) {
       history.push("/intro");
     } else {
-      getUserLocation(setUserLocation, history);
+      location.setGpsCache(gpsMutation);
     }
-  }, []);
+  }, [permissions]);
 
   useEffect(() => {
     if (cat.data) setCategories(cat.data.families);
@@ -133,11 +80,11 @@ const App = () => {
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <HomePage categorylist={categories} />
+          <HomePage />
           <BottomNav />
         </Route>
         <Route exact path="/category/:categoryId">
-          <CategoryPage categorylist={categories} materiallist={materials} />
+          <CategoryPage />
           <BottomNav />
         </Route>
         <Route exact path="/material/:materialId">
@@ -145,17 +92,14 @@ const App = () => {
           <BottomNav />
         </Route>
         <Route exact path="/material/:materialId/locations">
-          <LocationsPage location={userLocation} />
+          <LocationsPage />
           <BottomNav />
         </Route>
         <Route exact path="/intro">
           <LandingPage />
         </Route>
         <Route exact path="/intro/permission">
-          <PermissionPage
-            handleLocation={setUserLocation}
-            getLocation={getUserLocation}
-          />
+          <PermissionPage />
         </Route>
       </Switch>
     </div>
