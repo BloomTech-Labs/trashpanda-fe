@@ -104,7 +104,7 @@ const CameraPage = () => {
     <div>
       <video
         ref={videoRef}
-        hidden={false}
+        hidden={true}
         // style={{ zIndex: 10000, backgroundColor: "black" }}
         width={originalWidth}
         height={originalHeight}
