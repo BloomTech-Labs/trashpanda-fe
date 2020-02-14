@@ -22,9 +22,10 @@ const CameraPage = () => {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, window.innerHeight, window.innerWidth);
-      drawVid(videoRef.current, ctx, originalWidth, originalHeight);
+      //   drawVid(videoRef.current, ctx, originalWidth, originalHeight);
+      requestAnimationFrame(repeatOften);
     }
-  }, [locations]);
+  }, [handleCanPlay]);
 
   useEffect(() => {
     originalWidth = window.innerWidth;
@@ -66,6 +67,14 @@ const CameraPage = () => {
   //VIDEO PLUS CANVAS
   function drawVid(video, ctx, width, height) {
     ctx.drawImage(video, 0, 0, width, height);
+    // requestAnimationFrame(drawVid);
+  }
+
+  function repeatOften() {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    drawVid(videoRef.current, ctx, originalWidth, originalHeight);
+    requestAnimationFrame(repeatOften);
   }
 
   //You cannot call the drawImage() method before the image has loaded. To ensure that the image has been loaded, you can call drawImage() from window.onload() or from document.getElementById("imageID").onload.
