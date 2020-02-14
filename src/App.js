@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
@@ -47,16 +47,13 @@ function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
-const App = ({ cache }) => {
+const App = () => {
   const history = useHistory();
-  const [categories, setCategories] = useState([]);
-  const [materials, setMaterials] = useState([]);
   const permissions = useQuery(PERMISSIONS);
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
   const [gpsMutation] = location.gpsMutationHook();
 
-  //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
     if (
       permissions &&
@@ -67,14 +64,6 @@ const App = ({ cache }) => {
       location.setGpsCache(gpsMutation);
     }
   }, [permissions]);
-
-  useEffect(() => {
-    if (cat.data) setCategories(cat.data.families);
-  }, [cat.data]);
-
-  useEffect(() => {
-    if (mat.data) setMaterials(mat.data.materials);
-  }, [mat.data]);
 
   return (
     <div className="App">
@@ -88,7 +77,7 @@ const App = ({ cache }) => {
           <BottomNav />
         </Route>
         <Route exact path="/material/:materialId">
-          <MaterialPage materials={materials} />
+          <MaterialPage />
           <BottomNav />
         </Route>
         <Route exact path="/material/:materialId/locations">
