@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 import Button from "../atoms/Button";
 
 import { useHistory } from "react-router-dom";
+import location from "../utils/UserLocation";
 
 const Container = styled.div`
   margin: 35px 18px;
@@ -41,18 +44,35 @@ const BtnInvertedContainer = styled.div`
   margin-top: 45px;
 `;
 
-const PermissionPage = ({ getLocation, handleLocation }) => {
+export const UPDATE_PERMISSIONS = gql`
+  mutation setRejectedPermissions($rejectedPermissions: Boolean!) {
+    setRejectedPermissions(rejectedPermission: $rejectedPermission) @client {
+      Permission {
+        rejectedPermission
+      }
+    }
+  }
+`;
+
+const PermissionPage = () => {
   const history = useHistory();
+  const [gpsMutation] = location.gpsMutationHook();
+  const [setPermissions] = useMutation(UPDATE_PERMISSIONS);
 
   const handleAccept = () => {
-    localStorage.setItem("firstTime", true);
-    getLocation(handleLocation, history);
+    location.setGpsCache(gpsMutation);
+    setPermissions({ variables: { rejectedPermission: false } });
+    //set current location (mutation)
+    //set rejectedPermissions: false
+    // getLocation(handleLocation, history);
+    history.push("/");
   };
 
   const handleReject = () => {
-    localStorage.setItem("firstTime", true);
+    setPermissions({ variables: { rejectedPermission: true } });
     history.push("/");
   };
+
   return (
     <Container>
       <BoldPrompt>

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import GridCard from "../molecules/GridCard";
 import placeholderImg from "../images/category_placeholder.svg";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_CATEGORIES, GET_MATERIALS } from "../App.js";
 
 const Root = styled.div``;
 
@@ -28,38 +30,35 @@ const MaterialGrid = styled.div`
   margin-bottom: 105px;
 `;
 
-const CategoryPage = ({ categorylist, materiallist }) => {
-  const [materials, setMaterials] = useState([]);
+const CategoryPage = () => {
   const { categoryId } = useParams();
   const history = useHistory();
-  const [currentFamily, setCurrentFamily] = useState({ description: "" });
+  const categories = useQuery(GET_CATEGORIES);
+  const materials = useQuery(GET_MATERIALS);
+  const [currentFamily, setCurrentFamily] = useState();
+  const [materialList, setMaterialList] = useState();
 
-  //Find the family(category) with id in params.
   useEffect(() => {
-    if (categorylist.length > 0) {
-      const newFamily = categorylist.find(fam => {
-        return fam.family_id == categoryId;
-      });
-      setCurrentFamily(newFamily);
+    if (categories && categories.data) {
+      const family = categories.data.families.find(
+        family => parseInt(categoryId) === family.family_id
+      );
+      setCurrentFamily(family);
     }
-  }, [categoryId, categorylist]);
 
-  // Then change our list of materials everytime the family(category) changes
-  useEffect(() => {
-    if (currentFamily && currentFamily.material_ids) {
-      if (materiallist && materiallist.length > 0) {
-        const newMaterials = currentFamily.material_ids.map(matId => {
-          return materiallist.find(mat => {
-            return mat.material_id == matId;
-          });
-        });
-
-        //Filter any undefineds (could not find material from the materiallist )
-        const filteredList = newMaterials.filter(mat => mat !== undefined);
-        setMaterials(filteredList);
-      }
+    if (materials && materials.data && currentFamily) {
+      const familyMaterials = materials.data.materials
+        .map(material => {
+          if (
+            currentFamily.material_ids.find(id => material.material_id === id)
+          ) {
+            return material;
+          }
+        })
+        .filter(exists => exists);
+      setMaterialList(familyMaterials);
     }
-  }, [currentFamily]);
+  }, [categories, materials, currentFamily]);
 
   const onClick = materialId => {
     history.push(`/material/${materialId}`);
@@ -67,16 +66,17 @@ const CategoryPage = ({ categorylist, materiallist }) => {
 
   return (
     <Root>
-      <HeaderTitle>{currentFamily.description}</HeaderTitle>
+      {currentFamily && <HeaderTitle>{currentFamily.description}</HeaderTitle>}
       <MaterialGrid>
-        {materials.map((mat, key) => (
-          <GridCard
-            image={placeholderImg}
-            name={mat.description}
-            key={key}
-            onClick={() => onClick(mat.material_id)}
-          />
-        ))}
+        {materialList &&
+          materialList.map((mat, key) => (
+            <GridCard
+              image={placeholderImg}
+              name={mat.description}
+              key={key}
+              onClick={() => onClick(mat.material_id)}
+            />
+          ))}
       </MaterialGrid>
     </Root>
   );
