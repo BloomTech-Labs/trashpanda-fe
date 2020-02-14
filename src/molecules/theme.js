@@ -7,7 +7,8 @@ export const lightTheme = {
   searchBackground: "#FFFFFF",
   searchText: "#737373",
   bottomNav: "#336b68",
-  locationBorder: "#d9d9d9"
+  locationBorder: "#d9d9d9",
+  border: "1px solid #404040"
 };
 
 export const darkTheme = {
@@ -17,5 +18,6 @@ export const darkTheme = {
   searchBackground: "#404040",
   searchText: "#FFFFFF",
   bottomNav: "#404040",
-  locationBorder: "#404040"
+  locationBorder: "#404040",
+  border: "none"
 };

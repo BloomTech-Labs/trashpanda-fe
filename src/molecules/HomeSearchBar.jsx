@@ -16,7 +16,7 @@ const SearchPageContainer = styled.div`
 const SearchContainer = styled.form`
   display: flex;
   align-items: center;
-  border: 0.5px solid #404040;
+  border: ${({ theme }) => theme.border};
   background: ${({ theme }) => theme.searchBackground};
   width: 100%;
   box-sizing: border-box;
@@ -46,7 +46,7 @@ const Img = styled.img`
 `;
 const DropList = styled.ul`
   position: absolute;
-  border: 1px solid black;
+  border: ${({ theme }) => theme.border};
   border-top: none;
   width: inherit;
   list-style-type: none;
