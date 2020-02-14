@@ -6,7 +6,8 @@ export const lightTheme = {
   body: "#FFFFFF",
   searchBackground: "#FFFFFF",
   searchText: "#737373",
-  bottomNav: "#336b68"
+  bottomNav: "#336b68",
+  locationBorder: "#d9d9d9"
 };
 
 export const darkTheme = {
@@ -15,5 +16,6 @@ export const darkTheme = {
   body: "#1b1b1b",
   searchBackground: "#404040",
   searchText: "#FFFFFF",
-  bottomNav: "#404040"
+  bottomNav: "#404040",
+  locationBorder: "#404040"
 };

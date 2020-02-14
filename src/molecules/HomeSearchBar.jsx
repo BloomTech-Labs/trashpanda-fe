@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import lensImg from "../images/lens_dark.svg";
+import lensImg from "../images/lens.svg";
 
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
@@ -25,6 +25,7 @@ const SearchContainer = styled.form`
   height: 36px;
   font-size: 18px;
   margin-top: 20px;
+  color: red;
 `;
 
 const InputField = styled.input`

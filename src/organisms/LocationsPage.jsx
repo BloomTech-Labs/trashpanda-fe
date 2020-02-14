@@ -68,6 +68,7 @@ const Blurb = styled.h2`
   margin: 0;
   margin-top: 10px;
   pading: 0;
+  color: ${({ theme }) => theme.text};
 `;
 const CardsContainer = styled.div`
   margin-bottom: 70px;

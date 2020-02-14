@@ -5,7 +5,7 @@ import searchImage from "../images/lens.svg";
 const Container = styled.div`
   display: flex;
   align-items: center;
-
+  background: ${({ theme }) => theme.searchBackground};
   margin: 31px 16px;
   margin-bottom: 40px;
   height: 40px;
@@ -22,7 +22,8 @@ const Input = styled.input`
 
   border: none;
   outline: none;
-  color: #847d7d;
+  color: ${({ theme }) => theme.text};
+  background: ${({ theme }) => theme.searchBackground};
   line-height: 25px;
   width: 100%;
   margin-right: 10px;
