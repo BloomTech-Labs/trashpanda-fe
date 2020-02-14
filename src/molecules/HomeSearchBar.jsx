@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import lensImg from "../images/lens_dark.svg";
 
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const SearchContainer = styled.form`
   display: flex;
   align-items: center;
   border: 0.5px solid #404040;
-
+  background: ${({ theme }) => theme.searchBackground};
   width: 100%;
   box-sizing: border-box;
   border-radius: ${props =>
@@ -30,7 +30,8 @@ const SearchContainer = styled.form`
 const InputField = styled.input`
   border: none;
   outline: none;
-  color: #847d7d;
+  color: ${({ theme }) => theme.searchText};
+  background: ${({ theme }) => theme.searchBackground};
   font-size: 18px;
   line-height: 25px;
   width: inherit;
@@ -51,12 +52,13 @@ const DropList = styled.ul`
   text-align: none;
   margin: 0;
   padding: 0;
-  background-color: white;
+  background-color: ${({ theme }) => theme.searchBackground};
   box-sizing: border-box;
   border-radius: 0 0 20px 20px;
 `;
 const DropListItem = styled.li`
   margin: 0;
+  color: ${({ theme }) => theme.searchText};
   padding: 10px 0;
   width: 100%;
   margin-left: 9%;
