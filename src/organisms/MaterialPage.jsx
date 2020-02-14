@@ -20,7 +20,7 @@ const LongDescription = styled.p`
   line-height: 23px;
   margin: 0px 28px;
   margin-bottom: 120px;
-  color: #000000;
+  color: ${({ theme }) => theme.titleText};
 `;
 
 const SpecialText = styled.p`
@@ -32,7 +32,7 @@ const SpecialText = styled.p`
   margin-left: 28px;
   margin-right: 28px;
   margin-bottom: 120px;
-  color: #000000;
+  color: ${({ theme }) => theme.titleText};
 `;
 
 const Title = styled.h2`
@@ -40,6 +40,7 @@ const Title = styled.h2`
   font-size: 24px;
   text-align: center;
   line-height: 30px;
+  color: ${({ theme }) => theme.titleText};
 `;
 
 const ButtonContainer = styled.div`
