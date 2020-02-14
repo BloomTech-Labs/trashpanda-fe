@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import lensImg from "../images/lens_dark.svg";
+import lensImg from "../images/lens.svg";
 
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 
@@ -11,13 +11,14 @@ const SearchPageContainer = styled.div`
   z-index: 1;
   align-items: center;
   margin-top: 0;
-  width: 100%;
+  width: 85%;
 `;
 const SearchContainer = styled.form`
   display: flex;
+  flex-direction: start;
   align-items: center;
-  border: 0.5px solid #404040;
-
+  border: ${({ theme }) => theme.border};
+  background: ${({ theme }) => theme.searchBackground};
   width: 100%;
   box-sizing: border-box;
   border-radius: ${props =>
@@ -25,16 +26,21 @@ const SearchContainer = styled.form`
   height: 36px;
   font-size: 18px;
   margin-top: 20px;
+  color: red;
 `;
 
 const InputField = styled.input`
   border: none;
   outline: none;
-  color: #847d7d;
+  color: ${({ theme }) => theme.searchText};
+  background: ${({ theme }) => theme.searchBackground};
   font-size: 18px;
   line-height: 25px;
   width: inherit;
   margin-right: 10px;
+  ::placeholder {
+    color: ${({ theme }) => theme.searchText};
+  }
   /* identical to box height */
 `;
 const Img = styled.img`
@@ -44,19 +50,20 @@ const Img = styled.img`
 `;
 const DropList = styled.ul`
   position: absolute;
-  border: 1px solid black;
+  border: ${({ theme }) => theme.border};
   border-top: none;
-  width: inherit;
+  width: 100%;
   list-style-type: none;
   text-align: none;
   margin: 0;
   padding: 0;
-  background-color: white;
+  background-color: ${({ theme }) => theme.searchBackground};
   box-sizing: border-box;
   border-radius: 0 0 20px 20px;
 `;
 const DropListItem = styled.li`
   margin: 0;
+  color: ${({ theme }) => theme.searchText};
   padding: 10px 0;
   width: 100%;
   margin-left: 9%;
@@ -134,6 +141,7 @@ const HomeSearchBar = () => {
         />
       </SearchContainer>
       {renderFiltered()}
+      {/* <Toggle toggleTheme={toggleTheme} theme={theme} /> */}
     </SearchPageContainer>
   );
 };

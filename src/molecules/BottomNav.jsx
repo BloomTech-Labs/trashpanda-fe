@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 100vw;
   height: 56px;
 
-  background: #336b68;
+  background: ${({ theme }) => theme.bottomNav};
   position: fixed;
   bottom: 0;
 
