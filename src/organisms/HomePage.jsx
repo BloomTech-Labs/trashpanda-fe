@@ -3,14 +3,25 @@ import HomeSearchBar from "../molecules/HomeSearchBar";
 import CategoryGrid from "../molecules/CategoryGrid";
 import styled from "styled-components";
 
+import Toggle from "../molecules/ToggleTheme";
+
 const Container = styled.div`
   margin: 0px 16px;
 `;
 
-const HomePage = () => {
+const TopContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+const HomePage = ({ theme, toggleTheme }) => {
   return (
     <Container>
-      <HomeSearchBar />
+      <TopContainer>
+        <HomeSearchBar />
+        <Toggle theme={theme} toggleTheme={toggleTheme} />
+      </TopContainer>
       <CategoryGrid />
     </Container>
   );

@@ -18,6 +18,6 @@ export const darkTheme = {
   searchBackground: "#404040",
   searchText: "#FFFFFF",
   bottomNav: "#404040",
-  locationBorder: "#404040",
+  locationBorder: "#737373",
   border: "none"
 };

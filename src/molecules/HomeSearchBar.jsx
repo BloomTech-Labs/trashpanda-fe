@@ -11,10 +11,11 @@ const SearchPageContainer = styled.div`
   z-index: 1;
   align-items: center;
   margin-top: 0;
-  width: 100%;
+  width: 85%;
 `;
 const SearchContainer = styled.form`
   display: flex;
+  flex-direction: start;
   align-items: center;
   border: ${({ theme }) => theme.border};
   background: ${({ theme }) => theme.searchBackground};
@@ -37,6 +38,9 @@ const InputField = styled.input`
   line-height: 25px;
   width: inherit;
   margin-right: 10px;
+  ::placeholder {
+    color: ${({ theme }) => theme.searchText};
+  }
   /* identical to box height */
 `;
 const Img = styled.img`
@@ -48,7 +52,7 @@ const DropList = styled.ul`
   position: absolute;
   border: ${({ theme }) => theme.border};
   border-top: none;
-  width: inherit;
+  width: 100%;
   list-style-type: none;
   text-align: none;
   margin: 0;
@@ -137,6 +141,7 @@ const HomeSearchBar = () => {
         />
       </SearchContainer>
       {renderFiltered()}
+      {/* <Toggle toggleTheme={toggleTheme} theme={theme} /> */}
     </SearchPageContainer>
   );
 };

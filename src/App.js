@@ -88,10 +88,11 @@ const App = ({ cache }) => {
     <ThemeProvider theme={themeMode}>
       <div className="App">
         <GlobalStyles />
-        <Toggle toggleTheme={toggleTheme} theme={theme} />
+
         <Switch>
           <Route exact path="/">
-            <HomePage />
+            <HomePage toggleTheme={toggleTheme} theme={theme} />
+
             <BottomNav />
           </Route>
           <Route exact path="/category/:categoryId">
