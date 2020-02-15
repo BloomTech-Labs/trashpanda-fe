@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import BottomNav from "../molecules/BottomNav";
 import { cameraAsyncHook } from "./hooks/CameraAsyncHook";
+import Spinner from "../atoms/Spinner";
+
+///CURRENT ISSUE: Getting TypeError when using back or home button because the canvas element is taken off the DOM but the animation frames are still running, meaning the animation frames are looking for something that is no longer defined
+
 const Root = styled.div``;
 
 const CAPTURE_OPTIONS = {
@@ -10,30 +14,35 @@ const CAPTURE_OPTIONS = {
 };
 
 const CameraPage = () => {
+  //these need to be mutable
   let originalWidth = window.innerWidth;
   let originalHeight = window.innerHeight;
-  //CANVAS
 
+  //////////////////////////////////////////////////CANVAS\\\\\\\\\\\\\\\\\\\\
   const canvasRef = useRef();
-  const [locations, setLocations] = useState([]);
+  const [renewals, setRenewals] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRenewals([1]);
+    }, 5000);
+    return () => clearTimeout(timer);
+  });
 
   useEffect(() => {
     if (canvasRef.current && canvasRef.current.getContext) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, window.innerHeight, window.innerWidth);
-      //   drawVid(videoRef.current, ctx, originalWidth, originalHeight);
       requestAnimationFrame(repeatOften);
     }
-  }, [handleCanPlay]);
+  }); //handleCanPlay was what I originally used to initiate this during development, but we actually want this to be a continual side effect regardless of whether videoRef has current or not.
 
   useEffect(() => {
     originalWidth = window.innerWidth;
-  }, [originalWidth]);
-
-  useEffect(() => {
     originalHeight = window.innerHeight;
-  }, [originalHeight]);
+  }, [originalWidth, originalHeight]);
 
   //to get base64
   function handleImageSave() {
@@ -41,15 +50,15 @@ const CameraPage = () => {
     console.log(dataURL);
   }
 
-  //VIDEO
+  ////////////////////////////////////VIDEO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   const videoRef = useRef();
-  //   const video = videoRef.current;
 
   const videoSrc = cameraAsyncHook(CAPTURE_OPTIONS);
 
   if (videoSrc && videoRef.current && !videoRef.current.srcObject) {
+    // && !videoRef.current.srcObject keeps it from doing an infinite loop, (it is only rerendering if the srcObject has not been set yet)
     videoRef.current.srcObject = videoSrc;
-    console.log(videoRef.current.srcObject);
+    setLoading(false);
   }
 
   function handleCanPlay() {
@@ -59,15 +68,12 @@ const CameraPage = () => {
   if (!videoSrc) {
     return null;
   }
-
   //CAN'T USE srcObject in REACT, Abramov says to use refs and just assign with DOM API directly
-
   // depreciated pattern:   videoSrc = URL.createObjectURL(stream);
 
-  //VIDEO PLUS CANVAS
+  ///////////////////////////////////////////VIDEO PLUS CANVAS\\\\\\\\\\\\\\\\\
   function drawVid(video, ctx, width, height) {
     ctx.drawImage(video, 0, 0, width, height);
-    // requestAnimationFrame(drawVid);
   }
 
   function repeatOften() {
@@ -81,13 +87,13 @@ const CameraPage = () => {
 
   return (
     <Root>
+      {loading ? <Spinner /> : null}
       <video
         ref={videoRef}
         hidden={true}
         width={originalWidth}
         height={originalHeight}
         onCanPlay={handleCanPlay}
-        playsInline
         muted
         autoPlay={true}
         // src={videoSrc}//srcObject expects mediaStream object, not string as src does
@@ -98,10 +104,9 @@ const CameraPage = () => {
         height={originalHeight}
         style={{ zIndex: 10001 }}
         onClick={e => {
-          const newLocation = { x: e.clientX, y: e.clientY };
-          setLocations([...locations, newLocation]);
           handleImageSave();
         }}
+        hidden={loading ? true : false}
       />
       <BottomNav />
     </Root>
