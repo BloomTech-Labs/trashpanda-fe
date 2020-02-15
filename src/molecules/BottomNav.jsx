@@ -70,8 +70,7 @@ const BottomNav = () => {
   const handleCameraBtn = () => {
     history.push(`/camera`);
   };
-  // const CameraButton = getCameraButton(isHome);
-  //removed isHome={isHome} from CameraButton
+
   return (
     <Container>
       <InnerContainer>
