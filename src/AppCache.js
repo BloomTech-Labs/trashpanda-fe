@@ -43,7 +43,6 @@ const AppCache = props => {
       try {
         return cache.originalReadQuery(...args);
       } catch (err) {
-        console.log(err);
         return undefined;
       }
     };

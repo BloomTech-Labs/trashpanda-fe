@@ -24,7 +24,7 @@ const Name = styled.p`
   margin: 0;
   margin-top: 9px;
   padding: 0;
-  color: #737373;
+  color: ${({ theme }) => theme.text};
 
   ${props =>
     props.bold

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
 import { Switch, Route, useHistory } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import MaterialPage from "./organisms/MaterialPage";
 
 import { useQuery } from "@apollo/react-hooks";
@@ -13,6 +14,10 @@ import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
 import CameraPage from "./organisms/CameraPage";
 import location from "./utils/UserLocation";
+import { lightTheme, darkTheme } from "./molecules/theme";
+import Toggle from "./molecules/ToggleTheme";
+import { useDarkMode } from "./molecules/useDarkMode";
+import { GlobalStyles } from "./molecules/global";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -48,16 +53,16 @@ function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
 }
 
-const App = ({ cache }) => {
+const App = () => {
   const history = useHistory();
-  const [categories, setCategories] = useState([]);
-  const [materials, setMaterials] = useState([]);
   const permissions = useQuery(PERMISSIONS);
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
   const [gpsMutation] = location.gpsMutationHook();
+  const [theme, toggleTheme] = useDarkMode();
 
-  //Detect if it's the users first time on the website when we load app.
+  const themeMode = theme === "light" ? lightTheme : darkTheme;
+
   useEffect(() => {
     if (
       permissions &&
@@ -69,44 +74,41 @@ const App = ({ cache }) => {
     }
   }, [permissions]);
 
-  useEffect(() => {
-    if (cat.data) setCategories(cat.data.families);
-  }, [cat.data]);
-
-  useEffect(() => {
-    if (mat.data) setMaterials(mat.data.materials);
-  }, [mat.data]);
-
   return (
-    <div className="App">
-      <Switch>
-        <Route exact path="/">
-          <HomePage />
-          <BottomNav />
-        </Route>
-        <Route exact path="/category/:categoryId">
-          <CategoryPage />
-          <BottomNav />
-        </Route>
-        <Route exact path="/material/:materialId">
-          <MaterialPage materials={materials} />
-          <BottomNav />
-        </Route>
-        <Route exact path="/material/:materialId/locations">
-          <LocationsPage />
-          <BottomNav />
-        </Route>
-        <Route exact path="/intro">
-          <LandingPage />
-        </Route>
-        <Route exact path="/intro/permission">
-          <PermissionPage />
-        </Route>
-        <Route exact path="/camera">
-          <CameraPage />
-        </Route>
-      </Switch>
-    </div>
+    <ThemeProvider theme={themeMode}>
+      <div className="App">
+        <GlobalStyles />
+
+        <Switch>
+          <Route exact path="/">
+            <HomePage toggleTheme={toggleTheme} theme={theme} />
+
+            <BottomNav />
+          </Route>
+          <Route exact path="/category/:categoryId">
+            <CategoryPage />
+            <BottomNav />
+          </Route>
+          <Route exact path="/material/:materialId">
+            <MaterialPage />
+            <BottomNav />
+          </Route>
+          <Route exact path="/material/:materialId/locations">
+            <LocationsPage />
+            <BottomNav />
+          </Route>
+          <Route exact path="/intro">
+            <LandingPage />
+          </Route>
+          <Route exact path="/intro/permission">
+            <PermissionPage />
+          </Route>
+          <Route exact path="/camera">
+            <CameraPage />
+          </Route>
+        </Switch>
+      </div>
+    </ThemeProvider>
   );
 };
 

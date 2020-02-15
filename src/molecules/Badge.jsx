@@ -14,7 +14,7 @@ const Container = styled.div`
 `;
 
 const BadgeTitle = styled.h3`
-  color: #404040;
+  color: ${({ theme }) => theme.text};
   font-weight: bold;
   font-size: 24px;
   line-height: 30px;

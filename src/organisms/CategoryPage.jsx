@@ -16,7 +16,7 @@ const HeaderTitle = styled.h2`
   line-height: 30px;
   text-align: center;
 
-  color: #000000;
+  color: ${({ theme }) => theme.titleText};
 
   margin: 20px 0px 39px 0px;
   padding: 0;

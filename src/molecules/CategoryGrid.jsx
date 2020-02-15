@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -15,17 +15,16 @@ const GridContainer = styled.div`
   margin-bottom: 100px;
 `;
 
-const CategoryGrid = ({ categorylist }) => {
+const CategoryGrid = () => {
   const history = useHistory();
   const categories = useQuery(GET_CATEGORIES);
 
   const handleCategoryClick = id => {
     history.push(`/category/${id}`);
   };
-
   return (
     <>
-      {categories && (
+      {categories && !categories.loading && (
         <GridContainer>
           {categories.data.families.map((category, key) => (
             <GridCard
