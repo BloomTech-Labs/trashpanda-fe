@@ -153,12 +153,8 @@ export const TutorialPage = ({ theme }) => {
     switch (step) {
       case 3:
         getCamera(
-          () => {
-            history.push("/");
-          },
-          () => {
-            history.push("/");
-          }
+          () => history.push("/"),
+          () => history.push("/")
         );
         break;
       case 2:
