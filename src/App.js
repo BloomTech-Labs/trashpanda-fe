@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
 import { Switch, Route, useHistory } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import MaterialPage from "./organisms/MaterialPage";
 
-import { useQuery, useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
-import TutorialPage from "./organisms/TutorialPage";
+import location from "./utils/UserLocation";
+import { lightTheme, darkTheme } from "./molecules/theme";
+import Toggle from "./molecules/ToggleTheme";
+import { useDarkMode } from "./molecules/useDarkMode";
+import { GlobalStyles } from "./molecules/global";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -34,35 +39,17 @@ export const GET_MATERIALS = gql`
   }
 `;
 
+const PERMISSIONS = gql`
+  query permissions @client {
+    Permission {
+      rejectedPermission
+      __typename
+    }
+  }
+`;
+
 function isLandingFirstTime() {
   return !localStorage.getItem("firstTime");
-}
-
-function onLocationSuccess(position, setUserLocation, cb) {
-  setUserLocation(position.coords);
-  cb();
-}
-
-function onLocationError(err, cb) {
-  if (err.message === "User denied Geolocation") {
-    cb();
-  } else {
-    console.log("Unable to retrieve position, error: ", err);
-    alert("Error: ", err.message);
-  }
-}
-
-function getUserLocation(handleLocation, onSuccess, onError) {
-  if (!navigator.geolocation) {
-    alert("Geolocation is not supported by your browser");
-    history.push("/");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    position => onLocationSuccess(position, handleLocation, onSuccess),
-    err => onError(err)
-  );
 }
 
 function getUserCamera(handle, onSuccess, onError) {
@@ -88,103 +75,57 @@ function getUserCamera(handle, onSuccess, onError) {
 
 const App = () => {
   const history = useHistory();
-  const [categories, setCategories] = useState([]);
-  const [materials, setMaterials] = useState([]);
-  const [userLocation, setUserLocation] = useState(null);
-  const client = useApolloClient(); //Are we not using this anymore?
+  const permissions = useQuery(PERMISSIONS);
   const cat = useQuery(GET_CATEGORIES);
   const mat = useQuery(GET_MATERIALS);
-  const gps = useQuery(
-    gql`
-      {
-        gps @client {
-          GPS {
-            latitude
-            longitude
-          }
-        }
-      }
-    `
-  );
+  const [gpsMutation] = location.gpsMutationHook();
+  const [theme, toggleTheme] = useDarkMode();
 
-  // const [addGps, { data }] = useMutation(
-  //   gql`
-  //     mutation SetGps($latitude: Float!, $longitude: Float!) {
-  //       setGps(latitude: $latitude, longitude: $longitude) {
-  //         gps {
-  //           latitude
-  //           longitude
-  //         }
-  //       }
-  //     }
-  //   `
-  // );
+  const themeMode = theme === "light" ? lightTheme : darkTheme;
 
-  // useEffect(() => {
-  //   if (gps.data) {
-  //     console.log(gps.data);
-  //     addGps({
-  //       variables: {
-  //         latitude: 0.0,
-  //         longitude: 1.1
-  //       }
-  //     });
-  //   } else {
-  //   }
-  //   console.log(gps);
-  // }, []);
-
-  //Detect if it's the users first time on the website when we load app.
   useEffect(() => {
-    if (isLandingFirstTime()) {
+    if (
+      permissions &&
+      permissions.data.Permission.rejectedPermission === null
+    ) {
       history.push("/intro");
     } else {
-      getUserLocation(setUserLocation, history);
+      location.setGpsCache(gpsMutation);
     }
-  }, []);
-
-  useEffect(() => {
-    if (cat.data) setCategories(cat.data.families);
-  }, [cat.data]);
-
-  useEffect(() => {
-    if (mat.data) setMaterials(mat.data.materials);
-  }, [mat.data]);
+  }, [permissions]);
 
   return (
-    <div className="App">
-      <Switch>
-        <Route exact path="/">
-          <HomePage categorylist={categories} />
-          <BottomNav />
-        </Route>
-        <Route exact path="/category/:categoryId">
-          <CategoryPage categorylist={categories} materiallist={materials} />
-          <BottomNav />
-        </Route>
-        <Route exact path="/material/:materialId">
-          <MaterialPage materials={materials} />
-          <BottomNav />
-        </Route>
-        <Route exact path="/material/:materialId/locations">
-          <LocationsPage location={userLocation} />
-          <BottomNav />
-        </Route>
-        <Route exact path="/intro">
-          <TutorialPage
-            getLocation={getUserLocation}
-            getCamera={getUserCamera}
-            handleLocation={setUserLocation}
-          />
-        </Route>
-        <Route exact path="/intro/permission">
-          <PermissionPage
-            handleLocation={setUserLocation}
-            getLocation={getUserLocation}
-          />
-        </Route>
-      </Switch>
-    </div>
+    <ThemeProvider theme={themeMode}>
+      <div className="App">
+        <GlobalStyles />
+
+        <Switch>
+          <Route exact path="/">
+            <HomePage toggleTheme={toggleTheme} theme={theme} />
+
+            <BottomNav />
+          </Route>
+          <Route exact path="/category/:categoryId">
+            <CategoryPage />
+            <BottomNav />
+          </Route>
+          <Route exact path="/material/:materialId">
+            <MaterialPage />
+            <BottomNav />
+          </Route>
+          <Route exact path="/material/:materialId/locations">
+            <LocationsPage />
+            <BottomNav />
+          </Route>
+          <Route exact path="/intro">
+            <LandingPage />
+          </Route>
+          <Route exact path="/intro/permission">
+            <PermissionPage />
+          </Route>
+        </Switch>
+      </div>
+    </ThemeProvider>
   );
 };
 

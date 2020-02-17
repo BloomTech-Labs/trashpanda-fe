@@ -64,7 +64,18 @@ const mockMaterials = [
   }
 ];
 
+const mockUserLocation = {
+  latitude: 36.004,
+  longitude: -45.005,
+  altitude: "Doesn't Matter",
+  accuracy: "Doesn't Matter",
+  altitudeAccuracy: "Doesn't Matter",
+  heading: "Doesn't Matter",
+  speed: "Doesn't Matter"
+};
+
 module.exports = {
   mockCategoryList,
-  mockMaterials
+  mockMaterials,
+  mockUserLocation
 };

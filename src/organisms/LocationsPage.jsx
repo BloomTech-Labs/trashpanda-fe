@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import gql from "graphql-tag";
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 
 import ZipSearchBar from "../molecules/ZipSearchBar";
@@ -44,6 +44,15 @@ export const GET_ZIP = gql`
   }
 `;
 
+export const GET_GPS = gql`
+  query coordinates {
+    GPS {
+      latitude
+      longitude
+    }
+  }
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -59,6 +68,7 @@ const Blurb = styled.h2`
   margin: 0;
   margin-top: 10px;
   pading: 0;
+  color: ${({ theme }) => theme.text};
 `;
 const CardsContainer = styled.div`
   margin-bottom: 70px;
@@ -91,18 +101,19 @@ function renderLocations(locations) {
   );
 }
 
-const LocationsPage = ({ location }) => {
+const LocationsPage = () => {
   const { materialId } = useParams();
   const [zip, setZip] = useState("");
   const [loading, setLoading] = useState(false);
   const [locations, setLocations] = useState([]);
+  const location = useQuery(GET_GPS);
   const [getLocations, locationInfo] = useLazyQuery(GET_LOCATIONS);
   const [getPostal, postalInfo] = useLazyQuery(GET_POSTAL);
   const [getZip, zipInfo] = useLazyQuery(GET_ZIP);
 
   useEffect(() => {
-    if (location) {
-      const { latitude, longitude } = location;
+    if (location && location.data) {
+      const { latitude, longitude } = location.data.GPS;
       //Set zip code field to contain current users zip code location
       getZip({
         variables: {

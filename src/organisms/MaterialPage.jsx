@@ -20,7 +20,7 @@ const LongDescription = styled.p`
   line-height: 23px;
   margin: 0px 28px;
   margin-bottom: 120px;
-  color: #000000;
+  color: ${({ theme }) => theme.titleText};
 `;
 
 const SpecialText = styled.p`
@@ -32,7 +32,7 @@ const SpecialText = styled.p`
   margin-left: 28px;
   margin-right: 28px;
   margin-bottom: 120px;
-  color: #000000;
+  color: ${({ theme }) => theme.titleText};
 `;
 
 const Title = styled.h2`
@@ -40,6 +40,7 @@ const Title = styled.h2`
   font-size: 24px;
   text-align: center;
   line-height: 30px;
+  color: ${({ theme }) => theme.titleText};
 `;
 
 const ButtonContainer = styled.div`
@@ -50,22 +51,6 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-`;
-
-export const GET_MATERIAL = gql`
-  query getMaterial($materialId: Int!) {
-    material(id: $materialId) {
-      material_id
-      description
-      long_description
-      bin_trash
-      bin_recycle
-      bin_compost
-      dropoff
-      pickup
-      notes
-    }
-  }
 `;
 
 const SpinnerContainer = styled.div`
@@ -94,6 +79,22 @@ const LocationButton = styled.button`
   cursor: pointer;
 `;
 
+export const GET_MATERIAL = gql`
+  query getMaterial($materialId: Int!) {
+    material(id: $materialId) {
+      material_id
+      description
+      long_description
+      bin_trash
+      bin_recycle
+      bin_compost
+      dropoff
+      pickup
+      notes
+    }
+  }
+`;
+
 function getTypeString(recycle, compost, landfill) {
   if (recycle) return "recycle";
   if (compost) return "compost";
@@ -101,7 +102,7 @@ function getTypeString(recycle, compost, landfill) {
   return "offsite";
 }
 
-const MaterialPage = ({ materials }) => {
+const MaterialPage = () => {
   const history = useHistory();
   const { materialId } = useParams();
 

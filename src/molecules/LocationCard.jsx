@@ -4,9 +4,10 @@ import styled from "styled-components";
 
 const Container = styled.div`
   padding: 8px 12px;
-  border: 0.5px solid #d9d9d9;
+  border: 0.5px solid ${({ theme }) => theme.locationBorder};
   box-sizing: border-box;
   border-radius: 5px;
+  background: ${({ theme }) => theme.searchBackground};
 
   margin-bottom: 30px;
   margin-left: 16px;
@@ -18,7 +19,7 @@ const Title = styled.h2`
   font-style: normal;
   font-weight: bold;
   font-size: 15px;
-  color: #404040;
+  color: ${({ theme }) => theme.text};
 
   text-decoration-line: underline;
   margin: 0;
@@ -26,7 +27,7 @@ const Title = styled.h2`
 `;
 
 const PText = styled.p`
-  color: #404040;
+  color: ${({ theme }) => theme.text};
   font-family: Muli;
   font-style: normal;
   font-weight: normal;

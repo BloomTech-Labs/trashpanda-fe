@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import GridCard from "./GridCard";
 import placeholderImg from "../images/category_placeholder.svg";
+import { GET_CATEGORIES } from "../App.js";
 
 const GridContainer = styled.div`
   display: grid;
@@ -13,24 +15,28 @@ const GridContainer = styled.div`
   margin-bottom: 100px;
 `;
 
-const CategoryGrid = ({ categorylist }) => {
+const CategoryGrid = () => {
   const history = useHistory();
+  const categories = useQuery(GET_CATEGORIES);
 
   const handleCategoryClick = id => {
     history.push(`/category/${id}`);
   };
-
   return (
-    <GridContainer>
-      {categorylist.map((category, key) => (
-        <GridCard
-          image={placeholderImg}
-          name={category.description}
-          key={key}
-          onClick={() => handleCategoryClick(category.family_id)}
-        />
-      ))}
-    </GridContainer>
+    <>
+      {categories && !categories.loading && (
+        <GridContainer>
+          {categories.data.families.map((category, key) => (
+            <GridCard
+              image={placeholderImg}
+              name={category.description}
+              key={key}
+              onClick={() => handleCategoryClick(category.family_id)}
+            />
+          ))}
+        </GridContainer>
+      )}
+    </>
   );
 };
 
