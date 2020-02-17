@@ -104,13 +104,14 @@ function renderPage(step) {
   }
 }
 
-const TutorialPage = ({ getLocation, handleLocation }) => {
+const TutorialPage = ({ getLocation, handleLocation, getCamera }) => {
   const [step, setStep] = useState(1);
 
   const handleNext = () => {
     switch (step) {
       case 3:
         //Ask for camera permission
+        getCamera();
         break;
       case 2:
         //Ask for location permission

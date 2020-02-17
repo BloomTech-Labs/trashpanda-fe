@@ -65,6 +65,27 @@ function getUserLocation(handleLocation, onSuccess, onError) {
   );
 }
 
+function getUserCamera(handle, onSuccess, onError) {
+  const constraints = (window.constraints = {
+    audio: false,
+    video: true
+  });
+
+  if (navigator.mediaDevices) {
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then(stream => {
+        onSuccess();
+      })
+      .catch(err => {
+        onError(err);
+      });
+  } else {
+    console.log("Browser does not support media devices API");
+    alert("Your browser does not support the use of media");
+  }
+}
+
 const App = () => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
@@ -150,9 +171,9 @@ const App = () => {
           <BottomNav />
         </Route>
         <Route exact path="/intro">
-          {/* <LandingPage /> */}
           <TutorialPage
             getLocation={getUserLocation}
+            getCamera={getUserCamera}
             handleLocation={setUserLocation}
           />
         </Route>
