@@ -6,7 +6,7 @@ const Sphere = styled.div`
   ${props =>
     props.selected
       ? `background: #336b68`
-      : `background: rgba(51, 107, 104, 0.2)`};
+      : `background: ${props.theme.stepperColor}`};
   width: 10px;
   height: 10px;
   border-radius: 50px;

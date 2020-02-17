@@ -11,6 +11,7 @@ import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
+import TutorialPage from "./organisms/TutorialPage";
 import PermissionPage from "./organisms/PermissionPage";
 import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
@@ -81,7 +82,7 @@ const App = () => {
   const [gpsMutation] = location.gpsMutationHook();
   const [theme, toggleTheme] = useDarkMode();
 
-  const themeMode = theme === "light" ? lightTheme : darkTheme;
+  const themeMode = theme !== "light" ? lightTheme : darkTheme;
 
   useEffect(() => {
     if (
@@ -118,7 +119,7 @@ const App = () => {
             <BottomNav />
           </Route>
           <Route exact path="/intro">
-            <LandingPage />
+            <TutorialPage />
           </Route>
           <Route exact path="/intro/permission">
             <PermissionPage />

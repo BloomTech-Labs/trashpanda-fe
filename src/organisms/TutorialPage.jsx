@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { withTheme } from "styled-components";
 import Stepper from "../molecules/Stepper";
 import styled from "styled-components";
 import Button from "../atoms/Button";
 
-import trashManImg from "../images/trash_man.svg";
 import photoImg from "../images/photo_illustration.svg";
 import locationImg from "../images/location_illustration.svg";
 
@@ -13,6 +13,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  background-color: ${({ theme }) => theme.body};
 `;
 
 const Title = styled.h2`
@@ -21,7 +23,7 @@ const Title = styled.h2`
   font-weight: bold;
   text-align: center;
   font-size: 28px;
-  color: #404040;
+  color: ${({ theme }) => theme.text};
 
   margin-top: 20px;
   margin-bottom: 25px;
@@ -35,7 +37,7 @@ const SubTitle = styled.h3`
   line-height: 25px;
   text-align: center;
 
-  color: #404040;
+  color: ${({ theme }) => theme.text};
   margin-top: 30px;
   margin-bottom: 11px;
   margin-left: 30px;
@@ -54,7 +56,7 @@ const PText = styled.p`
   line-height: 25px;
   text-align: center;
 
-  color: #404040;
+  color: ${({ theme }) => theme.text};
 
   margin-left: 60px;
   margin-right: 60px;
@@ -69,7 +71,7 @@ const CenterContainer = styled.div`
   justify-content: center;
 `;
 
-function renderPage(step) {
+function renderPage(step, theme) {
   switch (step) {
     case 1:
       return (
@@ -78,7 +80,7 @@ function renderPage(step) {
           <PText marginBottom="60">
             Here to help you create better recycling habits.
           </PText>
-          <Img marginBottom="38" src={trashManImg} />
+          <Img marginBottom="38" src={theme.trashManImg} />
         </CenterContainer>
       );
     case 2:
@@ -104,9 +106,10 @@ function renderPage(step) {
   }
 }
 
-const TutorialPage = ({ getLocation, handleLocation, getCamera }) => {
+const TutorialPage = ({ getLocation, handleLocation, getCamera, theme }) => {
   const [step, setStep] = useState(1);
 
+  console.log("Theme: ", theme);
   const handleNext = () => {
     switch (step) {
       case 3:
@@ -138,7 +141,7 @@ const TutorialPage = ({ getLocation, handleLocation, getCamera }) => {
 
   return (
     <Container>
-      {renderPage(step)}
+      {renderPage(step, theme)}
       <Stepper amount={3} currentStep={step} />
       <Button marginTop="75" marginBottom="70" onClick={handleNext}>
         Next
@@ -147,4 +150,4 @@ const TutorialPage = ({ getLocation, handleLocation, getCamera }) => {
   );
 };
 
-export default TutorialPage;
+export default withTheme(TutorialPage);
