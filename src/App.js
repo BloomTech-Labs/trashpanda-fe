@@ -56,8 +56,6 @@ function isLandingFirstTime() {
 const App = () => {
   const history = useHistory();
   const permissions = useQuery(PERMISSIONS);
-  const cat = useQuery(GET_CATEGORIES);
-  const mat = useQuery(GET_MATERIALS);
   const [gpsMutation] = location.gpsMutationHook();
   const [theme, toggleTheme] = useDarkMode();
 
