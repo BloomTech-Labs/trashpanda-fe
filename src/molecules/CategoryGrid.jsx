@@ -22,13 +22,18 @@ const CategoryGrid = () => {
   const handleCategoryClick = id => {
     history.push(`/category/${id}`);
   };
+  console.log("Categor", categories);
   return (
     <>
       {categories && !categories.loading && (
         <GridContainer>
           {categories.data.families.map((category, key) => (
             <GridCard
-              image={placeholderImg}
+              image={
+                category.image_url.length > 0
+                  ? category.image_url
+                  : placeholderImg
+              }
               name={category.description}
               key={key}
               onClick={() => handleCategoryClick(category.family_id)}

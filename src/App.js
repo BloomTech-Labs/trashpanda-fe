@@ -26,6 +26,7 @@ export const GET_CATEGORIES = gql`
       family_id
       description
       family_type_id
+      image_url
     }
   }
 `;
@@ -36,6 +37,7 @@ export const GET_MATERIALS = gql`
       description
       material_id
       long_description
+      image_url
     }
   }
 `;
@@ -61,7 +63,7 @@ const App = () => {
   const [gpsMutation] = location.gpsMutationHook();
   const [theme, toggleTheme] = useDarkMode();
 
-  const themeMode = theme !== "light" ? lightTheme : darkTheme;
+  const themeMode = theme === "light" ? lightTheme : darkTheme;
 
   useEffect(() => {
     if (

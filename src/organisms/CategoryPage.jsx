@@ -71,7 +71,7 @@ const CategoryPage = () => {
         {materialList &&
           materialList.map((mat, key) => (
             <GridCard
-              image={placeholderImg}
+              image={mat.image_url.length > 0 ? mat.image_url : placeholderImg}
               name={mat.description}
               key={key}
               onClick={() => onClick(mat.material_id)}

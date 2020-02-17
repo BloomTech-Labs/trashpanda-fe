@@ -8,6 +8,8 @@ import location from "../utils/UserLocation";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
+import { useHistory } from "react-router-dom";
+
 import photoImg from "../images/photo_illustration.svg";
 import locationImg from "../images/location_illustration.svg";
 
@@ -136,22 +138,31 @@ function getCamera(handle, onSuccess, onError) {
         onError(err);
       });
   } else {
+    //Media devices api does not support user
     console.log("Browser does not support media devices API");
-    alert("Your browser does not support the use of media");
   }
 }
 
-const TutorialPage = ({ getLocation, handleLocation, theme }) => {
+const TutorialPage = ({ theme }) => {
   const [step, setStep] = useState(1);
+  const history = useHistory();
   const [gpsMutation] = location.gpsMutationHook();
   const [setPermissions] = useMutation(UPDATE_PERMISSIONS);
 
-  console.log("Theme: ", theme);
   const handleNext = () => {
     switch (step) {
       case 3:
         //Ask for camera permission
-        getCamera();
+        getCamera(
+          () => {
+            //User accepted permission
+            history.push("/");
+          },
+          () => {
+            //User rejected permission
+            history.push("/");
+          }
+        );
         break;
       case 2:
         //Ask for location permission
