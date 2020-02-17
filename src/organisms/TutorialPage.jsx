@@ -4,6 +4,10 @@ import Stepper from "../molecules/Stepper";
 import styled from "styled-components";
 import Button from "../atoms/Button";
 
+import location from "../utils/UserLocation";
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+
 import photoImg from "../images/photo_illustration.svg";
 import locationImg from "../images/location_illustration.svg";
 
@@ -71,6 +75,16 @@ const CenterContainer = styled.div`
   justify-content: center;
 `;
 
+export const UPDATE_PERMISSIONS = gql`
+  mutation setRejectedPermissions($rejectedPermissions: Boolean!) {
+    setRejectedPermissions(rejectedPermission: $rejectedPermission) @client {
+      Permission {
+        rejectedPermission
+      }
+    }
+  }
+`;
+
 function renderPage(step, theme) {
   switch (step) {
     case 1:
@@ -106,8 +120,31 @@ function renderPage(step, theme) {
   }
 }
 
-const TutorialPage = ({ getLocation, handleLocation, getCamera, theme }) => {
+function getCamera(handle, onSuccess, onError) {
+  const constraints = (window.constraints = {
+    audio: false,
+    video: true
+  });
+
+  if (navigator.mediaDevices) {
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then(stream => {
+        onSuccess();
+      })
+      .catch(err => {
+        onError(err);
+      });
+  } else {
+    console.log("Browser does not support media devices API");
+    alert("Your browser does not support the use of media");
+  }
+}
+
+const TutorialPage = ({ getLocation, handleLocation, theme }) => {
   const [step, setStep] = useState(1);
+  const [gpsMutation] = location.gpsMutationHook();
+  const [setPermissions] = useMutation(UPDATE_PERMISSIONS);
 
   console.log("Theme: ", theme);
   const handleNext = () => {
@@ -118,19 +155,17 @@ const TutorialPage = ({ getLocation, handleLocation, getCamera, theme }) => {
         break;
       case 2:
         //Ask for location permission
-        getLocation(
-          handleLocation,
+        location.setGpsCache(
+          gpsMutation,
           () => {
+            //Success
+            setPermissions({ variables: { rejectedPermission: false } });
             setStep(3);
           },
-          err => {
-            if (err.message === "User denied Geolocation") {
-              setStep(3);
-            } else {
-              console.log("Unable to retrieve position, error: ", err);
-              alert("Error: ", err.message);
-              setStep(3);
-            }
+          () => {
+            //Error
+            setPermissions({ variables: { rejectedPermission: true } });
+            setStep(3);
           }
         );
         break;
