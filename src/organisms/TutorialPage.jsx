@@ -122,7 +122,7 @@ function renderPage(step, theme) {
   }
 }
 
-function getCamera(handle, onSuccess, onError) {
+function getCamera(onSuccess, onError) {
   const constraints = (window.constraints = {
     audio: false,
     video: true
@@ -132,10 +132,10 @@ function getCamera(handle, onSuccess, onError) {
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(stream => {
-        onSuccess();
+        if (onSuccess) onSuccess();
       })
       .catch(err => {
-        onError(err);
+        if (onError) onError(err);
       });
   } else {
     //Media devices api does not support user
