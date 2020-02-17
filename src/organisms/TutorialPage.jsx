@@ -143,7 +143,7 @@ function getCamera(handle, onSuccess, onError) {
   }
 }
 
-const TutorialPage = ({ theme }) => {
+export const TutorialPage = ({ theme }) => {
   const [step, setStep] = useState(1);
   const history = useHistory();
   const [gpsMutation] = location.gpsMutationHook();

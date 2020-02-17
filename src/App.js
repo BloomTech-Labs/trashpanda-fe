@@ -10,9 +10,7 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
-import LandingPage from "./organisms/LandingPage";
 import TutorialPage from "./organisms/TutorialPage";
-import PermissionPage from "./organisms/PermissionPage";
 import CameraPage from "./organisms/CameraPage";
 import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
@@ -102,9 +100,6 @@ const App = () => {
           </Route>
           <Route exact path="/intro">
             <TutorialPage />
-          </Route>
-          <Route exact path="/intro/permission">
-            <PermissionPage />
           </Route>
           <Route exact path="/camera">
             <CameraPage />
