@@ -62,9 +62,6 @@ const PermissionPage = () => {
   const handleAccept = () => {
     location.setGpsCache(gpsMutation);
     setPermissions({ variables: { rejectedPermission: false } });
-    //set current location (mutation)
-    //set rejectedPermissions: false
-    // getLocation(handleLocation, history);
     history.push("/");
   };
 

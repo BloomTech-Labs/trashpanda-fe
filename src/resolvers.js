@@ -40,38 +40,35 @@ export const typeDefs = gql`
 `;
 
 export const resolvers = {
-    Mutation: {
-      setGps: (_root, { latitude, longitude }, { cache }) => {
-        const currentGps = cache.readQuery({ query: GPS_QUERY });
-        const data = {
-          GPS: { ...currentGps.GPS, latitude, longitude },
-          //mutations are requesting typename from mutation where none exists. Set top level typename to Mutation to clear warning.
-          __typename: "Mutation"
-        };
-        cache.writeQuery({ query: GPS_QUERY, data });
-        return data;
-      },
-      setRejectedPermissions: (_root, { rejectedPermission }, { cache }) => {
-        const currentPermissions = cache.readQuery({ query: PERMISSIONS });
-        console.log("currentPermissions", currentPermissions);
-        const data = {
-          Permission: { rejectedPermission, __typename: "Permission" },
-          __typename: "Mutation"
-        };
-        console.log("data", data);
-        // cache.writeQuery({ query: PERMISSIONS, data });
-        return data;
-      }
+  Mutation: {
+    setGps: (_root, { latitude, longitude }, { cache }) => {
+      const currentGps = cache.readQuery({ query: GPS_QUERY });
+      const data = {
+        GPS: { ...currentGps.GPS, latitude, longitude },
+        //mutations are requesting typename from mutation where none exists. Set top level typename to Mutation to clear warning.
+        __typename: "Mutation"
+      };
+      cache.writeQuery({ query: GPS_QUERY, data });
+      return data;
     },
-    Query: {
-      gps: (_root, __, { cache }) =>
-        cache.readQuery({
-          query: GPS_QUERY
-        }),
-      permissions: (_root, __, { cache }) =>
-        cache.readQuery({
-          query: PERMISSIONS
-        })
+    setRejectedPermissions: (_root, { rejectedPermission }, { cache }) => {
+      const currentPermissions = cache.readQuery({ query: PERMISSIONS });
+      const data = {
+        Permission: { rejectedPermission, __typename: "Permission" },
+        __typename: "Mutation"
+      };
+      cache.writeQuery({ query: PERMISSIONS, data });
+      return data;
     }
-  };
-  
+  },
+  Query: {
+    gps: (_root, __, { cache }) =>
+      cache.readQuery({
+        query: GPS_QUERY
+      }),
+    permissions: (_root, __, { cache }) =>
+      cache.readQuery({
+        query: PERMISSIONS
+      })
+  }
+};
