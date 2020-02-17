@@ -66,11 +66,15 @@ const BottomNav = () => {
   const handleBackClick = () => {
     history.goBack();
   };
-  // const CameraButton = getCameraButton(isHome);
+
+  const handleCameraBtn = () => {
+    history.push(`/camera`);
+  };
+
   return (
     <Container>
       <InnerContainer>
-        <CameraButton isHome={isHome}>
+        <CameraButton onClick={handleCameraBtn}>
           <CameraImage src={cameraImg} alt="camera" />
         </CameraButton>
         {isHome ? null : <Img onClick={handleBackClick} src={arrowImg} />}
