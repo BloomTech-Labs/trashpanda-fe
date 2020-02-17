@@ -12,6 +12,7 @@ import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import LandingPage from "./organisms/LandingPage";
 import PermissionPage from "./organisms/PermissionPage";
+import CameraPage from "./organisms/CameraPage";
 import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
 import Toggle from "./molecules/ToggleTheme";
@@ -101,6 +102,9 @@ const App = () => {
           </Route>
           <Route exact path="/intro/permission">
             <PermissionPage />
+          </Route>
+          <Route exact path="/camera">
+            <CameraPage />
           </Route>
         </Switch>
       </div>
