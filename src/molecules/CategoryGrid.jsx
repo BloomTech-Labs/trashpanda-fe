@@ -22,7 +22,6 @@ const CategoryGrid = () => {
   const handleCategoryClick = id => {
     history.push(`/category/${id}`);
   };
-  console.log("Categor", categories);
   return (
     <>
       {categories && !categories.loading && (

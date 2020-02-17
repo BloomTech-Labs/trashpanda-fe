@@ -152,29 +152,23 @@ export const TutorialPage = ({ theme }) => {
   const handleNext = () => {
     switch (step) {
       case 3:
-        //Ask for camera permission
         getCamera(
           () => {
-            //User accepted permission
             history.push("/");
           },
           () => {
-            //User rejected permission
             history.push("/");
           }
         );
         break;
       case 2:
-        //Ask for location permission
         location.setGpsCache(
           gpsMutation,
           () => {
-            //Success
             setPermissions({ variables: { rejectedPermission: false } });
             setStep(3);
           },
           () => {
-            //Error
             setPermissions({ variables: { rejectedPermission: true } });
             setStep(3);
           }
