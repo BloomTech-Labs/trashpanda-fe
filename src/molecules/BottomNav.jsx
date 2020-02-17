@@ -4,7 +4,7 @@ import arrowImg from "../images/arrow_back.svg";
 import homeImg from "../images/home.svg";
 import { Link, useLocation, useHistory } from "react-router-dom";
 
-import cameraImg from "../images/camera.svg";
+import cameraImg from "../images/camera_center_icon.svg";
 
 const Container = styled.div`
   width: 100vw;
@@ -37,8 +37,8 @@ const InnerContainer = styled.div`
 const CameraButton = styled.button`
   outline: none;
   border: none;
+  background-color: ${({ theme }) => theme.bottomNavCameraPg};
 
-  background: #404040;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 16px;
   border-radius: 100px;
