@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import arrowImg from "../images/arrow_back.svg";
-import homeImg from "../images/home.svg";
+import arrowImg from "../images/back_arrow_lite.svg";
+import homeImg from "../images/home_icon_lite.svg";
 import { Link, useLocation, useHistory } from "react-router-dom";
 
 import cameraImg from "../images/camera_center_icon.svg";
 
 const Container = styled.div`
+  max-width: 575px;
   width: 100vw;
   height: 56px;
 
@@ -15,25 +16,25 @@ const Container = styled.div`
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const BottomBandSquare = styled.div`
-  width: 30vw;
+  flex-grow: 1;
   height: 56px;
 
   background: ${({ theme }) => theme.bottomNav};
-  position: fixed;
+  border: none;
   bottom: 0;
 `;
 
 const BottomBandLeft = styled.div`
-  left: 29vw;
-  width: 21vw;
+  right: 49%;
+  border: none;
+  width: 77px;
   height: 56px;
   clip-path: polygon(
-    -10% 0%,
-    -5% 0%,
+    0% 0%,
     4% 0%,
     21% 1.9%,
     25% 3.6%,
@@ -49,16 +50,17 @@ const BottomBandLeft = styled.div`
     97% 59.5%,
     100% 59.5%,
     100% 100%,
-    1% 100%
+    0% 100%
   );
   background: ${({ theme }) => theme.bottomNav};
-  position: fixed;
   bottom: 0;
+  margin: 0;
 `;
 
 const BottomBandRight = styled.div`
-  right: 29vw;
-  width: 21vw;
+  left: 49%;
+  border: none;
+  width: 77px;
   height: 56px;
   clip-path: polygon(
     -10% 100%,
@@ -81,23 +83,27 @@ const BottomBandRight = styled.div`
     10% 100%
   );
   background: ${({ theme }) => theme.bottomNav};
-  position: fixed;
+  margin: 0;
   bottom: 0;
 `;
 
 const Img = styled.img`
   height: 24px;
-
+  z-index: 4;
+  position: absolute;
+  align-items: center;
   cursor: pointer;
+  padding: 13px;
 `;
 
 const InnerContainer = styled.div`
-  margin: 0px 16px;
+  margin: 0px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   position: relative;
+  max-width: 575px;
 `;
 
 const CameraButton = styled.button`
@@ -140,17 +146,25 @@ const BottomNav = () => {
   return (
     <Container>
       <InnerContainer>
-        <BottomBandSquare style={{ left: 0 }} />
+        <BottomBandSquare />
         <BottomBandLeft />
         <CameraButton onClick={handleCameraBtn}>
           <CameraImage src={cameraImg} alt="camera" />
         </CameraButton>
         <BottomBandRight />
-        <BottomBandSquare style={{ right: 0 }} />
+        <BottomBandSquare />
         {isHome ? null : <Img onClick={handleBackClick} src={arrowImg} />}
 
         {isHome ? null : (
-          <Link to="/">
+          <Link
+            to="/"
+            style={{
+              zIndex: 7,
+              position: "absolute",
+              left: "90%",
+              bottom: "50px"
+            }}
+          >
             <Img src={homeImg} />
           </Link>
         )}
