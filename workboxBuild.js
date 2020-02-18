@@ -4,7 +4,7 @@ const buildSw = () => {
   return workboxBuild
     .injectManifest({
       swSrc: "./src/sw.js",
-      swDest: "./dist/sw.js",
+      swDest: "./dist/__/src/sw.js",
       globDirectory: "dist",
       globPatterns: [
         "**/*.css",
