@@ -3,8 +3,8 @@ const workboxBuild = require("workbox-build");
 const buildSw = () => {
   return workboxBuild
     .injectManifest({
-      swSrc: "./src/sw.js",
-      swDest: "./dist/__/src/sw.js",
+      swSrc: "./public/sw.js",
+      swDest: "./dist/sw.js",
       globDirectory: "dist",
       globPatterns: [
         "**/*.css",
