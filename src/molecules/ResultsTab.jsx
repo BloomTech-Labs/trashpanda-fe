@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../atoms/Button";
+import handle from "../images/results_button.svg";
 
 import { useHistory } from "react-router-dom";
 
-let boxHeight = "250px";
+let boxHeight = "110px";
 
 const Container = styled.div`
     max-width= 575px;
@@ -22,7 +23,7 @@ const ResultsBox = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
   align-items: center;
   border-radius: 15px 15px 0px 0px;
   transition: height 2s;
@@ -30,6 +31,11 @@ const ResultsBox = styled.div`
 //  &:hover {
 //     height: 500px;
 //   }
+
+const ResultHandleImg = styled.img`
+  margin: 10px;
+`;
+
 const ResultsTab = () => {
   const [result, setResult] = useState("");
   const history = useHistory();
@@ -39,14 +45,11 @@ const ResultsTab = () => {
   };
 
   const changeHeight = () => {
-    console.log("boxheight1", boxHeight);
-    if (boxHeight === "250px") {
-      boxHeight = "500px";
-      console.log("boxheight2", boxHeight);
+    if (boxHeight === "110px") {
+      boxHeight = "200px";
       return boxHeight;
-    } else if (boxHeight === "500px") {
-      boxHeight = "250px";
-      console.log("boxheight3", boxHeight);
+    } else if (boxHeight === "200px") {
+      boxHeight = "110px";
       return boxHeight;
     }
   };
@@ -55,22 +58,15 @@ const ResultsTab = () => {
     <Container>
       {result === "" ? (
         <ResultsBox style={{ height: boxHeight }}>
-          <p onClick={changeHeight}>Click me</p>
-
-          <p>No results found</p>
-          <p>1</p>
-          <p>2</p>
-          <p>3</p>
-          <Button>Search</Button>
+          <ResultHandleImg src={handle} onClick={changeHeight} />
+          {boxHeight === "110px" ? null : <p>No results found</p>}
+          {boxHeight === "110px" ? null : <Button>Search</Button>}
         </ResultsBox>
       ) : (
         <ResultsBox style={{ height: boxHeight }}>
-          <p onClick={changeHeight}>Click me</p>
-          <p>Is this an</p>
-          {result}
-          <p>1</p>
-          <p>2</p>
-          <p>3</p>
+          <ResultHandleImg src={handle} onClick={changeHeight} />
+          {boxHeight === "110px" ? null : <p>Is this an</p>}
+          {boxHeight === "110px" ? null : { result }}
         </ResultsBox>
       )}
     </Container>
@@ -78,8 +74,3 @@ const ResultsTab = () => {
 };
 
 export default ResultsTab;
-
-//putting the following under the onClick tag will make it automatically move up and down
-//  {boxHeight === "500px"
-// ? (boxHeight = "250px")
-// : (boxHeight = "500px")}
