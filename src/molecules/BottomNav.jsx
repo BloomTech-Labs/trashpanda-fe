@@ -7,7 +7,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import cameraImg from "../images/camera_center_icon.svg";
 
 const Container = styled.div`
-  max-width: 575px;
+  max-width: 573px;
   width: 100vw;
   height: 56px;
 
@@ -49,6 +49,7 @@ const BottomBandLeft = styled.div`
     93% 59%,
     97% 59.5%,
     100% 59.5%,
+    140% 59.5%,
     100% 100%,
     0% 100%
   );
@@ -64,6 +65,7 @@ const BottomBandRight = styled.div`
   height: 56px;
   clip-path: polygon(
     -10% 100%,
+    -9% 59.5%,
     0% 59.5%,
     3% 59.5%,
     7% 59%,
