@@ -16,15 +16,16 @@ const gpsMutationHook = () => {
   return useMutation(UPDATE_GPS);
 };
 
-const setGpsCache = (hook, cb) => {
+const setGpsCache = (hook, onSuccess, onError) => {
   navigator.geolocation.getCurrentPosition(
     position => {
       const { latitude, longitude } = position.coords;
       hook({ variables: { latitude, longitude } });
+      if (onSuccess) onSuccess(position);
     },
     err => {
-      console.error(err)
-      cb();
+      console.error(err);
+      if (onError) onError(err);
     },
     {
       timeout: 5000

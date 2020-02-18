@@ -141,8 +141,10 @@ const LocationsPage = () => {
   }, [zipInfo]);
 
   useEffect(() => {
+    console.log("Postal info data changed");
     if (postalInfo.called && postalInfo.data) {
       const { longitude, latitude } = postalInfo.data.postal_code;
+      console.log("Calling getlocations from postalInfo use");
       getLocations({
         variables: {
           latitude,
@@ -151,18 +153,32 @@ const LocationsPage = () => {
         }
       });
     }
-  }, [postalInfo.data]);
+  }, [postalInfo]);
+
+  console.log("Postal info", postalInfo);
 
   useEffect(() => {
-    if (locationInfo.called && locationInfo.data) {
+    if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
       setLocations(locationInfo.data.locations);
       setLoading(false);
     }
-  }, [locationInfo.data]);
+  }, [locationInfo.loading, locationInfo.called, locationInfo.data]);
+
+  console.log("Location info", locationInfo);
 
   const handleClick = () => {
+    if (
+      postalInfo.variables &&
+      postalInfo.variables.postal_code &&
+      postalInfo.variables.postal_code === zip
+    ) {
+      alert("Change the damn zip code");
+      return;
+    }
+
     if (validateZip(zip)) {
       setLoading(true);
+      console.log("Searching for ", zip);
       getPostal({
         variables: {
           postal_code: zip

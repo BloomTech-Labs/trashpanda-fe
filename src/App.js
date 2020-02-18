@@ -10,8 +10,7 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
-import LandingPage from "./organisms/LandingPage";
-import PermissionPage from "./organisms/PermissionPage";
+import TutorialPage from "./organisms/TutorialPage";
 import CameraPage from "./organisms/CameraPage";
 import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
@@ -26,6 +25,7 @@ export const GET_CATEGORIES = gql`
       family_id
       description
       family_type_id
+      image_url
     }
   }
 `;
@@ -36,6 +36,7 @@ export const GET_MATERIALS = gql`
       description
       material_id
       long_description
+      image_url
     }
   }
 `;
@@ -96,10 +97,7 @@ const App = () => {
             <BottomNav />
           </Route>
           <Route exact path="/intro">
-            <LandingPage />
-          </Route>
-          <Route exact path="/intro/permission">
-            <PermissionPage />
+            <TutorialPage />
           </Route>
           <Route exact path="/camera">
             <CameraPage />

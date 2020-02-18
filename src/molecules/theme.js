@@ -1,3 +1,6 @@
+import trashManImg from "../images/trash_man.svg";
+import trashManDarkImg from "../images/trash_man_dark.svg";
+
 // themes for light mode and dark mode
 
 export const lightTheme = {
@@ -7,8 +10,11 @@ export const lightTheme = {
   searchBackground: "#FFFFFF",
   searchText: "#737373",
   bottomNav: "#336b68",
+  bottomNavCameraPg: "#404040",
   locationBorder: "#d9d9d9",
-  border: "1px solid #404040"
+  border: "1px solid #404040",
+  stepperColor: "rgba(51, 107, 104, 0.2)",
+  trashManImg
 };
 
 export const darkTheme = {
@@ -18,6 +24,9 @@ export const darkTheme = {
   searchBackground: "#404040",
   searchText: "#FFFFFF",
   bottomNav: "#404040",
+  bottomNavCameraPg: "#336b68",
   locationBorder: "#737373",
-  border: "none"
+  border: "none",
+  stepperColor: "#737373",
+  trashManImg: trashManDarkImg
 };
