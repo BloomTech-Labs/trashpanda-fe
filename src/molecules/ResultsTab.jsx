@@ -4,6 +4,8 @@ import Button from "../atoms/Button";
 
 import { useHistory } from "react-router-dom";
 
+let boxHeight = "250px";
+
 const Container = styled.div`
     max-width= 575px;
     width: 100%;
@@ -23,13 +25,11 @@ const ResultsBox = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 15px 15px 0px 0px;
-  transition: height 4s;
-
-  &:hover {
-    height: 500px;
-  }
+  transition: height 2s;
 `;
-
+//  &:hover {
+//     height: 500px;
+//   }
 const ResultsTab = () => {
   const [result, setResult] = useState("");
   const history = useHistory();
@@ -38,10 +38,25 @@ const ResultsTab = () => {
     history.push(`/`);
   };
 
+  const changeHeight = () => {
+    console.log("boxheight1", boxHeight);
+    if (boxHeight === "250px") {
+      boxHeight = "500px";
+      console.log("boxheight2", boxHeight);
+      return boxHeight;
+    } else if (boxHeight === "500px") {
+      boxHeight = "250px";
+      console.log("boxheight3", boxHeight);
+      return boxHeight;
+    }
+  };
+
   return (
     <Container>
       {result === "" ? (
-        <ResultsBox>
+        <ResultsBox style={{ height: boxHeight }}>
+          <p onClick={changeHeight}>Click me</p>
+
           <p>No results found</p>
           <p>1</p>
           <p>2</p>
@@ -49,7 +64,8 @@ const ResultsTab = () => {
           <Button>Search</Button>
         </ResultsBox>
       ) : (
-        <ResultsBox>
+        <ResultsBox style={{ height: boxHeight }}>
+          <p onClick={changeHeight}>Click me</p>
           <p>Is this an</p>
           {result}
           <p>1</p>
@@ -62,3 +78,8 @@ const ResultsTab = () => {
 };
 
 export default ResultsTab;
+
+//putting the following under the onClick tag will make it automatically move up and down
+//  {boxHeight === "500px"
+// ? (boxHeight = "250px")
+// : (boxHeight = "500px")}
