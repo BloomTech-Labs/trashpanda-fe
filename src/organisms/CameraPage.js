@@ -4,6 +4,8 @@ import BottomNav from "../molecules/BottomNav";
 import { cameraAsyncHook } from "./hooks/CameraAsyncHook";
 import Spinner from "../atoms/Spinner";
 
+import ResultsTab from "../molecules/ResultsTab";
+
 ///CURRENT ISSUE: Getting TypeError when using back or home button because the canvas element is taken off the DOM but the animation frames are still running, meaning the animation frames are looking for something that is no longer defined
 
 const Root = styled.div``;
@@ -108,6 +110,7 @@ const CameraPage = () => {
         }}
         hidden={loading ? true : false}
       />
+      <ResultsTab />
       <BottomNav />
     </Root>
   );
