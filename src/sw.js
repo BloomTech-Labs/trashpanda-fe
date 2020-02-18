@@ -3,9 +3,9 @@ importScripts(
 );
 
 if (workbox) {
-  //   console.log(`Yay! Workbox is loaded 🎉`);
+  console.log(`Yay! Workbox is loaded 🎉`);
 
-  workbox.precaching.precacheAndRoute([]);
+  workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
 } else {
   console.log(`Boo! Workbox didn't load 😬`);
 }
