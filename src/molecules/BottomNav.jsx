@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 const BottomBandSquare = styled.div`
-  width: 40vw;
+  width: 30vw;
   height: 56px;
 
   background: ${({ theme }) => theme.bottomNav};
@@ -28,20 +28,58 @@ const BottomBandSquare = styled.div`
 `;
 
 const BottomBandLeft = styled.div`
-  left: 39vw;
-  width: 11vw;
+  left: 29vw;
+  width: 21vw;
   height: 56px;
-
+  clip-path: polygon(
+    -10% 0%,
+    -5% 0%,
+    4% 0%,
+    21% 1.9%,
+    25% 3.6%,
+    33% 8.95%,
+    42% 18.9%,
+    51% 31.9%,
+    60% 41.6%,
+    69% 49.5%,
+    72% 51.7%,
+    81% 56.5%,
+    88% 58.5%,
+    93% 59%,
+    97% 59.5%,
+    100% 59.5%,
+    100% 100%,
+    1% 100%
+  );
   background: ${({ theme }) => theme.bottomNav};
   position: fixed;
   bottom: 0;
 `;
 
 const BottomBandRight = styled.div`
-  right: 39vw;
-  width: 11vw;
+  right: 29vw;
+  width: 21vw;
   height: 56px;
-
+  clip-path: polygon(
+    -10% 100%,
+    0% 59.5%,
+    3% 59.5%,
+    7% 59%,
+    12% 58.5%,
+    19% 56.5%,
+    28% 51.7%,
+    31% 49.5%,
+    40% 41.6%,
+    49% 31.9%,
+    58% 18.9%,
+    67% 8.95%,
+    75% 3.6%,
+    79% 1.9%,
+    96% 0%,
+    105% 0%,
+    110% 100%,
+    10% 100%
+  );
   background: ${({ theme }) => theme.bottomNav};
   position: fixed;
   bottom: 0;
