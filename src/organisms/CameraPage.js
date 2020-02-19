@@ -6,7 +6,15 @@ import Spinner from "../atoms/Spinner";
 
 ///CURRENT ISSUE: Getting TypeError when using back or home button because the canvas element is taken off the DOM but the animation frames are still running, meaning the animation frames are looking for something that is no longer defined
 
-const Root = styled.div``;
+const Root = styled.div`
+`;
+
+const CenterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const CAPTURE_OPTIONS = {
   audio: false,
@@ -87,7 +95,8 @@ const CameraPage = () => {
 
   return (
     <Root>
-      {loading ? <Spinner /> : null}
+
+      {loading ? <CenterContainer><Spinner /></CenterContainer> : null}
       <video
         ref={videoRef}
         hidden={true}
@@ -96,7 +105,7 @@ const CameraPage = () => {
         onCanPlay={handleCanPlay}
         muted
         autoPlay={true}
-        // src={videoSrc}//srcObject expects mediaStream object, not string as src does
+      // src={videoSrc}//srcObject expects mediaStream object, not string as src does
       />
       <canvas
         ref={canvasRef}
