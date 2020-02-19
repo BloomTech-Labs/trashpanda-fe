@@ -28,7 +28,7 @@ const CameraPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setRenewals([1]);
-    }, 5000);
+    }, 2500);
     return () => clearTimeout(timer);
   });
 
@@ -111,7 +111,6 @@ const CameraPage = () => {
         hidden={loading ? true : false}
       />
       <ResultsTab />
-      <BottomNav />
     </Root>
   );
 };

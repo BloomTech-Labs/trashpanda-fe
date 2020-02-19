@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../atoms/Button";
 import handle from "../images/results_button.svg";
+import chevron_lite from "../images/chevrons_up_lite.svg";
+import chevron_dark from "../images/chevrons_up_dark.svg";
 
 import { useHistory } from "react-router-dom";
 
@@ -36,8 +38,12 @@ const ResultHandleImg = styled.img`
   margin: 10px;
 `;
 
+const ChevronsImg = styled.img`
+  margin: 10px;
+`;
+
 const ResultsTab = () => {
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState("6");
   const history = useHistory();
 
   const handleSearchReturn = () => {
@@ -66,7 +72,8 @@ const ResultsTab = () => {
         <ResultsBox style={{ height: boxHeight }}>
           <ResultHandleImg src={handle} onClick={changeHeight} />
           {boxHeight === "110px" ? null : <p>Is this an</p>}
-          {boxHeight === "110px" ? null : { result }}
+          {boxHeight === "110px" ? null : result}
+          {boxHeight === "110px" ? null : <ChevronsImg src={chevron_lite} />}
         </ResultsBox>
       )}
     </Container>
@@ -74,3 +81,4 @@ const ResultsTab = () => {
 };
 
 export default ResultsTab;
+//src={theme === "light" ? chevron_lite : chevron_dark}
