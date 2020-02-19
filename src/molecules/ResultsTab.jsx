@@ -17,10 +17,10 @@ const Container = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-
 `;
 
 const ResultsBox = styled.div`
+  max-width: 575px;
   width: 98vw;
   background-color: ${({ theme }) => theme.body};
   color: ${({ theme }) => theme.text};
@@ -31,9 +31,6 @@ const ResultsBox = styled.div`
   border-radius: 15px 15px 0px 0px;
   transition: height 2s;
 `;
-//  &:hover {
-//     height: 500px;
-//   }
 
 const ResultHandleImg = styled.img`
   margin: 10px;
@@ -56,8 +53,17 @@ const ResultName = styled.b`
 
 const ResultsTab = () => {
   const [result, setResult] = useState("");
-  const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const [clicks, setClicks] = useState([]);
+  const history = useHistory();
+  const theme = localStorage.getItem("theme");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setClicks([1]);
+    }, 500);
+    return () => clearTimeout(timer);
+  });
 
   const handleSearchReturn = () => {
     history.push(`/`);
@@ -73,8 +79,6 @@ const ResultsTab = () => {
     }
   };
 
-  const theme = localStorage.getItem("theme");
-  console.log(theme);
   return (
     <Container>
       {loading ? (
@@ -116,3 +120,65 @@ const ResultsTab = () => {
 };
 
 export default ResultsTab;
+
+//////////////////SECONDARY\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+// {
+//   !loading ? (
+//     result === "" ? (
+//       boxHeight === "110px" ? (
+//         <ResultsBox style={{ height: boxHeight }}>
+//           <ResultHandleImg src={handle} onClick={changeHeight} />
+//         </ResultsBox>
+//       ) : (
+//         <ResultsBox style={{ height: boxHeight }}>
+//           <ResultHandleImg src={handle} onClick={changeHeight} />
+//           <ResultDefault>No results found</ResultDefault>
+//           <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
+//             Search
+//           </Button>
+//         </ResultsBox>
+//       )
+//     ) : boxHeight === "110px" ? (
+//       <ResultsBox style={{ height: boxHeight }}>
+//         <ResultHandleImg src={handle} onClick={changeHeight} />
+//       </ResultsBox>
+//     ) : (
+//       <ResultsBox style={{ height: boxHeight }}>
+//         <ResultHandleImg src={handle} onClick={changeHeight} />
+//         <ResultDefault>Is this an</ResultDefault>
+//         <ResultName>{result}</ResultName>}
+//         <ChevronsImg src={theme === "light" ? chevron_lite : chevron_dark} />
+//       </ResultsBox>
+//     )
+//   ) : null
+// }
+
+///////////////////////////PRIMARY\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+// {!loading ? (
+//     result === "" ? (
+//       <ResultsBox style={{ height: boxHeight }}>
+//         <ResultHandleImg src={handle} onClick={changeHeight} />
+//         {boxHeight === "110px" ? null : (
+//           <ResultDefault>No results found</ResultDefault>
+//         )}
+//         {boxHeight === "110px" ? null : (
+//           <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
+//             Search
+//           </Button>
+//         )}
+//       </ResultsBox>
+//     ) : (
+//       <ResultsBox style={{ height: boxHeight }}>
+//         <ResultHandleImg src={handle} onClick={changeHeight} />
+//         {boxHeight === "110px" ? null : (
+//           <ResultDefault>Is this an</ResultDefault>
+//         )}
+//         {boxHeight === "110px" ? null : <ResultName>{result}</ResultName>}
+//         {boxHeight === "110px" ? null : (
+//           <ChevronsImg
+//             src={theme === "light" ? chevron_lite : chevron_dark}
+//           />
+//         )}
+//       </ResultsBox>
+//     )
+//   ) : null}

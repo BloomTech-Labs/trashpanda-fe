@@ -8,7 +8,10 @@ import ResultsTab from "../molecules/ResultsTab";
 
 ///CURRENT ISSUE: Getting TypeError when using back or home button because the canvas element is taken off the DOM but the animation frames are still running, meaning the animation frames are looking for something that is no longer defined
 
-const Root = styled.div``;
+const Root = styled.div`
+  max-width: 575px;
+  display: flex;
+`;
 
 const CAPTURE_OPTIONS = {
   audio: false,
@@ -17,8 +20,9 @@ const CAPTURE_OPTIONS = {
 
 const CameraPage = () => {
   //these need to be mutable
-  let originalWidth = window.innerWidth;
-  let originalHeight = window.innerHeight;
+  let originalWidth = window.innerWidth > 575 ? "575px" : window.innerWidth;
+  let originalHeight =
+    window.innerHeight > 1000 ? "1000px" : window.innerHeight;
 
   //////////////////////////////////////////////////CANVAS\\\\\\\\\\\\\\\\\\\\
   const canvasRef = useRef();
@@ -28,7 +32,7 @@ const CameraPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setRenewals([1]);
-    }, 2500);
+    }, 5000);
     return () => clearTimeout(timer);
   });
 
@@ -42,8 +46,8 @@ const CameraPage = () => {
   }); //handleCanPlay was what I originally used to initiate this during development, but we actually want this to be a continual side effect regardless of whether videoRef has current or not.
 
   useEffect(() => {
-    originalWidth = window.innerWidth;
-    originalHeight = window.innerHeight;
+    originalWidth = window.innerWidth > 575 ? "575px" : window.innerWidth;
+    originalHeight = window.innerHeight > 1000 ? "1000px" : window.innerHeight;
   }, [originalWidth, originalHeight]);
 
   //to get base64
@@ -104,7 +108,7 @@ const CameraPage = () => {
         ref={canvasRef}
         width={originalWidth}
         height={originalHeight}
-        style={{ zIndex: 10001 }}
+        // style={{ zIndex: 10001, width: "inherit" }}
         onClick={e => {
           handleImageSave();
         }}
