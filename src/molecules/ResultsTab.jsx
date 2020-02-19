@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../atoms/Button";
@@ -133,64 +134,55 @@ const ResultsTab = () => {
 };
 export default ResultsTab;
 
-//////////////////SECONDARY\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-// {
-//   !loading ? (
-//     result === "" ? (
-//       boxHeight === "110px" ? (
-//         <ResultsBox style={{ height: boxHeight }}>
-//           <ResultHandleImg src={handle} onClick={changeHeight} />
-//         </ResultsBox>
-//       ) : (
-//         <ResultsBox style={{ height: boxHeight }}>
-//           <ResultHandleImg src={handle} onClick={changeHeight} />
-//           <ResultDefault>No results found</ResultDefault>
-//           <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
-//             Search
-//           </Button>
-//         </ResultsBox>
-//       )
-//     ) : boxHeight === "110px" ? (
-//       <ResultsBox style={{ height: boxHeight }}>
-//         <ResultHandleImg src={handle} onClick={changeHeight} />
-//       </ResultsBox>
-//     ) : (
-//       <ResultsBox style={{ height: boxHeight }}>
-//         <ResultHandleImg src={handle} onClick={changeHeight} />
-//         <ResultDefault>Is this an</ResultDefault>
-//         <ResultName>{result}</ResultName>}
-//         <ChevronsImg src={theme === "light" ? chevron_lite : chevron_dark} />
-//       </ResultsBox>
-//     )
-//   ) : null
-// }
+// Maybe a good candidate for replacing what's above. Is only pseudocode,
+// need to actually substitute real data
 
-///////////////////////////PRIMARY\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-// {!loading ? (
-//     result === "" ? (
-//       <ResultsBox style={{ height: boxHeight }}>
-//         <ResultHandleImg src={handle} onClick={changeHeight} />
-//         {boxHeight === "110px" ? null : (
-//           <ResultDefault>No results found</ResultDefault>
-//         )}
-//         {boxHeight === "110px" ? null : (
-//           <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
-//             Search
-//           </Button>
-//         )}
-//       </ResultsBox>
-//     ) : (
-//       <ResultsBox style={{ height: boxHeight }}>
-//         <ResultHandleImg src={handle} onClick={changeHeight} />
-//         {boxHeight === "110px" ? null : (
-//           <ResultDefault>Is this an</ResultDefault>
-//         )}
-//         {boxHeight === "110px" ? null : <ResultName>{result}</ResultName>}
-//         {boxHeight === "110px" ? null : (
+// const ResultBoxText = ({ result }) => {
+//   switch (result) {
+//     case "loading":
+//       return <p>Loading results...</p>;
+//     case "none":
+//       return <p>No results found</p>;
+//     case "found":
+//       return <p>Is this an</p>;
+//     default:
+//       return <p>Error, please supply a result</p>;
+//   }
+// };
+
+// const ResultBox = ({ resultState }) => {
+//     const [getResults, results] = useMutation()
+//     const [loadingState, setLoadingState] = useState();
+
+//     useEffect(() => {
+//         getResults();
+//         if (results.loading) {
+//             setLoadingState("loading")
+//         } else {
+//             if (results.data.materials.length > 0) {
+//             setLoadingState("found");
+//         } else {
+//             setLoadingState("none");
+//         }}
+//     }, [getResults])
+
+//   return (
+//     <>
+//       <ResultHandleImg />
+//       <ResultBoxText result={loadingState} />
+//       {result && loadingState === "found" && (
+//         <>
+//           <ResultName>{result}</ResultName>
 //           <ChevronsImg
 //             src={theme === "light" ? chevron_lite : chevron_dark}
-//           />
-//         )}
-//       </ResultsBox>
-//     )
-//   ) : null}
+//           />{" "}
+//         </>
+//       ) }
+//       {result && loadingState === "none" && (
+//         <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
+//           Search
+//         </Button>
+//       )}
+//     </>
+//   );
+// };
