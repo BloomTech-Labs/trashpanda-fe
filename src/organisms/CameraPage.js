@@ -103,7 +103,7 @@ const CameraPage = () => {
         onCanPlay={handleCanPlay}
         muted
         autoPlay={true}
-        // src={videoSrc}//srcObject expects mediaStream object, not string as src does
+      // src={videoSrc}//srcObject expects mediaStream object, not string as src does
       />
       <canvas
         ref={canvasRef}

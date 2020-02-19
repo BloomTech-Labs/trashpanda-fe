@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "node parcelBundler.js",
+    "startDev": "parcel public/index.html",
     "build": "parcel build public/index.html && node -e \"require('./workboxBuild.js')()\"",
     "test": "jest --watchAll",
     "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
