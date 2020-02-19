@@ -51,6 +51,14 @@ const ResultName = styled.b`
   margin-top: 2vh;
 `;
 
+const CheckBoxHeight = props => {
+  if (boxHeight !== "110px") {
+    return <>{props.children}</>;
+  } else {
+    return <></>;
+  }
+};
+
 const ResultsTab = () => {
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
@@ -58,16 +66,16 @@ const ResultsTab = () => {
   const history = useHistory();
   const theme = localStorage.getItem("theme");
 
+  const handleSearchReturn = () => {
+    history.push(`/`);
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setClicks([1]);
     }, 500);
     return () => clearTimeout(timer);
   });
-
-  const handleSearchReturn = () => {
-    history.push(`/`);
-  };
 
   const changeHeight = () => {
     if (boxHeight === "110px") {
@@ -79,46 +87,50 @@ const ResultsTab = () => {
     }
   };
 
-  return (
-    <Container>
-      {loading ? (
+  // if (result.loading) {
+  if (loading) {
+    return (
+      <Container>
         <ResultsBox>
           <ResultHandleImg src={handle} onClick={changeHeight} />
           <ResultDefault>Loading results...</ResultDefault>
         </ResultsBox>
-      ) : null}
-      {!loading ? (
-        result === "" ? (
+      </Container>
+    );
+  } else {
+    // if (result.data.materials.length === 0) {
+    if (result) {
+      return (
+        <Container>
           <ResultsBox style={{ height: boxHeight }}>
             <ResultHandleImg src={handle} onClick={changeHeight} />
-            {boxHeight === "110px" ? null : (
-              <ResultDefault>No results found</ResultDefault>
-            )}
-            {boxHeight === "110px" ? null : (
-              <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
-                Search
-              </Button>
-            )}
-          </ResultsBox>
-        ) : (
-          <ResultsBox style={{ height: boxHeight }}>
-            <ResultHandleImg src={handle} onClick={changeHeight} />
-            {boxHeight === "110px" ? null : (
+            <CheckBoxHeight>
               <ResultDefault>Is this an</ResultDefault>
-            )}
-            {boxHeight === "110px" ? null : <ResultName>{result}</ResultName>}
-            {boxHeight === "110px" ? null : (
+              <ResultName>{result}</ResultName>
               <ChevronsImg
                 src={theme === "light" ? chevron_lite : chevron_dark}
               />
-            )}
+            </CheckBoxHeight>
           </ResultsBox>
-        )
-      ) : null}
-    </Container>
-  );
+        </Container>
+      );
+    } else {
+      return (
+        <Container>
+          <ResultsBox style={{ height: boxHeight }}>
+            <ResultHandleImg src={handle} onClick={changeHeight} />
+            <CheckBoxHeight>
+              <ResultDefault>No results found</ResultDefault>
+              <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
+                Search
+              </Button>
+            </CheckBoxHeight>
+          </ResultsBox>
+        </Container>
+      );
+    }
+  }
 };
-
 export default ResultsTab;
 
 //////////////////SECONDARY\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
