@@ -4,16 +4,14 @@ import BottomNav from "../molecules/BottomNav";
 import { cameraAsyncHook } from "./hooks/CameraAsyncHook";
 import Spinner from "../atoms/Spinner";
 
+import ResultsTab from "../molecules/ResultsTab";
+
 ///CURRENT ISSUE: Getting TypeError when using back or home button because the canvas element is taken off the DOM but the animation frames are still running, meaning the animation frames are looking for something that is no longer defined
 
 const Root = styled.div`
-`;
-
-const CenterContainer = styled.div`
+  max-width: 575px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
 `;
 
 const CAPTURE_OPTIONS = {
@@ -23,8 +21,9 @@ const CAPTURE_OPTIONS = {
 
 const CameraPage = () => {
   //these need to be mutable
-  let originalWidth = window.innerWidth;
-  let originalHeight = window.innerHeight;
+  let originalWidth = window.innerWidth > 575 ? "575px" : window.innerWidth;
+  let originalHeight =
+    window.innerHeight > 1000 ? "1000px" : window.innerHeight;
 
   //////////////////////////////////////////////////CANVAS\\\\\\\\\\\\\\\\\\\\
   const canvasRef = useRef();
@@ -48,8 +47,8 @@ const CameraPage = () => {
   }); //handleCanPlay was what I originally used to initiate this during development, but we actually want this to be a continual side effect regardless of whether videoRef has current or not.
 
   useEffect(() => {
-    originalWidth = window.innerWidth;
-    originalHeight = window.innerHeight;
+    originalWidth = window.innerWidth > 575 ? "575px" : window.innerWidth;
+    originalHeight = window.innerHeight > 1000 ? "1000px" : window.innerHeight;
   }, [originalWidth, originalHeight]);
 
   //to get base64
@@ -87,7 +86,7 @@ const CameraPage = () => {
   function repeatOften() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    drawVid(videoRef.current, ctx, originalWidth, originalHeight);
+    drawVid(videoRef.current, ctx, window.innerWidth, window.innerHeight);
     requestAnimationFrame(repeatOften);
   }
 
@@ -95,13 +94,12 @@ const CameraPage = () => {
 
   return (
     <Root>
-
-      {loading ? <CenterContainer><Spinner /></CenterContainer> : null}
+      {loading ? <Spinner /> : null}
       <video
         ref={videoRef}
         hidden={true}
-        width={originalWidth}
-        height={originalHeight}
+        width={window.innerWidth}
+        height={window.innerHeight}
         onCanPlay={handleCanPlay}
         muted
         autoPlay={true}
@@ -111,13 +109,13 @@ const CameraPage = () => {
         ref={canvasRef}
         width={originalWidth}
         height={originalHeight}
-        style={{ zIndex: 10001 }}
+        // style={{ zIndex: 10001, width: "inherit" }}
         onClick={e => {
           handleImageSave();
         }}
         hidden={loading ? true : false}
       />
-      <BottomNav />
+      <ResultsTab />
     </Root>
   );
 };
