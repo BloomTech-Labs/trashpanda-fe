@@ -101,6 +101,7 @@ const App = () => {
           </Route>
           <Route exact path="/camera">
             <CameraPage />
+            <BottomNav />
           </Route>
         </Switch>
       </div>
