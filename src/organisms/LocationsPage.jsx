@@ -57,6 +57,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 const Blurb = styled.h2`
@@ -75,8 +76,12 @@ const CardsContainer = styled.div`
 `;
 
 const Img = styled.img`
-  margin-top: 100px;
+
+  margin-top: 108px;
   margin-bottom: 150px;
+
+  // width: 50px;
+  
 `;
 
 function validateZip(zip) {
@@ -97,8 +102,8 @@ function renderLocations(locations) {
       ))}
     </CardsContainer>
   ) : (
-    <Img src={walkingImage} />
-  );
+      <Img src={walkingImage} />
+    );
 }
 
 const LocationsPage = () => {

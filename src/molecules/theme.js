@@ -1,6 +1,24 @@
 import trashManImg from "../images/trash_man.svg";
 import trashManDarkImg from "../images/trash_man_dark.svg";
 
+import offsiteImg from "../images/offsite.svg";
+
+import landfillImg from "../images/landfill.svg";
+import landfillDarkImg from "../images/landfill_dark.svg";
+
+import recycleImg from "../images/recycle.svg";
+import recycleDarkImg from "../images/recycle_dark.svg";
+
+import walkingGraphic from "../images/walking_graphic.svg";
+import walkingGraphicDark from "../images/walking_graphic_dark.svg";
+
+import loadingImg from "../images/loading.svg";
+import loadingDarkImg from "../images/loading_dark.svg";
+
+import compostImg from "../images/compost.svg";
+
+import sadManImg from "../images/sad_man.svg";
+
 // themes for light mode and dark mode
 
 export const lightTheme = {
@@ -14,7 +32,14 @@ export const lightTheme = {
   locationBorder: "#d9d9d9",
   border: "1px solid #404040",
   stepperColor: "rgba(51, 107, 104, 0.2)",
-  trashManImg
+  trashManImg,
+  landfillImg,
+  recycleImg,
+  offsiteImg,
+  compostImg,
+  walkingGraphic,
+  loadingImg,
+  sadManImg,
 };
 
 export const darkTheme = {
@@ -28,5 +53,12 @@ export const darkTheme = {
   locationBorder: "#737373",
   border: "none",
   stepperColor: "#737373",
-  trashManImg: trashManDarkImg
+  trashManImg: trashManDarkImg,
+  landfillImg: landfillDarkImg,
+  recycleImg: recycleDarkImg,
+  offsiteImg,
+  compostImg,
+  walkingGraphic: walkingGraphicDark,
+  loadingImg: loadingDarkImg,
+  sadManImg
 };

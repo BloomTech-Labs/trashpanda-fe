@@ -6,6 +6,9 @@ import recycleImg from "../images/recycle.svg";
 import landfillImg from "../images/landfill.svg";
 import compostImg from "../images/compost.svg";
 
+import { withTheme } from "styled-components";
+
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -36,28 +39,28 @@ function getBadgeTitle(type) {
   return "Off-Site Recycle";
 }
 
-function getBadgeImage(type) {
+function getBadgeImage(type, theme) {
   switch (type) {
     case "recycle":
-      return <BadgeImage src={recycleImg} marginTop={85} />;
+      return <BadgeImage src={theme.recycleImg} marginTop={85} />;
     case "offsite":
-      return <BadgeImage src={offsiteImg} marginTop={40} />;
+      return <BadgeImage src={theme.offsiteImg} marginTop={40} />;
     case "landfill":
-      return <BadgeImage src={landfillImg} marginTop={74} />;
+      return <BadgeImage src={theme.landfillImg} marginTop={74} />;
     case "compost":
-      return <BadgeImage src={compostImg} marginTop={62} />;
+      return <BadgeImage src={theme.compostImg} marginTop={62} />;
     default:
-      return <BadgeImage src={offsiteImg} marginTop={40} />;
+      return <BadgeImage src={theme.offsiteImg} marginTop={40} />;
   }
 }
 
-const Badge = ({ type }) => {
+const Badge = ({ type, theme }) => {
   return (
     <Container>
-      {getBadgeImage(type)}
+      {getBadgeImage(type, theme)}
       <BadgeTitle>{getBadgeTitle(type)}</BadgeTitle>
     </Container>
   );
 };
 
-export default Badge;
+export default withTheme(Badge);
