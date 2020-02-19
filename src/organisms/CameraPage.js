@@ -11,6 +11,7 @@ import ResultsTab from "../molecules/ResultsTab";
 const Root = styled.div`
   max-width: 575px;
   display: flex;
+  justify-content: center;
 `;
 
 const CAPTURE_OPTIONS = {
@@ -85,7 +86,7 @@ const CameraPage = () => {
   function repeatOften() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    drawVid(videoRef.current, ctx, originalWidth, originalHeight);
+    drawVid(videoRef.current, ctx, window.innerWidth, window.innerHeight);
     requestAnimationFrame(repeatOften);
   }
 
@@ -97,8 +98,8 @@ const CameraPage = () => {
       <video
         ref={videoRef}
         hidden={true}
-        width={originalWidth}
-        height={originalHeight}
+        width={window.innerWidth}
+        height={window.innerHeight}
         onCanPlay={handleCanPlay}
         muted
         autoPlay={true}

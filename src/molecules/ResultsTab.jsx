@@ -10,12 +10,12 @@ import { useHistory } from "react-router-dom";
 let boxHeight = "110px";
 
 const Container = styled.div`
-    max-width= 575px;
-    width: 100%;
+    max-width= "575px";
+    width: ${window.innerWidth > 575 ? "567px" : window.innerWidth};
     position:absolute;
     bottom: 0;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 `;
 
