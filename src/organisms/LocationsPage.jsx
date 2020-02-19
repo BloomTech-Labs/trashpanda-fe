@@ -76,12 +76,10 @@ const CardsContainer = styled.div`
 `;
 
 const Img = styled.img`
-
   margin-top: 108px;
   margin-bottom: 150px;
 
   // width: 50px;
-  
 `;
 
 function validateZip(zip) {
@@ -102,8 +100,8 @@ function renderLocations(locations) {
       ))}
     </CardsContainer>
   ) : (
-      <Img src={walkingImage} />
-    );
+    <Img src={walkingImage} />
+  );
 }
 
 const LocationsPage = () => {
@@ -177,7 +175,6 @@ const LocationsPage = () => {
       postalInfo.variables.postal_code &&
       postalInfo.variables.postal_code === zip
     ) {
-      alert("Change the damn zip code");
       return;
     }
 
