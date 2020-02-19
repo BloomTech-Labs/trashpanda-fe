@@ -17,7 +17,6 @@ import { lightTheme, darkTheme } from "./molecules/theme";
 import Toggle from "./molecules/ToggleTheme";
 import { useDarkMode } from "./molecules/useDarkMode";
 import { GlobalStyles } from "./molecules/global";
-import ResultsTab from "./molecules/ResultsTab";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {

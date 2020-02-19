@@ -22,7 +22,8 @@ const Container = styled.div`
 
 const ResultsBox = styled.div`
   width: 98vw;
-  background-color: white;
+  background-color: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   display: flex;
   flex-direction: column;
   justify-content: top;
@@ -42,9 +43,21 @@ const ChevronsImg = styled.img`
   margin: 10px;
 `;
 
+const ResultDefault = styled.b`
+  color: ${({ theme }) => theme.text};
+  margin-top: 3vh;
+`;
+
+const ResultName = styled.b`
+  color: ${({ theme }) => theme.text};
+  font-size: 5vh;
+  margin-top: 2vh;
+`;
+
 const ResultsTab = () => {
-  const [result, setResult] = useState("6");
+  const [result, setResult] = useState("");
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   const handleSearchReturn = () => {
     history.push(`/`);
@@ -52,33 +65,54 @@ const ResultsTab = () => {
 
   const changeHeight = () => {
     if (boxHeight === "110px") {
-      boxHeight = "200px";
+      boxHeight = "500px";
       return boxHeight;
-    } else if (boxHeight === "200px") {
+    } else if (boxHeight === "500px") {
       boxHeight = "110px";
       return boxHeight;
     }
   };
 
+  const theme = localStorage.getItem("theme");
+  console.log(theme);
   return (
     <Container>
-      {result === "" ? (
-        <ResultsBox style={{ height: boxHeight }}>
+      {loading ? (
+        <ResultsBox>
           <ResultHandleImg src={handle} onClick={changeHeight} />
-          {boxHeight === "110px" ? null : <p>No results found</p>}
-          {boxHeight === "110px" ? null : <Button>Search</Button>}
+          <ResultDefault>Loading results...</ResultDefault>
         </ResultsBox>
-      ) : (
-        <ResultsBox style={{ height: boxHeight }}>
-          <ResultHandleImg src={handle} onClick={changeHeight} />
-          {boxHeight === "110px" ? null : <p>Is this an</p>}
-          {boxHeight === "110px" ? null : result}
-          {boxHeight === "110px" ? null : <ChevronsImg src={chevron_lite} />}
-        </ResultsBox>
-      )}
+      ) : null}
+      {!loading ? (
+        result === "" ? (
+          <ResultsBox style={{ height: boxHeight }}>
+            <ResultHandleImg src={handle} onClick={changeHeight} />
+            {boxHeight === "110px" ? null : (
+              <ResultDefault>No results found</ResultDefault>
+            )}
+            {boxHeight === "110px" ? null : (
+              <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
+                Search
+              </Button>
+            )}
+          </ResultsBox>
+        ) : (
+          <ResultsBox style={{ height: boxHeight }}>
+            <ResultHandleImg src={handle} onClick={changeHeight} />
+            {boxHeight === "110px" ? null : (
+              <ResultDefault>Is this an</ResultDefault>
+            )}
+            {boxHeight === "110px" ? null : <ResultName>{result}</ResultName>}
+            {boxHeight === "110px" ? null : (
+              <ChevronsImg
+                src={theme === "light" ? chevron_lite : chevron_dark}
+              />
+            )}
+          </ResultsBox>
+        )
+      ) : null}
     </Container>
   );
 };
 
 export default ResultsTab;
-//src={theme === "light" ? chevron_lite : chevron_dark}
