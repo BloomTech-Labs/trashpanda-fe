@@ -62,6 +62,7 @@ const App = () => {
 
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
+
   useEffect(() => {
     if (
       permissions &&
