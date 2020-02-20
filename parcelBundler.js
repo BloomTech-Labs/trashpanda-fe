@@ -3,11 +3,11 @@ const Path = require("path");
 const buildSw = require("./workboxBuild");
 
 // Single entrypoint file location:
-// const entryFiles = Path.join(__dirname, "./public/index.html");
+const entryFiles = Path.join(__dirname, "./public/index.html");
 // OR: Multiple files with globbing (can also be .js)
 // const entryFiles = './src/*.js';
 // OR: Multiple files in an array
-const entryFiles = [Path.join(__dirname, "./public/index.html"), Path.join(__dirname, './public/_redirects')];
+// const entryFiles = [Path.join(__dirname, "./public/index.html"), Path.join(__dirname, './public/_redirects')];
 
 // Bundler options
 const options = {
