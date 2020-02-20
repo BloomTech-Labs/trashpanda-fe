@@ -12,7 +12,7 @@ const Container = styled.div`
 const TopContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 `;
 
 const HomePage = ({ theme, toggleTheme }) => {

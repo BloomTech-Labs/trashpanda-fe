@@ -8,12 +8,12 @@ import Moon from "../images/darkmode.svg";
 const Img = styled.img`
   height: 25px;
   width: 25px;
-  margin-right: 5px;
 `;
 
 const ToggleContainer = styled.div`
   width: 0px;
   height: 0px;
+  margin-left: 5%;
 `;
 
 const Toggle = ({ theme, toggleTheme }) => {
