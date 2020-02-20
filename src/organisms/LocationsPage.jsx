@@ -8,6 +8,8 @@ import ZipSearchBar from "../molecules/ZipSearchBar";
 import walkingImage from "../images/walking_graphic.svg";
 import LocationCard from "../molecules/LocationCard";
 import Spinner from "../atoms/Spinner";
+import { withTheme } from "styled-components";
+
 
 export const GET_LOCATIONS = gql`
   query getLocations($material_id: Int, $latitude: Float!, $longitude: Float!) {
@@ -84,7 +86,7 @@ function validateZip(zip) {
   return /^\d{5}$/.test(zip);
 }
 
-function renderLocations(locations) {
+function renderLocations(locations, loaded, theme) {
   return locations.length > 0 ? (
     <CardsContainer>
       {locations.map((loc, key) => (
@@ -98,11 +100,12 @@ function renderLocations(locations) {
       ))}
     </CardsContainer>
   ) : (
-    <Img src={walkingImage} />
-  );
+
+      <Img src={loaded ? theme.sadManImg : walkingImage} />
+    );
 }
 
-const LocationsPage = () => {
+const LocationsPage = ({ theme }) => {
   const { materialId } = useParams();
   const [zip, setZip] = useState("");
   const [loading, setLoading] = useState(false);
@@ -202,9 +205,9 @@ const LocationsPage = () => {
         onKeyDown={handleKeyDown}
       />
 
-      {loading ? <Spinner /> : renderLocations(locations)}
+      {loading ? <Spinner /> : renderLocations(locations, locationInfo.called, theme)}
     </Container>
   );
 };
 
-export default LocationsPage;
+export default withTheme(LocationsPage);
