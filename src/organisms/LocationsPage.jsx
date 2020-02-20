@@ -139,7 +139,7 @@ const LocationsPage = () => {
 
   useEffect(() => {
     if (zipInfo.called && zipInfo.data) {
-      setZip(zipInfo.data.getZip.postal_code);
+      setZip(zipInfo.data.getZip.postal_code.slice(0, 5));
     }
   }, [zipInfo]);
 
