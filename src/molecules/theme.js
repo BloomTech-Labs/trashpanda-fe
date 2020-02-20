@@ -1,13 +1,13 @@
 import trashManImg from "../images/trash_man.svg";
 import trashManDarkImg from "../images/trash_man_dark.svg";
 
+//Badge images
 import offsiteImg from "../images/offsite.svg";
-
 import landfillImg from "../images/landfill.svg";
 import landfillDarkImg from "../images/landfill_dark.svg";
-
 import recycleImg from "../images/recycle.svg";
 import recycleDarkImg from "../images/recycle_dark.svg";
+import compostImg from "../images/compost.svg";
 
 import walkingGraphic from "../images/walking_graphic.svg";
 import walkingGraphicDark from "../images/walking_graphic_dark.svg";
@@ -15,9 +15,9 @@ import walkingGraphicDark from "../images/walking_graphic_dark.svg";
 import loadingImg from "../images/loading.svg";
 import loadingDarkImg from "../images/loading_dark.svg";
 
-import compostImg from "../images/compost.svg";
 
 import sadManImg from "../images/sad_man.svg";
+import sadManDarkImg from "../images/sad_man_dark.svg";
 
 // themes for light mode and dark mode
 
@@ -60,5 +60,5 @@ export const darkTheme = {
   compostImg,
   walkingGraphic: walkingGraphicDark,
   loadingImg: loadingDarkImg,
-  sadManImg
+  sadManImg: sadManDarkImg
 };
