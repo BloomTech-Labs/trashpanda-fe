@@ -3,11 +3,11 @@ const Path = require("path");
 const buildSw = require("./workboxBuild");
 
 // Single entrypoint file location:
-const entryFiles = Path.join(__dirname, "./public/index.html");
+// const entryFiles = Path.join(__dirname, "./public/index.html");
 // OR: Multiple files with globbing (can also be .js)
 // const entryFiles = './src/*.js';
 // OR: Multiple files in an array
-// const entryFiles = ['./src/index.html', './some/other/directory/scripts.js'];
+const entryFiles = [Path.join(__dirname, "./public/index.html"), Path.join(__dirname, './public/_redirects')];
 
 // Bundler options
 const options = {
@@ -19,7 +19,7 @@ const options = {
   autoInstall: true // Enable or disable auto install of missing dependencies found during bundling
 };
 
-(async function() {
+(async function () {
   // Initializes a bundler using the entrypoint location and options provided
   const bundler = new Bundler(entryFiles, options);
 
