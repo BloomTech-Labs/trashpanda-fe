@@ -7,7 +7,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import cameraImg from "../images/camera_center_icon.svg";
 
 const Container = styled.div`
-  max-width: 573px;
+  max-width: 575px;
   width: 100vw;
   height: 56px;
 
@@ -96,6 +96,7 @@ const Img = styled.img`
   align-items: center;
   cursor: pointer;
   padding: 13px;
+  margin-right: 100px;
 `;
 
 const InnerContainer = styled.div`
@@ -105,7 +106,7 @@ const InnerContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   position: relative;
-  max-width: 575px;
+  max-width: 573px;
 `;
 
 const CameraButton = styled.button`
@@ -163,8 +164,8 @@ const BottomNav = () => {
             style={{
               zIndex: 7,
               position: "absolute",
-              left: "90%",
-              bottom: "50px"
+              left: "85%",
+              bottom: "53px"
             }}
           >
             <Img src={homeImg} />
