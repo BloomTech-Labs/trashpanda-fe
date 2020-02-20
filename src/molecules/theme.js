@@ -17,6 +17,9 @@ import loadingDarkImg from "../images/loading_dark.svg";
 
 import compostImg from "../images/compost.svg";
 
+import locationIllustrationImg from "../images/location_illustration.svg";
+import locationIllustrationDarkImg from "../images/location_illustration_dark.svg";
+
 import sadManImg from "../images/sad_man.svg";
 
 // themes for light mode and dark mode
@@ -39,6 +42,8 @@ export const lightTheme = {
   compostImg,
   walkingGraphic,
   loadingImg,
+  locationIllustrationImg,
+  locationIllustrationMargin: "32",
   sadManImg,
 };
 
@@ -57,8 +62,11 @@ export const darkTheme = {
   landfillImg: landfillDarkImg,
   recycleImg: recycleDarkImg,
   offsiteImg,
+  locationIllustrationImg: locationIllustrationDarkImg,
   compostImg,
   walkingGraphic: walkingGraphicDark,
+  locationIllustrationMargin: "56",
+
   loadingImg: loadingDarkImg,
   sadManImg
 };
