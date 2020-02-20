@@ -39,14 +39,20 @@ const CategoryPage = () => {
   const [materialList, setMaterialList] = useState();
 
   useEffect(() => {
-    if (categories && categories.data) {
+    // update cache on reload
+    categories.refetch();
+    materials.refetch();
+  }, []);
+
+  useEffect(() => {
+    if (categories && !categories.loading && categories.data) {
       const family = categories.data.families.find(
         family => parseInt(categoryId) === family.family_id
       );
       setCurrentFamily(family);
     }
 
-    if (materials && materials.data && currentFamily) {
+    if (materials && !materials.loading && materials.data && currentFamily) {
       const familyMaterials = materials.data.materials
         .map(material => {
           if (

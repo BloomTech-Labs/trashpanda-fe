@@ -12,6 +12,7 @@ const SearchPageContainer = styled.div`
   align-items: center;
   margin-top: 0;
   width: 85%;
+  margin-left: 1%;
 `;
 const SearchContainer = styled.form`
   display: flex;

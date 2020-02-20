@@ -103,10 +103,10 @@ function renderPage(step, theme) {
       return (
         <CenterContainer>
           <SubTitle>Certain areas have different regulations.</SubTitle>
-          <PText>
+          <PText marginBottom="35">
             Let us use your location to help you properly dispose of the item.
           </PText>
-          <Img marginBottom="38" src={locationImg} />
+          <Img marginBottom={theme.locationIllustrationMargin} src={theme.locationIllustrationImg} />
         </CenterContainer>
       );
     case 3:
