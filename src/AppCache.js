@@ -57,39 +57,6 @@ const AppCache = props => {
     // set client immediately (replaces cache persist)
     setClient(client);
 
-    // await before instantiating ApolloClient, else queries might run before the cache is persisted
-    // persistCache({
-    //   cache,
-    //   storage: window.localStorage
-    // }).then(() => {
-    //   if (!cache.readQuery({ query: GPS_QUERY })) {
-    //     //add placeholder for GPS data
-    //     cache.writeQuery({
-    //       query: GPS_QUERY,
-    //       data: {
-    //         GPS: {
-    //           latitude: 0,
-    //           longitude: 0,
-    //           __typename: "GPS"
-    //         }
-    //       }
-    //     });
-    //   }
-
-    //   if (!cache.readQuery({ query: PERMISSIONS })) {
-    //     cache.writeQuery({
-    //       query: PERMISSIONS,
-    //       data: {
-    //         Permission: {
-    //           rejectedPermission: null,
-    //           __typename: "Permission"
-    //         }
-    //       }
-    //     });
-    //   }
-    //   setClient(client);
-    // });
-
     return () => {};
   }, []);
 
