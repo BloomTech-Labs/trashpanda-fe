@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import CameraPhoto, { FACING_MODES } from "jslib-html5-camera-photo";
 
 import styled from "styled-components";
-import BottomNav from "../molecules/BottomNav";
-import { cameraAsyncHook } from "./hooks/CameraAsyncHook";
 import Spinner from "../atoms/Spinner";
 
 import ResultsTab from "../molecules/ResultsTab";
@@ -20,6 +18,7 @@ const CameraPage = () => {
   const [videoRef, setVideoRef] = useState();
   const [cameraInstance, setCameraInstance] = useState();
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(false);
 
   const takePhoto = () => {
     // placeholder function to take photo. needs to be hooked into buttons in nav
@@ -66,13 +65,16 @@ const CameraPage = () => {
         })
         .catch(error => {
           console.error("Camera not started!", error);
+          setReload(true);
         });
     }
-  }, [cameraInstance]);
+  }, [cameraInstance, reload]);
 
   return (
     <Root>
       {loading && <Spinner />}
+      <p>x:{window.innerWidth}</p>
+      <p>y: {window.innerHeight}</p>
       {videoRef && <video ref={videoRef} autoPlay={true} />}
       <ResultsTab />
     </Root>
