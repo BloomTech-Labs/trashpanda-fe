@@ -125,9 +125,15 @@ function getCamera(onSuccess, onError) {
       .getUserMedia(constraints)
       .then(stream => {
         if (onSuccess) onSuccess();
+        stream.getTracks().forEach(function(track) {
+          track.stop();
+        });
       })
       .catch(err => {
         if (onError) onError(err);
+        stream.getTracks().forEach(function(track) {
+          track.stop();
+        });
       });
   } else {
     //Media devices api does not support user
