@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import CameraPhoto, { FACING_MODES } from "jslib-html5-camera-photo";
 
 import styled from "styled-components";
-import BottomNav from "../molecules/BottomNav";
-import { cameraAsyncHook } from "./hooks/CameraAsyncHook";
 import Spinner from "../atoms/Spinner";
 
 import ResultsTab from "../molecules/ResultsTab";
@@ -20,6 +18,7 @@ const CameraPage = () => {
   const [videoRef, setVideoRef] = useState();
   const [cameraInstance, setCameraInstance] = useState();
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(false);
 
   const takePhoto = () => {
     // placeholder function to take photo. needs to be hooked into buttons in nav
@@ -51,10 +50,15 @@ const CameraPage = () => {
 
   useEffect(() => {
     const facingMode = FACING_MODES.ENVIRONMENT;
-    const width = window.innerWidth > 575 ? 575 : window.innerWidth;
+    // const width = window.innerWidth > 575 ? 575 : window.innerWidth;
+    // const idealResolution = {
+    //   width,
+    //   height: window.innerHeight
+    // };
+    const height = window.innerWidth > 575 ? 575 : window.innerWidth;
     const idealResolution = {
-      width,
-      height: window.innerHeight
+      height,
+      width: window.innerHeight
     };
 
     if (cameraInstance) {
@@ -66,9 +70,10 @@ const CameraPage = () => {
         })
         .catch(error => {
           console.error("Camera not started!", error);
+          setReload(true);
         });
     }
-  }, [cameraInstance]);
+  }, [cameraInstance, reload]);
 
   return (
     <Root>
