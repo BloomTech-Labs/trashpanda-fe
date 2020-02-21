@@ -17,6 +17,7 @@ import { lightTheme, darkTheme } from "./molecules/theme";
 import Toggle from "./molecules/ToggleTheme";
 import { useDarkMode } from "./molecules/useDarkMode";
 import { GlobalStyles } from "./molecules/global";
+import CameraNav from "./molecules/CameraNav";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -62,7 +63,6 @@ const App = () => {
 
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
-
   useEffect(() => {
     if (
       permissions &&
@@ -102,7 +102,7 @@ const App = () => {
           </Route>
           <Route exact path="/camera">
             <CameraPage />
-            <BottomNav />
+            <CameraNav />
           </Route>
         </Switch>
       </div>
