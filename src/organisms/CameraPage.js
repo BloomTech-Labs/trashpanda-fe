@@ -11,7 +11,8 @@ import ResultsTab from "../molecules/ResultsTab";
 const Root = styled.div`
   max-width: 575px;
   display: flex;
-  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
 `;
 
 const CameraPage = () => {
@@ -71,7 +72,7 @@ const CameraPage = () => {
 
   return (
     <Root>
-      {loading ? <Spinner /> : null}
+      {loading && <Spinner />}
       {videoRef && <video ref={videoRef} autoPlay={true} />}
       <ResultsTab />
     </Root>
