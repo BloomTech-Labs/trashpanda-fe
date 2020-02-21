@@ -50,10 +50,15 @@ const CameraPage = () => {
 
   useEffect(() => {
     const facingMode = FACING_MODES.ENVIRONMENT;
-    const width = window.innerWidth > 575 ? 575 : window.innerWidth;
+    // const width = window.innerWidth > 575 ? 575 : window.innerWidth;
+    // const idealResolution = {
+    //   width,
+    //   height: window.innerHeight
+    // };
+    const height = window.innerWidth > 575 ? 575 : window.innerWidth;
     const idealResolution = {
-      width,
-      height: window.innerHeight
+      height,
+      width: window.innerHeight
     };
 
     if (cameraInstance) {
