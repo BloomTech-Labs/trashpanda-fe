@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
@@ -6,7 +6,6 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import MaterialPage from "./organisms/MaterialPage";
 
-import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
@@ -14,7 +13,6 @@ import TutorialPage from "./organisms/TutorialPage";
 import CameraPage from "./organisms/CameraPage";
 import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
-import Toggle from "./molecules/ToggleTheme";
 import { useDarkMode } from "./molecules/useDarkMode";
 import { GlobalStyles } from "./molecules/global";
 
@@ -41,38 +39,22 @@ export const GET_MATERIALS = gql`
   }
 `;
 
-const PERMISSIONS = gql`
-  query permissions @client {
-    Permission {
-      rejectedPermission
-      __typename
-    }
-  }
-`;
-
-function isLandingFirstTime() {
-  return !localStorage.getItem("firstTime");
-}
-
 const App = () => {
   const history = useHistory();
-  const permissions = useQuery(PERMISSIONS);
-  const [gpsMutation] = location.gpsMutationHook();
+
   const [theme, toggleTheme] = useDarkMode();
 
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
-
   useEffect(() => {
-    if (
-      permissions &&
-      permissions.data.Permission.rejectedPermission === null
-    ) {
-      history.push("/intro");
+    const permissions = JSON.parse(localStorage.getItem("permissions"));
+
+    if (permissions && permissions.firstVisit === false) {
+      location.setGps();
     } else {
-      location.setGpsCache(gpsMutation);
+      history.push("/intro");
     }
-  }, [permissions]);
+  }, []);
 
   return (
     <ThemeProvider theme={themeMode}>
