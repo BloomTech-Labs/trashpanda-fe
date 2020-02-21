@@ -1,26 +1,8 @@
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
-
-export const UPDATE_GPS = gql`
-  mutation setGps($latitude: Float!, $longitude: Float!) {
-    setGps(latitude: $latitude, longitude: $longitude) @client {
-      GPS {
-        latitude
-        longitude
-      }
-    }
-  }
-`;
-
-const gpsMutationHook = () => {
-  return useMutation(UPDATE_GPS);
-};
-
-const setGpsCache = (hook, onSuccess, onError) => {
+const setGps = (onSuccess, onError) => {
   navigator.geolocation.getCurrentPosition(
     position => {
       const { latitude, longitude } = position.coords;
-      hook({ variables: { latitude, longitude } });
+      localStorage.setItem("gps", JSON.stringify({ latitude, longitude }));
       if (onSuccess) onSuccess(position);
     },
     err => {
@@ -33,4 +15,13 @@ const setGpsCache = (hook, onSuccess, onError) => {
   );
 };
 
-export default { setGpsCache, gpsMutationHook };
+const getGps = () => {
+  const coords = localStorage.getItem("gps");
+  if (coords) {
+    return coords;
+  }
+
+  return { latitude: null, longitude: null };
+};
+
+export default { setGps, getGps };

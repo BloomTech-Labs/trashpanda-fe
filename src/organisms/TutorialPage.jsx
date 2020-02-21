@@ -11,7 +11,6 @@ import gql from "graphql-tag";
 import { useHistory } from "react-router-dom";
 
 import photoImg from "../images/photo_illustration.svg";
-import locationImg from "../images/location_illustration.svg";
 
 const Container = styled.div`
   display: flex;
@@ -77,16 +76,6 @@ const CenterContainer = styled.div`
   justify-content: center;
 `;
 
-export const UPDATE_PERMISSIONS = gql`
-  mutation setRejectedPermissions($rejectedPermissions: Boolean!) {
-    setRejectedPermissions(rejectedPermission: $rejectedPermission) @client {
-      Permission {
-        rejectedPermission
-      }
-    }
-  }
-`;
-
 function renderPage(step, theme) {
   switch (step) {
     case 1:
@@ -106,7 +95,10 @@ function renderPage(step, theme) {
           <PText marginBottom="35">
             Let us use your location to help you properly dispose of the item.
           </PText>
-          <Img marginBottom={theme.locationIllustrationMargin} src={theme.locationIllustrationImg} />
+          <Img
+            marginBottom={theme.locationIllustrationMargin}
+            src={theme.locationIllustrationImg}
+          />
         </CenterContainer>
       );
     case 3:
@@ -146,26 +138,26 @@ function getCamera(onSuccess, onError) {
 export const TutorialPage = ({ theme }) => {
   const [step, setStep] = useState(1);
   const history = useHistory();
-  const [gpsMutation] = location.gpsMutationHook();
-  const [setPermissions] = useMutation(UPDATE_PERMISSIONS);
 
   const handleNext = () => {
     switch (step) {
-      case 3:
+      case 3: {
+        localStorage.setItem(
+          "permissions",
+          JSON.stringify({ firstVisit: false })
+        );
         getCamera(
           () => history.push("/"),
           () => history.push("/")
         );
         break;
+      }
       case 2:
-        location.setGpsCache(
-          gpsMutation,
+        location.setGps(
           () => {
-            setPermissions({ variables: { rejectedPermission: false } });
             setStep(3);
           },
           () => {
-            setPermissions({ variables: { rejectedPermission: true } });
             setStep(3);
           }
         );
