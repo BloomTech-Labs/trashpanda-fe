@@ -78,8 +78,6 @@ const CameraPage = () => {
   return (
     <Root>
       {loading && <Spinner />}
-      <p>x:{window.innerWidth}</p>
-      <p>y: {window.innerHeight}</p>
       {videoRef && <video ref={videoRef} autoPlay={true} />}
       <ResultsTab />
     </Root>
