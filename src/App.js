@@ -49,6 +49,9 @@ const App = () => {
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
 
+    //remove persisted cache from apollo if exists
+    localStorage.removeItem("apollo-cache-persist");
+
     if (permissions && permissions.firstVisit === false) {
       location.setGps();
     } else {
