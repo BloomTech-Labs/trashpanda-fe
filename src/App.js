@@ -47,7 +47,7 @@ const App = () => {
 
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
-  const [shutterPress, toggleShutterPress] = useState(false);
+  const [shutterPress, setShutterPress] = useState(false);
 
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
@@ -62,8 +62,8 @@ const App = () => {
     }
   }, []);
 
-  const handleTakePicture = () => {
-    return toggleShutterPress(!shutterPress);
+  const toggleShutterPress = () => {
+    return setShutterPress(!shutterPress);
   };
 
   return (
@@ -94,7 +94,7 @@ const App = () => {
           </Route>
           <Route exact path="/camera">
             <CameraPage />
-            <CameraNav handleTakePicture={handleTakePicture} />
+            <CameraNav toggleShutterPress={toggleShutterPress} />
           </Route>
         </Switch>
       </div>

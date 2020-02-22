@@ -62,11 +62,14 @@ const CameraImage = styled.img`
   cursor: pointer;
 `;
 
-const CameraNav = ({ handleTakePicture }) => {
+const CameraNav = ({ toggleShutterPress }) => {
   const [isHome, setIsHome] = useState(true);
   const location = useLocation();
   const history = useHistory();
   const theme = localStorage.getItem("theme");
+  const [cameraBtn, setCameraBtn] = useState(cameraBtnImgLightMode);
+  const [homeBtn, setHomeBtn] = useState(homeIconLightMode);
+  const [searchBtn, setSearchBtn] = useState(searchIconLightMode);
 
   useEffect(() => {
     setIsHome(location.pathname === "/");
@@ -78,22 +81,30 @@ const CameraNav = ({ handleTakePicture }) => {
 
   const handleCameraBtn = () => {
     //pass in the function that captures the base 64 on the canvas/CameraPage
-    handleTakePicture();
+    toggleShutterPress();
   };
+
+  useEffect(() => {
+    if (theme === "light") {
+      setCameraBtn(cameraBtnImgLightMode);
+      setHomeBtn(homeIconLightMode);
+      setSearchBtn(searchIconLightMode);
+    } else {
+      setCameraBtn(cameraBtnImgDarkMode);
+      setHomeBtn(homeIconDarkMode);
+      setSearchBtn(searchIconDarkMode);
+    }
+  }, []);
 
   return (
     <Container>
       <InnerContainer>
-        <CameraImage
-          src={theme === "light" ? cameraBtnImgDarkMode : cameraBtnImgLightMode}
-          onClick={handleCameraBtn}
-          alt="camera"
-        />
+        <CameraImage src={cameraBtn} onClick={handleCameraBtn} alt="camera" />
 
         {isHome ? null : (
           <Img
             onClick={handleBackClick}
-            src={theme === "light" ? searchIconDarkMode : searchIconLightMode}
+            src={searchBtn}
             style={{
               zIndex: 7,
               position: "absolute",
@@ -113,9 +124,7 @@ const CameraNav = ({ handleTakePicture }) => {
               bottom: "53px"
             }}
           >
-            <Img
-              src={theme === "light" ? homeIconDarkMode : homeIconLightMode}
-            />
+            <Img src={homeBtn} />
           </Link>
         )}
       </InnerContainer>
