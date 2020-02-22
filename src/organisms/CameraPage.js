@@ -1,120 +1,84 @@
 import React, { useState, useEffect, useRef } from "react";
+import CameraPhoto, { FACING_MODES } from "jslib-html5-camera-photo";
+
 import styled from "styled-components";
-import BottomNav from "../molecules/BottomNav";
-import { cameraAsyncHook } from "./hooks/CameraAsyncHook";
 import Spinner from "../atoms/Spinner";
 
 import ResultsTab from "../molecules/ResultsTab";
 
-///CURRENT ISSUE: Getting TypeError when using back or home button because the canvas element is taken off the DOM but the animation frames are still running, meaning the animation frames are looking for something that is no longer defined
-
 const Root = styled.div`
   max-width: 575px;
   display: flex;
-  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
 `;
 
-const CAPTURE_OPTIONS = {
-  audio: false,
-  video: { facingMode: "environment" }
-};
-
 const CameraPage = () => {
-  //these need to be mutable
-  let originalWidth = window.innerWidth > 575 ? "575px" : window.innerWidth;
-  let originalHeight =
-    window.innerHeight > 1000 ? "1000px" : window.innerHeight;
-
-  //////////////////////////////////////////////////CANVAS\\\\\\\\\\\\\\\\\\\\
-  const canvasRef = useRef();
-  const [renewals, setRenewals] = useState([]);
+  const [image, setImage] = useState();
+  const [videoRef, setVideoRef] = useState();
+  const [cameraInstance, setCameraInstance] = useState();
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setRenewals([1]);
-    }, 5000);
-    return () => clearTimeout(timer);
-  });
+  const takePhoto = () => {
+    // placeholder function to take photo. needs to be hooked into buttons in nav
 
-  useEffect(() => {
-    if (canvasRef.current && canvasRef.current.getContext) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, window.innerHeight, window.innerWidth);
-      requestAnimationFrame(repeatOften);
+    const config = {
+      sizeFactor: 1
+    };
+
+    if (cameraInstance) {
+      const dataUri = cameraInstance.getDataUri(config);
+      console.log(dataUri);
+      setImage({ dataUri });
     }
-  }); //handleCanPlay was what I originally used to initiate this during development, but we actually want this to be a continual side effect regardless of whether videoRef has current or not.
+  };
 
   useEffect(() => {
-    originalWidth = window.innerWidth > 575 ? "575px" : window.innerWidth;
-    originalHeight = window.innerHeight > 1000 ? "1000px" : window.innerHeight;
-  }, [originalWidth, originalHeight]);
+    // create video ref
+    const videoRef = React.createRef();
+    setVideoRef(videoRef);
+  }, []);
 
-  //to get base64
-  function handleImageSave() {
-    const dataURL = canvasRef.current.toDataURL();
-    console.log(dataURL);
-  }
+  useEffect(() => {
+    // create video stream
+    if (videoRef) {
+      const cameraPhoto = new CameraPhoto(videoRef.current);
+      setCameraInstance(cameraPhoto);
+    }
+  }, [videoRef]);
 
-  ////////////////////////////////////VIDEO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  const videoRef = useRef();
+  useEffect(() => {
+    const facingMode = FACING_MODES.ENVIRONMENT;
+    // const width = window.innerWidth > 575 ? 575 : window.innerWidth;
+    // const idealResolution = {
+    //   width,
+    //   height: window.innerHeight
+    // };
+    const height = window.innerWidth > 575 ? 575 : window.innerWidth;
+    const idealResolution = {
+      height,
+      width: window.innerHeight
+    };
 
-  const videoSrc = cameraAsyncHook(CAPTURE_OPTIONS);
-
-  if (videoSrc && videoRef.current && !videoRef.current.srcObject) {
-    // && !videoRef.current.srcObject keeps it from doing an infinite loop, (it is only rerendering if the srcObject has not been set yet)
-    videoRef.current.srcObject = videoSrc;
-    setLoading(false);
-  }
-
-  function handleCanPlay() {
-    videoRef.current.play();
-  }
-
-  if (!videoSrc) {
-    return null;
-  }
-  //CAN'T USE srcObject in REACT, Abramov says to use refs and just assign with DOM API directly
-  // depreciated pattern:   videoSrc = URL.createObjectURL(stream);
-
-  ///////////////////////////////////////////VIDEO PLUS CANVAS\\\\\\\\\\\\\\\\\
-  function drawVid(video, ctx, width, height) {
-    ctx.drawImage(video, 0, 0, width, height);
-  }
-
-  function repeatOften() {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    drawVid(videoRef.current, ctx, window.innerWidth, window.innerHeight);
-    requestAnimationFrame(repeatOften);
-  }
-
-  //You cannot call the drawImage() method before the image has loaded. To ensure that the image has been loaded, you can call drawImage() from window.onload() or from document.getElementById("imageID").onload.
+    if (cameraInstance) {
+      cameraInstance
+        .startCamera(facingMode, idealResolution)
+        .then(() => {
+          console.log("camera is started !");
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error("Camera not started!", error);
+          setReload(true);
+        });
+    }
+  }, [cameraInstance, reload]);
 
   return (
     <Root>
-      {loading ? <Spinner /> : null}
-      <video
-        ref={videoRef}
-        hidden={true}
-        width={window.innerWidth}
-        height={window.innerHeight}
-        onCanPlay={handleCanPlay}
-        muted
-        autoPlay={true}
-        // src={videoSrc}//srcObject expects mediaStream object, not string as src does
-      />
-      <canvas
-        ref={canvasRef}
-        width={originalWidth}
-        height={originalHeight}
-        // style={{ zIndex: 10001, width: "inherit" }}
-        onClick={e => {
-          handleImageSave();
-        }}
-        hidden={loading ? true : false}
-      />
+      {loading && <Spinner />}
+      {videoRef && <video ref={videoRef} autoPlay={true} />}
       <ResultsTab />
     </Root>
   );

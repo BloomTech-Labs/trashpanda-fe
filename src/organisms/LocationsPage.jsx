@@ -10,7 +10,6 @@ import LocationCard from "../molecules/LocationCard";
 import Spinner from "../atoms/Spinner";
 import { withTheme } from "styled-components";
 
-
 export const GET_LOCATIONS = gql`
   query getLocations($material_id: Int, $latitude: Float!, $longitude: Float!) {
     locations(
@@ -100,9 +99,8 @@ function renderLocations(locations, loaded, theme) {
       ))}
     </CardsContainer>
   ) : (
-
-      <Img src={loaded ? theme.sadManImg : walkingImage} />
-    );
+    <Img src={loaded ? theme.sadManImg : walkingImage} />
+  );
 }
 
 const LocationsPage = ({ theme }) => {
@@ -110,14 +108,14 @@ const LocationsPage = ({ theme }) => {
   const [zip, setZip] = useState("");
   const [loading, setLoading] = useState(false);
   const [locations, setLocations] = useState([]);
-  const location = useQuery(GET_GPS);
+  const gps = JSON.parse(localStorage.getItem("gps"));
   const [getLocations, locationInfo] = useLazyQuery(GET_LOCATIONS);
   const [getPostal, postalInfo] = useLazyQuery(GET_POSTAL);
   const [getZip, zipInfo] = useLazyQuery(GET_ZIP);
 
   useEffect(() => {
-    if (location && location.data) {
-      const { latitude, longitude } = location.data.GPS;
+    if (gps) {
+      const { latitude, longitude } = gps;
       //Set zip code field to contain current users zip code location
       getZip({
         variables: {
@@ -145,10 +143,8 @@ const LocationsPage = ({ theme }) => {
   }, [zipInfo]);
 
   useEffect(() => {
-    console.log("Postal info data changed");
     if (postalInfo.called && postalInfo.data) {
       const { longitude, latitude } = postalInfo.data.postal_code;
-      console.log("Calling getlocations from postalInfo use");
       getLocations({
         variables: {
           latitude,
@@ -159,16 +155,12 @@ const LocationsPage = ({ theme }) => {
     }
   }, [postalInfo]);
 
-  console.log("Postal info", postalInfo);
-
   useEffect(() => {
     if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
       setLocations(locationInfo.data.locations);
       setLoading(false);
     }
   }, [locationInfo.loading, locationInfo.called, locationInfo.data]);
-
-  console.log("Location info", locationInfo);
 
   const handleClick = () => {
     if (
@@ -205,7 +197,11 @@ const LocationsPage = ({ theme }) => {
         onKeyDown={handleKeyDown}
       />
 
-      {loading ? <Spinner /> : renderLocations(locations, locationInfo.called, theme)}
+      {loading ? (
+        <Spinner />
+      ) : (
+        renderLocations(locations, locationInfo.called, theme)
+      )}
     </Container>
   );
 };
