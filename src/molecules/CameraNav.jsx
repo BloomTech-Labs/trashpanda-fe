@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import searchIconLightMode from "../images/search_icon_camera_lite.svg";
 import searchIconDarkMode from "../images/search_icon_camera_dark.svg";
 import homeIconDarkMode from "../images/home_icon_camera_dark.svg";
+import homeIconLightMode from "../images/home_icon_camera_lite.svg";
 import { Link, useLocation, useHistory } from "react-router-dom";
 
 import cameraBtnImgDarkMode from "../images/camera_icon_camera.svg";
+import cameraBtnImgLightMode from "../images/camera_icon_camera_light.svg";
 
 const Container = styled.div`
   max-width: 575px;
@@ -20,13 +23,15 @@ const Container = styled.div`
 `;
 
 const Img = styled.img`
-  height: 24px;
+  height: 43px;
   z-index: 4;
   position: absolute;
   align-items: center;
   cursor: pointer;
   padding: 13px;
-  margin-right: 100px;
+
+  left: 20%,
+  bottom: 53px
 `;
 
 const InnerContainer = styled.div`
@@ -39,28 +44,29 @@ const InnerContainer = styled.div`
   max-width: 573px;
 `;
 
-const CameraButton = styled.button`
+const CameraImage = styled.img`
   outline: none;
   border: none;
   background-color: none;
-  padding: 16px;
+  box-shadow: 0px;
+  padding: 0px;
   border-radius: 100px;
-  z-index: 2;
+  z-index: 1;
   position: fixed;
-  bottom: 17px;
+  bottom: 10px;
   left: 50%;
+  height: 13%;
 
   transform: translate(-50%, ${props => (props.isHome ? `6` : `-15`)}%);
 
   cursor: pointer;
 `;
 
-const CameraImage = styled.img``;
-
-const CameraNav = () => {
+const CameraNav = ({ handleTakePicture }) => {
   const [isHome, setIsHome] = useState(true);
   const location = useLocation();
   const history = useHistory();
+  const theme = localStorage.getItem("theme");
 
   useEffect(() => {
     setIsHome(location.pathname === "/");
@@ -71,21 +77,30 @@ const CameraNav = () => {
   };
 
   const handleCameraBtn = () => {
-    history.push(`/camera`);
+    //pass in the function that captures the base 64 on the canvas/CameraPage
+    handleTakePicture();
   };
 
   return (
     <Container>
       <InnerContainer>
-        <BottomBandSquare />
-        <BottomBandLeft />
-        <CameraButton onClick={handleCameraBtn}>
-          <CameraImage src={cameraBtnImgDarkMode} alt="camera" />
-        </CameraButton>
-        <BottomBandRight />
-        <BottomBandSquare />
+        <CameraImage
+          src={theme === "light" ? cameraBtnImgDarkMode : cameraBtnImgLightMode}
+          onClick={handleCameraBtn}
+          alt="camera"
+        />
+
         {isHome ? null : (
-          <Img onClick={handleBackClick} src={searchIconDarkMode} />
+          <Img
+            onClick={handleBackClick}
+            src={theme === "light" ? searchIconDarkMode : searchIconLightMode}
+            style={{
+              zIndex: 7,
+              position: "absolute",
+              left: "4%",
+              bottom: "-15px"
+            }}
+          />
         )}
 
         {isHome ? null : (
@@ -94,11 +109,13 @@ const CameraNav = () => {
             style={{
               zIndex: 7,
               position: "absolute",
-              left: "85%",
+              left: "80%",
               bottom: "53px"
             }}
           >
-            <Img src={homeIconDarkMode} />
+            <Img
+              src={theme === "light" ? homeIconDarkMode : homeIconLightMode}
+            />
           </Link>
         )}
       </InnerContainer>

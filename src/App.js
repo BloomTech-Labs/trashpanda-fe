@@ -74,6 +74,10 @@ const App = () => {
     }
   }, [permissions]);
 
+  const handleTakePicture = () => {
+    return null;
+  };
+
   return (
     <ThemeProvider theme={themeMode}>
       <div className="App">
@@ -102,7 +106,7 @@ const App = () => {
           </Route>
           <Route exact path="/camera">
             <CameraPage />
-            <CameraNav />
+            <CameraNav handleTakePicture={handleTakePicture} />
           </Route>
         </Switch>
       </div>
