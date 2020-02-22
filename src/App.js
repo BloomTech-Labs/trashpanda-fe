@@ -15,6 +15,7 @@ import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
 import { useDarkMode } from "./molecules/useDarkMode";
 import { GlobalStyles } from "./molecules/global";
+import CameraNav from "./molecules/CameraNav";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -46,6 +47,8 @@ const App = () => {
 
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
+  const [shutterPress, setShutterPress] = useState(false);
+
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
 
@@ -58,6 +61,10 @@ const App = () => {
       history.push("/intro");
     }
   }, []);
+
+  const toggleShutterPress = () => {
+    return setShutterPress(!shutterPress);
+  };
 
   return (
     <ThemeProvider theme={themeMode}>
@@ -87,7 +94,7 @@ const App = () => {
           </Route>
           <Route exact path="/camera">
             <CameraPage />
-            <BottomNav />
+            <CameraNav toggleShutterPress={toggleShutterPress} />
           </Route>
         </Switch>
       </div>
