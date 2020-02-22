@@ -13,26 +13,27 @@ const Root = styled.div`
   align-items: center;
 `;
 
-const CameraPage = () => {
+const CameraPage = ({ shutterPress }) => {
   const [image, setImage] = useState();
   const [videoRef, setVideoRef] = useState();
   const [cameraInstance, setCameraInstance] = useState();
   const [loading, setLoading] = useState(true);
-  const [reload, setReload] = useState(false);
 
-  const takePhoto = () => {
-    // placeholder function to take photo. needs to be hooked into buttons in nav
+  useEffect(() => {
+    if (shutterPress) {
+      const config = {
+        sizeFactor: 1
+      };
 
-    const config = {
-      sizeFactor: 1
-    };
-
-    if (cameraInstance) {
-      const dataUri = cameraInstance.getDataUri(config);
-      console.log(dataUri);
-      setImage({ dataUri });
+      if (cameraInstance) {
+        const dataUri = cameraInstance.getDataUri(config);
+        console.log(dataUri);
+        setImage({ dataUri });
+      }
+    } else {
+      setImage(null);
     }
-  };
+  }, [shutterPress]);
 
   useEffect(() => {
     // create video ref
@@ -50,11 +51,8 @@ const CameraPage = () => {
 
   useEffect(() => {
     const facingMode = FACING_MODES.ENVIRONMENT;
-    // const width = window.innerWidth > 575 ? 575 : window.innerWidth;
-    // const idealResolution = {
-    //   width,
-    //   height: window.innerHeight
-    // };
+
+    //set width to height to fix mobile camera
     const height = window.innerWidth > 575 ? 575 : window.innerWidth;
     const idealResolution = {
       height,
@@ -70,15 +68,15 @@ const CameraPage = () => {
         })
         .catch(error => {
           console.error("Camera not started!", error);
-          setReload(true);
         });
     }
-  }, [cameraInstance, reload]);
+  }, [cameraInstance]);
 
   return (
     <Root>
       {loading && <Spinner />}
-      {videoRef && <video ref={videoRef} autoPlay={true} />}
+      {!image && videoRef && <video ref={videoRef} autoPlay={true} />}
+      {image && <img src={image} alt="camera image" />}
       <ResultsTab />
     </Root>
   );
