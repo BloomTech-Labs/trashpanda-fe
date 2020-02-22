@@ -47,6 +47,8 @@ const App = () => {
 
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
+  const [shutterPress, toggleShutterPress] = useState(false);
+
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
 
@@ -61,7 +63,7 @@ const App = () => {
   }, []);
 
   const handleTakePicture = () => {
-    return null;
+    return toggleShutterPress(!shutterPress);
   };
 
   return (
