@@ -93,7 +93,7 @@ const App = () => {
             <TutorialPage />
           </Route>
           <Route exact path="/camera">
-            <CameraPage />
+            <CameraPage shutterPress={shutterPress} />
             <CameraNav toggleShutterPress={toggleShutterPress} />
           </Route>
         </Switch>

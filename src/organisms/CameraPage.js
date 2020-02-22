@@ -13,9 +13,13 @@ const Root = styled.div`
   align-items: center;
 `;
 
+const StyledVideo = styled.video`
+  display: ${({ hidden }) => (hidden ? "none" : "block")}};
+`;
+
 const CameraPage = ({ shutterPress }) => {
   const [image, setImage] = useState();
-  const [videoRef, setVideoRef] = useState();
+  const videoRef = useRef(null);
   const [cameraInstance, setCameraInstance] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -29,17 +33,13 @@ const CameraPage = ({ shutterPress }) => {
         const dataUri = cameraInstance.getDataUri(config);
         console.log(dataUri);
         setImage({ dataUri });
+        cameraInstance.stopCamera();
       }
     } else {
       setImage(null);
+      setLoading(true);
     }
   }, [shutterPress]);
-
-  useEffect(() => {
-    // create video ref
-    const videoRef = React.createRef();
-    setVideoRef(videoRef);
-  }, []);
 
   useEffect(() => {
     // create video stream
@@ -58,7 +58,6 @@ const CameraPage = ({ shutterPress }) => {
       height,
       width: window.innerHeight
     };
-
     if (cameraInstance) {
       cameraInstance
         .startCamera(facingMode, idealResolution)
@@ -70,13 +69,13 @@ const CameraPage = ({ shutterPress }) => {
           console.error("Camera not started!", error);
         });
     }
-  }, [cameraInstance]);
+  }, [cameraInstance, shutterPress]);
 
   return (
     <Root>
       {loading && <Spinner />}
-      {!image && videoRef && <video ref={videoRef} autoPlay={true} />}
-      {image && <img src={image} alt="camera image" />}
+      <StyledVideo hidden={image || !videoRef} ref={videoRef} autoPlay={true} />
+      {image && <img src={image.dataUri} alt="camera image" />}
       <ResultsTab />
     </Root>
   );
