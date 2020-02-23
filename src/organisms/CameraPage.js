@@ -6,7 +6,7 @@ import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 import Spinner from "../atoms/Spinner";
 
-import ResultsTab from "../molecules/ResultsTab";
+import ClusterResult from "../molecules/ClusterResult";
 
 const Root = styled.div`
   max-width: 575px;
@@ -99,7 +99,7 @@ const CameraPage = ({ shutterPress }) => {
       {loading && <Spinner />}
       <StyledVideo hidden={image || !videoRef} ref={videoRef} autoPlay={true} />
       {image && <img src={image.dataUri} alt="camera image" />}
-      <ResultsTab />
+      {ClusterData && <ClusterResult ClusterData={ClusterData} />}
     </Root>
   );
 };
