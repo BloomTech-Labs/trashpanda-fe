@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import CameraPhoto, { FACING_MODES } from "jslib-html5-camera-photo";
+import gql from "graphql-tag";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 
 import styled from "styled-components";
 import Spinner from "../atoms/Spinner";
@@ -17,11 +19,27 @@ const StyledVideo = styled.video`
   display: ${({ hidden }) => (hidden ? "none" : "block")}};
 `;
 
+export const GET_CLUSTER = gql`
+  query Cluster($imageData: String!) {
+    getCluster(imageData: $imageData) {
+      message
+      cluster_name
+      cluster
+      materials
+    }
+  }
+`;
+
 const CameraPage = ({ shutterPress }) => {
   const [image, setImage] = useState();
   const videoRef = useRef(null);
   const [cameraInstance, setCameraInstance] = useState();
   const [loading, setLoading] = useState(true);
+  const [getCluster, ClusterData] = useLazyQuery(GET_CLUSTER);
+
+  useEffect(() => {
+    console.log({ ClusterData });
+  }, [ClusterData]);
 
   useEffect(() => {
     if (shutterPress) {
@@ -34,6 +52,11 @@ const CameraPage = ({ shutterPress }) => {
         console.log(dataUri);
         setImage({ dataUri });
         cameraInstance.stopCamera();
+        getCluster({
+          variables: {
+            imageData: dataUri
+          }
+        });
       }
     } else {
       setImage(null);
