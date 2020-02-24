@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import CameraPhoto, { FACING_MODES } from "jslib-html5-camera-photo";
+import gql from "graphql-tag";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 
 import styled from "styled-components";
 import Spinner from "../atoms/Spinner";
 
-import ResultsTab from "../molecules/ResultsTab";
+import ClusterResult from "../molecules/ClusterResult";
 
 const Root = styled.div`
   max-width: 575px;
@@ -13,32 +15,54 @@ const Root = styled.div`
   align-items: center;
 `;
 
-const CameraPage = () => {
+const StyledVideo = styled.video`
+  display: ${({ hidden }) => (hidden ? "none" : "block")}};
+`;
+
+export const GET_CLUSTER = gql`
+  query Cluster($imageData: String!) {
+    getCluster(imageData: $imageData) {
+      message
+      cluster_name
+      cluster
+      materials
+    }
+  }
+`;
+
+const CameraPage = ({ shutterPress }) => {
   const [image, setImage] = useState();
-  const [videoRef, setVideoRef] = useState();
+  const videoRef = useRef(null);
   const [cameraInstance, setCameraInstance] = useState();
   const [loading, setLoading] = useState(true);
-  const [reload, setReload] = useState(false);
-
-  const takePhoto = () => {
-    // placeholder function to take photo. needs to be hooked into buttons in nav
-
-    const config = {
-      sizeFactor: 1
-    };
-
-    if (cameraInstance) {
-      const dataUri = cameraInstance.getDataUri(config);
-      console.log(dataUri);
-      setImage({ dataUri });
-    }
-  };
+  const [getCluster, ClusterData] = useLazyQuery(GET_CLUSTER);
 
   useEffect(() => {
-    // create video ref
-    const videoRef = React.createRef();
-    setVideoRef(videoRef);
-  }, []);
+    console.log({ ClusterData });
+  }, [ClusterData]);
+
+  useEffect(() => {
+    if (shutterPress) {
+      const config = {
+        sizeFactor: 1
+      };
+
+      if (cameraInstance) {
+        const dataUri = cameraInstance.getDataUri(config);
+        console.log(dataUri);
+        setImage({ dataUri });
+        cameraInstance.stopCamera();
+        getCluster({
+          variables: {
+            imageData: dataUri
+          }
+        });
+      }
+    } else {
+      setImage(null);
+      setLoading(true);
+    }
+  }, [shutterPress]);
 
   useEffect(() => {
     // create video stream
@@ -50,17 +74,13 @@ const CameraPage = () => {
 
   useEffect(() => {
     const facingMode = FACING_MODES.ENVIRONMENT;
-    // const width = window.innerWidth > 575 ? 575 : window.innerWidth;
-    // const idealResolution = {
-    //   width,
-    //   height: window.innerHeight
-    // };
+
+    //set width to height to fix mobile camera
     const height = window.innerWidth > 575 ? 575 : window.innerWidth;
     const idealResolution = {
       height,
       width: window.innerHeight
     };
-
     if (cameraInstance) {
       cameraInstance
         .startCamera(facingMode, idealResolution)
@@ -70,16 +90,16 @@ const CameraPage = () => {
         })
         .catch(error => {
           console.error("Camera not started!", error);
-          setReload(true);
         });
     }
-  }, [cameraInstance, reload]);
+  }, [cameraInstance, shutterPress]);
 
   return (
     <Root>
       {loading && <Spinner />}
-      {videoRef && <video ref={videoRef} autoPlay={true} />}
-      <ResultsTab />
+      <StyledVideo hidden={image || !videoRef} ref={videoRef} autoPlay={true} />
+      {image && <img src={image.dataUri} alt="camera image" />}
+      {ClusterData && <ClusterResult ClusterData={ClusterData} />}
     </Root>
   );
 };
