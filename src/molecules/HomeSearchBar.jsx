@@ -89,7 +89,6 @@ const HomeSearchBar = ({ searchFocus, toggleSearchFocus }) => {
   useEffect(() => {
     if (searchFocus) {
       searchBarRef.current.focus();
-      console.log(searchBarRef);
     }
   }, [searchFocus]);
 

@@ -72,6 +72,10 @@ const CameraNav = ({ toggleShutterPress, toggleSearchFocus }) => {
   const [searchBtn, setSearchBtn] = useState(searchIconLightMode);
 
   useEffect(() => {
+    toggleSearchFocus(false);
+  }, []);
+
+  useEffect(() => {
     setIsHome(location.pathname === "/");
   }, [location.pathname]);
 

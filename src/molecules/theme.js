@@ -28,6 +28,7 @@ export const lightTheme = {
   titleText: "#000000",
   text: "#404040",
   body: "#FFFFFF",
+  resultsText: "#000000",
   searchBackground: "#FFFFFF",
   searchText: "#737373",
   bottomNav: "#336b68",
@@ -50,6 +51,7 @@ export const lightTheme = {
 export const darkTheme = {
   titleText: "#FFFFFF",
   text: "#FFFFFF",
+  resultsText: "#FFFFFF",
   body: "#1b1b1b",
   searchBackground: "#404040",
   searchText: "#FFFFFF",

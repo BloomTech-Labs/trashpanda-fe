@@ -107,6 +107,7 @@ const App = () => {
           <Route exact path="/camera">
             <CameraPage />
             <CameraNav
+              shutterPress={shutterPress}
               toggleShutterPress={toggleShutterPress}
               toggleSearchFocus={toggleSearchFocus}
             />
