@@ -10,8 +10,10 @@ const GridContainer = styled.div`
   display: grid;
   margin-top: 36px;
   width: 100%;
-  gap: 26px 25px;
+  gap: 26px 22px;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  // grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
   margin-bottom: 100px;
 `;
 

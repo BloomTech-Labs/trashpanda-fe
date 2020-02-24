@@ -7,11 +7,13 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  width: 100%;
 `;
 
 const Img = styled.img`
   border-radius: 50px;
-  width: 100px;
+  width: 100%;
+  max-width: 100px;
 `;
 
 const Name = styled.p`
