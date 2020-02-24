@@ -66,12 +66,11 @@ const resultText = loadingState => {
 const getLoadingState = ClusterData => {
   if (ClusterData.loading) {
     return "loading";
+  }
+  if (ClusterData.data && ClusterData.data.getCluster.materials.length > 0) {
+    return "found";
   } else {
-    if (ClusterData.data && ClusterData.data.getCluster.materials.length > 0) {
-      return "found";
-    } else {
-      return "none";
-    }
+    return "none";
   }
 };
 
