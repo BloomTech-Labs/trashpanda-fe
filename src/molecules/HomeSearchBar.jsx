@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import lensImg from "../images/lens.svg";
 
@@ -79,11 +79,19 @@ const GET_MATERIALS = gql`
     }
   }
 `;
-const HomeSearchBar = () => {
+const HomeSearchBar = ({ searchFocus, toggleSearchFocus }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filtered, setFiltered] = useState([]);
+  const searchBarRef = useRef();
   const { loading, data } = useQuery(GET_MATERIALS);
   const history = useHistory();
+
+  useEffect(() => {
+    if (searchFocus) {
+      searchBarRef.current.focus();
+      console.log(searchBarRef);
+    }
+  }, [searchFocus]);
 
   // gets the materials and filters the material to the search term
   useEffect(() => {
@@ -128,6 +136,7 @@ const HomeSearchBar = () => {
   const handleSubmit = e => {
     e.preventDefault();
     search(searchTerm);
+    toggleSearchFocus(false);
   };
 
   return (
@@ -135,6 +144,7 @@ const HomeSearchBar = () => {
       <SearchContainer onSubmit={handleSubmit} searchTerm={searchTerm}>
         <Img src={lensImg} alt="lens" />
         <InputField
+          ref={searchBarRef}
           type="text"
           placeholder="enter search term"
           value={searchTerm}

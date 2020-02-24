@@ -62,7 +62,7 @@ const CameraImage = styled.img`
   cursor: pointer;
 `;
 
-const CameraNav = ({ toggleShutterPress }) => {
+const CameraNav = ({ toggleShutterPress, toggleSearchFocus }) => {
   const [isHome, setIsHome] = useState(true);
   const location = useLocation();
   const history = useHistory();
@@ -77,6 +77,7 @@ const CameraNav = ({ toggleShutterPress }) => {
 
   const handleBackClick = () => {
     history.push("/");
+    toggleSearchFocus(true);
   };
 
   const handleCameraBtn = () => {
