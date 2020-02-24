@@ -92,6 +92,12 @@ const CameraPage = ({ shutterPress }) => {
           console.error("Camera not started!", error);
         });
     }
+
+    return function cleanup() {
+      if (cameraInstance) {
+        cameraInstance.stopCamera();
+      }
+    };
   }, [cameraInstance, shutterPress]);
 
   return (
