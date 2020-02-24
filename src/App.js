@@ -69,7 +69,6 @@ const App = () => {
   };
 
   const toggleSearchFocus = focused => {
-    console.log("toggleSearch", focused);
     return setSearchFocus(focused);
   };
 
