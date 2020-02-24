@@ -126,7 +126,7 @@ function renderLocations(locations, loaded, theme) {
         {loaded ? <div>
           <NoResults>Sorry</NoResults>
           <NoResultsP>There are no results in your area</NoResultsP>
-        </div> : "Test"}
+        </div> : ""}
         <Img src={loaded ? theme.sadManImg : walkingImage} marginTop={loaded ? "51" : "108"} />
       </div>
     );
