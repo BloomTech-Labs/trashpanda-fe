@@ -49,6 +49,8 @@ const App = () => {
 
   const [shutterPress, setShutterPress] = useState(false);
 
+  const [searchFocus, setSearchFocus] = useState(false);
+
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
 
@@ -66,6 +68,10 @@ const App = () => {
     return setShutterPress(!shutterPress);
   };
 
+  const toggleSearchFocus = focused => {
+    return setSearchFocus(focused);
+  };
+
   return (
     <ThemeProvider theme={themeMode}>
       <div className="App">
@@ -73,7 +79,12 @@ const App = () => {
 
         <Switch>
           <Route exact path="/">
-            <HomePage toggleTheme={toggleTheme} theme={theme} />
+            <HomePage
+              toggleTheme={toggleTheme}
+              toggleSearchFocus={toggleSearchFocus}
+              searchFocus={searchFocus}
+              theme={theme}
+            />
 
             <BottomNav />
           </Route>
@@ -93,8 +104,12 @@ const App = () => {
             <TutorialPage />
           </Route>
           <Route exact path="/camera">
-            <CameraPage shutterPress={shutterPress} />
-            <CameraNav toggleShutterPress={toggleShutterPress} />
+            <CameraPage />
+            <CameraNav
+              shutterPress={shutterPress}
+              toggleShutterPress={toggleShutterPress}
+              toggleSearchFocus={toggleSearchFocus}
+            />
           </Route>
         </Switch>
       </div>
