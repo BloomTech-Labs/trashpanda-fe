@@ -77,8 +77,31 @@ const CardsContainer = styled.div`
 `;
 
 const Img = styled.img`
-  margin-top: 108px;
+  // margin-top: 108px;
   margin-bottom: 150px;
+  margin-top: ${props => props.marginBottom}px
+`;
+
+const NoResults = styled.h3`
+font-family: Muli;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 23px;
+text-align: center;
+margin: 0;
+color: ${({ theme }) => theme.resultsText};
+`;
+
+const NoResultsP = styled.p`
+font-family: Muli;
+font-style: normal;
+font-size: 18px;
+line-height: 23px;
+text-align: center;
+margin: 0;
+margin-bottom: 51px;
+color: ${({ theme }) => theme.resultsText};
 `;
 
 function validateZip(zip) {
@@ -99,8 +122,14 @@ function renderLocations(locations, loaded, theme) {
       ))}
     </CardsContainer>
   ) : (
-    <Img src={loaded ? theme.sadManImg : walkingImage} />
-  );
+      <div>
+        {loaded ? <div>
+          <NoResults>Sorry</NoResults>
+          <NoResultsP>There are no results in your area</NoResultsP>
+        </div> : "Test"}
+        <Img src={loaded ? theme.sadManImg : walkingImage} marginTop={loaded ? "51" : "108"} />
+      </div>
+    );
 }
 
 const LocationsPage = ({ theme }) => {
@@ -200,8 +229,8 @@ const LocationsPage = ({ theme }) => {
       {loading ? (
         <Spinner />
       ) : (
-        renderLocations(locations, locationInfo.called, theme)
-      )}
+          renderLocations(locations, locationInfo.called, theme)
+        )}
     </Container>
   );
 };
