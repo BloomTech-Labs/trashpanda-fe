@@ -11,6 +11,7 @@ import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
 import TutorialPage from "./organisms/TutorialPage";
 import CameraPage from "./organisms/CameraPage";
+import ClusterPage from "./organisms/ClusterPage";
 import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
 import { useDarkMode } from "./molecules/useDarkMode";
@@ -42,14 +43,11 @@ export const GET_MATERIALS = gql`
 
 const App = () => {
   const history = useHistory();
-
   const [theme, toggleTheme] = useDarkMode();
-
   const themeMode = theme === "light" ? lightTheme : darkTheme;
-
   const [shutterPress, setShutterPress] = useState(false);
-
   const [searchFocus, setSearchFocus] = useState(false);
+  const [appCluster, setAppCluster] = useState();
 
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
@@ -104,12 +102,19 @@ const App = () => {
             <TutorialPage />
           </Route>
           <Route exact path="/camera">
-            <CameraPage />
+            <CameraPage
+              setAppCluster={setAppCluster}
+              shutterPress={shutterPress}
+            />
             <CameraNav
               shutterPress={shutterPress}
               toggleShutterPress={toggleShutterPress}
               toggleSearchFocus={toggleSearchFocus}
             />
+          </Route>
+          <Route exact path="/camera/results">
+            <ClusterPage appCluster={appCluster} />
+            <BottomNav />
           </Route>
         </Switch>
       </div>
