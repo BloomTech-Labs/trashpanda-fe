@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import GridCard from "../molecules/GridCard";
-import placeholderImg from "../images/category_placeholder.svg";
+import placeholderImg from "../images/category_placeholder.png";
 
 const Root = styled.div``;
 
