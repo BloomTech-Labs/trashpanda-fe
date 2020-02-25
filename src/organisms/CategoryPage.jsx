@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import GridCard from "../molecules/GridCard";
-import placeholderImg from "../images/category_placeholder.svg";
+import placeholderImg from "../images/category_placeholder.png";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_CATEGORIES, GET_MATERIALS } from "../App.js";
 

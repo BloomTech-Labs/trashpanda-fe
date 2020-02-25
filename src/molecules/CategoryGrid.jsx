@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import GridCard from "./GridCard";
-import placeholderImg from "../images/category_placeholder.svg";
+import placeholderImg from "../images/category_placeholder.png";
 import { GET_CATEGORIES } from "../App.js";
 
 const GridContainer = styled.div`
