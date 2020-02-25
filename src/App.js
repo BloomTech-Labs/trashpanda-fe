@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
@@ -48,6 +48,7 @@ const App = () => {
   const [shutterPress, setShutterPress] = useState(false);
   const [searchFocus, setSearchFocus] = useState(false);
   const [appCluster, setAppCluster] = useState();
+  const appContainer = useRef();
 
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
@@ -64,7 +65,7 @@ const App = () => {
 
   useEffect(() => {
     if ("orientation" in screen) {
-      document.documentElement.requestFullscreen();
+      appContainer.current.requestFullscreen();
       screen.orientation.lock("portrait-primary").then(null, function(error) {
         document.exitFullscreen();
       });
@@ -81,7 +82,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={themeMode}>
-      <div className="App">
+      <div className="App" ref="appContainer">
         <GlobalStyles />
 
         <Switch>
