@@ -21,10 +21,6 @@ const lightTheme = {
   stepperColor: "rgba(51, 107, 104, 0.2)",
   trashManImg: ""
 };
-import {
-  mockSetUserLocation,
-  mockGetUserLocation
-} from "./mock_data/mockStateFunctions";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -56,7 +52,12 @@ describe("TutorialPage", () => {
     );
 
     fireEvent.click(page.getByText(/Next/i));
+    page.debug();
 
-    // expect(mockGetUserLocation).toHaveBeenCalledTimes(1);
+    expect(
+      page.getByText(
+        /Let us use your location to help you properly dispose of the item./i
+      )
+    ).toBeTruthy();
   });
 });
