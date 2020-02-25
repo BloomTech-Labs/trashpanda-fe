@@ -25,12 +25,23 @@ export const GET_CLUSTER = gql`
       message
       cluster_name
       cluster
-      materials
+      materials {
+        material_id
+        description
+        long_description
+        bin_trash
+        bin_recycle
+        bin_compost
+        dropoff
+        pickup
+        notes
+        image_url
+      }
     }
   }
 `;
 
-const CameraPage = ({ shutterPress }) => {
+const CameraPage = ({ shutterPress, setAppCluster }) => {
   const [image, setImage] = useState();
   const videoRef = useRef(null);
   const [cameraInstance, setCameraInstance] = useState();
@@ -38,7 +49,9 @@ const CameraPage = ({ shutterPress }) => {
   const [getCluster, ClusterData] = useLazyQuery(GET_CLUSTER);
 
   useEffect(() => {
-    console.log({ ClusterData });
+    if (!ClusterData.loading && ClusterData.data) {
+      setAppCluster(ClusterData.data.getCluster);
+    }
   }, [ClusterData]);
 
   useEffect(() => {
@@ -49,7 +62,6 @@ const CameraPage = ({ shutterPress }) => {
 
       if (cameraInstance) {
         const dataUri = cameraInstance.getDataUri(config);
-        console.log(dataUri);
         setImage({ dataUri });
         cameraInstance.stopCamera();
         getCluster({

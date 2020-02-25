@@ -50,6 +50,12 @@ const ResultName = styled.b`
   margin-top: 2vh;
 `;
 
+const Results = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+`;
+
 const resultText = loadingState => {
   switch (loadingState) {
     case "loading":
@@ -98,7 +104,7 @@ const ClusterResult = ({ ClusterData }) => {
       <ResultsBox expanded={expanded}>
         <ResultHandleImg src={resultBtnImage} onClick={toggleExpanded} />
         {expanded && (
-          <>
+          <Results onClick={() => history.push("/camera/results")}>
             <ResultBoxText>{resultText(loadingState)}</ResultBoxText>
             {loadingState === "found" && (
               <>
@@ -115,7 +121,7 @@ const ClusterResult = ({ ClusterData }) => {
                 Search
               </Button>
             )}
-          </>
+          </Results>
         )}
       </ResultsBox>
     </Container>
