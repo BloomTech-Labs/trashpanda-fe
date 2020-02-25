@@ -61,6 +61,7 @@ const CameraPage = ({ shutterPress, setAppCluster, toggleSearchFocus }) => {
       };
 
       if (cameraInstance) {
+        console.log("take Photo");
         const dataUri = cameraInstance.getDataUri(config);
         setImage({ dataUri });
         cameraInstance.stopCamera();
@@ -85,6 +86,7 @@ const CameraPage = ({ shutterPress, setAppCluster, toggleSearchFocus }) => {
   }, [videoRef]);
 
   useEffect(() => {
+    console.log(shutterPress);
     const facingMode = FACING_MODES.ENVIRONMENT;
 
     //set width to height to fix mobile camera
@@ -93,6 +95,7 @@ const CameraPage = ({ shutterPress, setAppCluster, toggleSearchFocus }) => {
       height,
       width: window.innerHeight
     };
+
     if (cameraInstance) {
       cameraInstance
         .startCamera(facingMode, idealResolution)
@@ -106,11 +109,17 @@ const CameraPage = ({ shutterPress, setAppCluster, toggleSearchFocus }) => {
     }
 
     return function cleanup() {
-      if (cameraInstance) {
-        cameraInstance.stopCamera();
+      if (cameraInstance && cameraInstance.stream) {
+        console.log("running cleanup");
+        cameraInstance
+          .stopCamera()
+          .then(() => {
+            console.log("stopped camera");
+          })
+          .catch(err => console.log("camera not running"));
       }
     };
-  }, [cameraInstance, shutterPress]);
+  }, [cameraInstance]);
 
   return (
     <Root>
