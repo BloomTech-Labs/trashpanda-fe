@@ -61,7 +61,6 @@ const CameraPage = ({ shutterPress, setAppCluster, toggleSearchFocus }) => {
       };
 
       if (cameraInstance) {
-        console.log("take Photo");
         const dataUri = cameraInstance.getDataUri(config);
         setImage({ dataUri });
         cameraInstance.stopCamera();
