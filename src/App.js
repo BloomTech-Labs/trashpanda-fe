@@ -48,7 +48,6 @@ const App = () => {
   const [shutterPress, setShutterPress] = useState(false);
   const [searchFocus, setSearchFocus] = useState(false);
   const [appCluster, setAppCluster] = useState();
-  const appContainer = useRef();
 
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
@@ -65,9 +64,11 @@ const App = () => {
 
   useEffect(() => {
     if ("orientation" in screen) {
-      appContainer.current.requestFullscreen();
+      const element = document.documentElement;
+      console.log("test");
+      // element.requestFullscreen();
       screen.orientation.lock("portrait-primary").then(null, function(error) {
-        document.exitFullscreen();
+        //  document.exitFullscreen();
       });
     }
   }, []);
@@ -82,7 +83,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={themeMode}>
-      <div className="App" ref="appContainer">
+      <div className="App">
         <GlobalStyles />
 
         <Switch>
