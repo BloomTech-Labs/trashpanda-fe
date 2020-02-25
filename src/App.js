@@ -105,6 +105,7 @@ const App = () => {
             <CameraPage
               setAppCluster={setAppCluster}
               shutterPress={shutterPress}
+              toggleSearchFocus={toggleSearchFocus}
             />
             <CameraNav
               shutterPress={shutterPress}

@@ -41,7 +41,7 @@ export const GET_CLUSTER = gql`
   }
 `;
 
-const CameraPage = ({ shutterPress, setAppCluster }) => {
+const CameraPage = ({ shutterPress, setAppCluster, toggleSearchFocus }) => {
   const [image, setImage] = useState();
   const videoRef = useRef(null);
   const [cameraInstance, setCameraInstance] = useState();
@@ -117,7 +117,12 @@ const CameraPage = ({ shutterPress, setAppCluster }) => {
       {loading && <Spinner />}
       <StyledVideo hidden={image || !videoRef} ref={videoRef} autoPlay={true} />
       {image && <img src={image.dataUri} alt="camera image" />}
-      {ClusterData && <ClusterResult ClusterData={ClusterData} />}
+      {ClusterData && (
+        <ClusterResult
+          ClusterData={ClusterData}
+          toggleSearchFocus={toggleSearchFocus}
+        />
+      )}
     </Root>
   );
 };
