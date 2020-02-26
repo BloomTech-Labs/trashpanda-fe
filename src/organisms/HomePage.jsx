@@ -20,7 +20,7 @@ const HomePage = ({ theme, toggleTheme, searchFocus, toggleSearchFocus }) => {
     document.getElementById("homeContainer").addEventListener(
       "click",
       function() {
-        document.documentElement.requestFullscreen();
+        // document.documentElement.requestFullscreen();
         screen.orientation.lock("natural");
       },
       false

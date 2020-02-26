@@ -150,7 +150,7 @@ export const TutorialPage = ({ theme }) => {
       document.getElementById("button").addEventListener(
         "click",
         function() {
-          document.documentElement.requestFullscreen();
+          // document.documentElement.requestFullscreen();
           screen.orientation.lock("natural");
         },
         false
