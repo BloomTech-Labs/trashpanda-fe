@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeSearchBar from "../molecules/HomeSearchBar";
 import CategoryGrid from "../molecules/CategoryGrid";
 import styled from "styled-components";

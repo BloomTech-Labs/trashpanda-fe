@@ -145,25 +145,19 @@ export const TutorialPage = ({ theme }) => {
   const [step, setStep] = useState(1);
   const history = useHistory();
 
-  useEffect(() => {
-    // if ("orientation" in screen) {
-    //   const element = document.documentElement;
-    document.getElementById("button").addEventListener(
-      "click",
-      function() {
-        document.documentElement.requestFullscreen();
-        screen.orientation.lock("natural");
-      },
-      false
-    );
-    console.log(window.screen.orientation.type);
-    //   // element.requestFullscreen();
-    // window.screen.orientation.lock("natural"); //.then(null, function(error) {
-    //  document.exitFullscreen();
-    //   });
-    // }
-    console.log(window.screen.orientation.type);
-  }, []);
+  // useEffect(() => {
+
+  //   document.getElementById("button").addEventListener(
+  //     "click",
+  //     function() {
+  //       document.documentElement.requestFullscreen();
+  //       screen.orientation.lock("natural");
+  //     },
+  //     false
+  //   );
+  //   console.log(window.screen.orientation.type);
+
+  // }, []);
 
   const handleNext = () => {
     switch (step) {
