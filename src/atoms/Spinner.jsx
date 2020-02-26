@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, withTheme } from "styled-components";
 import spinnerImg from "../images/loading.svg";
 
 const rotate = keyframes`
@@ -13,15 +13,19 @@ const rotate = keyframes`
 `;
 
 const SpinnerImage = styled.img`
-  height: 193px;
-  width: 200px;
   animation: ${rotate} 1.4s linear infinite;
-  margin: 0 auto;
-  margin-top: 134px;
+  
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -50px; 
+
+
 `;
 
-const Spinner = () => {
-  return <SpinnerImage src={spinnerImg} alt="loading spinner" />;
+const Spinner = ({ theme }) => {
+  return <SpinnerImage src={theme ? theme.loadingImg : spinnerImg} alt="loading spinner" />;
 };
 
-export default Spinner;
+export default withTheme(Spinner);
