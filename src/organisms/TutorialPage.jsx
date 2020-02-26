@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withTheme } from "styled-components";
 import Stepper from "../molecules/Stepper";
 import styled from "styled-components";
@@ -145,6 +145,26 @@ export const TutorialPage = ({ theme }) => {
   const [step, setStep] = useState(1);
   const history = useHistory();
 
+  useEffect(() => {
+    // if ("orientation" in screen) {
+    //   const element = document.documentElement;
+    document.getElementById("button").addEventListener(
+      "click",
+      function() {
+        document.documentElement.requestFullscreen();
+        screen.orientation.lock("natural");
+      },
+      false
+    );
+    console.log(window.screen.orientation.type);
+    //   // element.requestFullscreen();
+    // window.screen.orientation.lock("natural"); //.then(null, function(error) {
+    //  document.exitFullscreen();
+    //   });
+    // }
+    console.log(window.screen.orientation.type);
+  }, []);
+
   const handleNext = () => {
     switch (step) {
       case 3: {
@@ -177,7 +197,7 @@ export const TutorialPage = ({ theme }) => {
     <Container>
       {renderPage(step, theme)}
       <Stepper amount={3} currentStep={step} />
-      <Button marginTop="75" marginBottom="70" onClick={handleNext}>
+      <Button id="button" marginTop="75" marginBottom="70" onClick={handleNext}>
         Next
       </Button>
     </Container>

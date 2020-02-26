@@ -62,17 +62,18 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    // if ("orientation" in screen) {
-    //   const element = document.documentElement;
-    console.log(window.screen.orientation.type);
-    //   // element.requestFullscreen();
-    window.screen.orientation.lock("portrait-primary"); //.then(null, function(error) {
-    //  document.exitFullscreen();
-    //   });
-    // }
-    console.log(window.screen.orientation.type);
-  }, []);
+  // useEffect(() => {
+  //   // if ("orientation" in screen) {
+  //   //   const element = document.documentElement;
+  //   document.getElementsById("button")
+  //   console.log(window.screen.orientation.type);
+  //   //   // element.requestFullscreen();
+  //   window.screen.orientation.lock("natural"); //.then(null, function(error) {
+  //   //  document.exitFullscreen();
+  //   //   });
+  //   // }
+  //   console.log(window.screen.orientation.type);
+  // }, []);
 
   const toggleShutterPress = () => {
     return setShutterPress(!shutterPress);
