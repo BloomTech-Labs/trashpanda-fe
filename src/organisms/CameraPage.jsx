@@ -125,7 +125,7 @@ const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
       {loading && <Spinner />}
       <StyledVideo hidden={image || !videoRef} ref={videoRef} autoPlay={true} />
       {image && <img src={image.dataUri} alt="camera image" />}
-      {ClusterData && (
+      {!ClusterData.loading && ClusterData.data && (
         <ClusterResult
           ClusterData={ClusterData}
           setSearchFocus={setSearchFocus}
