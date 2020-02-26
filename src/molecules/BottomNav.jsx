@@ -7,7 +7,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import cameraImg from "../images/camera_center_icon.svg";
 
 const Container = styled.div`
-  max-width: 573px;
+  max-width: 697px;
   width: 100vw;
   height: 56px;
 
@@ -105,7 +105,7 @@ const InnerContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   position: relative;
-  max-width: 575px;
+  max-width: 700px;
 `;
 
 const CameraButton = styled.button`
