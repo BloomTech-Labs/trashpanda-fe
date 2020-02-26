@@ -69,6 +69,7 @@ const DropListItem = styled.li`
   width: 100%;
   margin-left: 9%;
 `;
+const FilteredContainer = styled.div``;
 
 const GET_MATERIALS = gql`
   query getAllMaterials {
@@ -155,9 +156,11 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
           onChange={e => setSearchTerm(e.target.value)}
         />
       </SearchContainer>
-      <div style={{ display: filtered.length === 0 ? "none" : null }}>
+      <FilteredContainer
+        style={{ display: filtered.length === 0 ? "none" : null }}
+      >
         {renderFiltered()}
-      </div>
+      </FilteredContainer>
       {/* <Toggle toggleTheme={toggleTheme} theme={theme} /> */}
     </SearchPageContainer>
   );
