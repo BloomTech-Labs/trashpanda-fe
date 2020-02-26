@@ -189,6 +189,15 @@ const LocationsPage = ({ theme }) => {
         }
       });
     }
+    //invalid postal_codes still return objects but nothing that is resolved by our backend
+    if (
+      !postalInfo.loading &&
+      postalInfo.postal_code !== 0 &&
+      !locationInfo.loading &&
+      locationInfo.called
+    ) {
+      setLoading(false);
+    }
   }, [postalInfo]);
 
   useEffect(() => {
@@ -210,16 +219,11 @@ const LocationsPage = ({ theme }) => {
     if (validateZip(zip)) {
       setLoading(true);
       console.log("Searching for ", zip);
-
       getPostal({
         variables: {
           postal_code: zip
         }
       });
-      //invalid postal_codes still return objects but nothing that is resolved by our backend
-      if (postalInfo.postal_code !== 0) {
-        setLoading(false);
-      }
     } else alert("Please enter a valid 5-digit US zip code");
   };
 
