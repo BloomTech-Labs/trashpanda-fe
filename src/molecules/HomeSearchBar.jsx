@@ -69,6 +69,7 @@ const DropListItem = styled.li`
   width: 100%;
   margin-left: 9%;
 `;
+const FilteredContainer = styled.div``;
 
 const GET_MATERIALS = gql`
   query getAllMaterials {
@@ -101,13 +102,11 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
       setFiltered(newList);
     }
   }, [searchTerm]);
-
   // sets the selected suggestion to be the search term
   const search = value => {
     const foundMaterial = data.materials.filter(mat =>
       mat.description.toLowerCase().includes(value.toLowerCase())
     )[0];
-    console.log(foundMaterial);
     history.push(`/material/${foundMaterial.material_id}`);
   };
 
@@ -140,7 +139,14 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
 
   return (
     <SearchPageContainer>
-      <SearchContainer onSubmit={handleSubmit} searchTerm={searchTerm}>
+      <SearchContainer
+        onSubmit={handleSubmit}
+        searchTerm={searchTerm}
+        style={{
+          borderRadius:
+            searchTerm !== "" && filtered.length === 0 ? "20px" : null
+        }}
+      >
         <Img src={lensImg} alt="lens" />
         <InputField
           ref={searchBarRef}
@@ -150,7 +156,11 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
           onChange={e => setSearchTerm(e.target.value)}
         />
       </SearchContainer>
-      {renderFiltered()}
+      <FilteredContainer
+        style={{ display: filtered.length === 0 ? "none" : null }}
+      >
+        {renderFiltered()}
+      </FilteredContainer>
       {/* <Toggle toggleTheme={toggleTheme} theme={theme} /> */}
     </SearchPageContainer>
   );
