@@ -18,7 +18,7 @@ const TopContainer = styled.div`
 const HomePage = ({ theme, toggleTheme, searchFocus, toggleSearchFocus }) => {
   useEffect(() => {
     document.getElementById("homeContainer").addEventListener(
-      "click",
+      "load",
       function() {
         document.documentElement.requestFullscreen();
         screen.orientation.lock("natural");
