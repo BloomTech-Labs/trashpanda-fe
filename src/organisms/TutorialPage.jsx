@@ -145,19 +145,19 @@ export const TutorialPage = ({ theme }) => {
   const [step, setStep] = useState(1);
   const history = useHistory();
 
-  // useEffect(() => {
-
-  //   document.getElementById("button").addEventListener(
-  //     "click",
-  //     function() {
-  //       document.documentElement.requestFullscreen();
-  //       screen.orientation.lock("natural");
-  //     },
-  //     false
-  //   );
-  //   console.log(window.screen.orientation.type);
-
-  // }, []);
+  useEffect(() => {
+    if (step === 3) {
+      document.getElementById("button").addEventListener(
+        "click",
+        function() {
+          document.documentElement.requestFullscreen();
+          screen.orientation.lock("natural");
+        },
+        false
+      );
+      console.log(window.screen.orientation.type);
+    }
+  }, [step]);
 
   const handleNext = () => {
     switch (step) {
