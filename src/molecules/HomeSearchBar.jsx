@@ -79,7 +79,7 @@ const GET_MATERIALS = gql`
     }
   }
 `;
-const HomeSearchBar = ({ searchFocus, toggleSearchFocus }) => {
+const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filtered, setFiltered] = useState([]);
   const searchBarRef = useRef();
@@ -135,7 +135,7 @@ const HomeSearchBar = ({ searchFocus, toggleSearchFocus }) => {
   const handleSubmit = e => {
     e.preventDefault();
     search(searchTerm);
-    toggleSearchFocus(false);
+    setSearchFocus(false);
   };
 
   return (
