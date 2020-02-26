@@ -1,6 +1,7 @@
 import React from "react";
 import HomePage from "../HomePage";
 import { MockedProvider } from "@apollo/react-testing";
+import { GET_CATEGORIES } from "../../App.js";
 import {
   render,
   cleanup,
@@ -10,9 +11,6 @@ import {
 } from "@testing-library/react";
 import { mockCategoryList } from "./mock_data/mockOrganismState";
 
-// import reactRouterDOM from "react-router-dom";
-// import CategoryGrid from "../../molecules/CategoryGrid";
-
 //useHistory is used in modules CategoryGrid and HomeSearchBar
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -21,13 +19,41 @@ jest.mock("react-router-dom", () => ({
   })
 }));
 
+const mocksQuery = [
+  {
+    request: {
+      query: GET_CATEGORIES
+    },
+    result: {
+      data: {
+        families: [
+          {
+            material_ids: [1, 2, 4],
+            family_id: 1,
+            description: "first family",
+            family_type_id: 1,
+            image_url: "google.com"
+          },
+          {
+            material_ids: [3, 5, 7],
+            family_id: 2,
+            description: "second family",
+            family_type_id: 2,
+            image_url: "google.com"
+          }
+        ]
+      }
+    }
+  }
+];
+
 describe("HomePage", () => {
   afterEach(cleanup);
 
   it("renders HomePage and GridCards based on description of mock Category List", async () => {
     const page = render(
-      <MockedProvider addTypename={false}>
-        <HomePage categorylist={mockCategoryList} />
+      <MockedProvider mocks={mocksQuery} addTypename={false}>
+        <HomePage />
       </MockedProvider>
     );
     await waitForElement(() => page.getByText(/first family/i));
@@ -36,21 +62,15 @@ describe("HomePage", () => {
 
   it("renders HomePage and input field with placeholder text 'enter search term'", async () => {
     const page = render(
-      <MockedProvider addTypename={false}>
-        <HomePage categorylist={mockCategoryList} />
+      <MockedProvider mocks={mocksQuery} addTypename={false}>
+        <HomePage />
       </MockedProvider>
     );
     await waitForElement(() => page.getByPlaceholderText(/enter search term/i));
   });
 
-  //   it("fires handleCategoryClick function by clicking a GridCard", async () => {
-  //     const page = render(
-  //       <MockedProvider addTypename={false}>
-  //         <HomePage categorylist={mockCategoryList} />
-  //       </MockedProvider>
-  //     );
-  //     fireEvent.click(page.getByText(/first family/));
-
-  //     expect().toHaveBeenCalledTimes( 1);
-  //   });
+  //NO TEXT CHANGES ON FIRED EVENTS
 });
+
+//REMOVED
+//categorylist={mockCategoryList} from HomePage component, we are no longer passing query results down from App through prop drilling, so here we have to mock the entire query and pass it to the MockProvider
