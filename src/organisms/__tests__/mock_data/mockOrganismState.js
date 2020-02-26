@@ -3,13 +3,15 @@ const mockCategoryList = [
     material_ids: [1, 2, 4],
     family_id: 1,
     description: "first family",
-    family_type_id: 1
+    family_type_id: 1,
+    image_url: "google.com"
   },
   {
     material_ids: [3, 5, 7],
     family_id: 2,
     description: "second family",
-    family_type_id: 2
+    family_type_id: 2,
+    image_url: "google.com"
   }
 ];
 
