@@ -46,7 +46,7 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.svg$": "<rootDir>/svgTransform.js",
+      "^.+\\.(svg|png|css)$": "<rootDir>/svgTransform.js",
       "^.+\\.(js|jsx)$": "babel-jest"
     },
     "testPathIgnorePatterns": [
