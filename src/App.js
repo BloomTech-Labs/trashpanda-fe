@@ -65,12 +65,13 @@ const App = () => {
   useEffect(() => {
     // if ("orientation" in screen) {
     //   const element = document.documentElement;
-    //   console.log("test");
+    console.log(window.screen.orientation.type);
     //   // element.requestFullscreen();
     window.screen.orientation.lock("portrait-primary"); //.then(null, function(error) {
     //  document.exitFullscreen();
     //   });
     // }
+    console.log(window.screen.orientation.type);
   }, []);
 
   const toggleShutterPress = () => {
