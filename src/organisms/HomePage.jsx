@@ -17,7 +17,7 @@ const TopContainer = styled.div`
 
 const HomePage = ({ theme, toggleTheme, searchFocus, setSearchFocus }) => {
   return (
-    <Container onClick={() => toggleSearchFocus(false)}>
+    <Container onClick={() => setSearchFocus(false)}>
       <TopContainer>
         <HomeSearchBar
           searchFocus={searchFocus}
