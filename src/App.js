@@ -62,18 +62,17 @@ const App = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   // if ("orientation" in screen) {
-  //   //   const element = document.documentElement;
-  //   document.getElementsById("button")
-  //   console.log(window.screen.orientation.type);
-  //   //   // element.requestFullscreen();
-  //   window.screen.orientation.lock("natural"); //.then(null, function(error) {
-  //   //  document.exitFullscreen();
-  //   //   });
-  //   // }
-  //   console.log(window.screen.orientation.type);
-  // }, []);
+  useEffect(() => {
+    document.getElementById("appContainer").addEventListener(
+      "click",
+      function() {
+        document.documentElement.requestFullscreen();
+        screen.orientation.lock("natural");
+      },
+      false
+    );
+    console.log(window.screen.orientation.type);
+  }, []);
 
   const toggleShutterPress = () => {
     return setShutterPress(!shutterPress);
@@ -85,7 +84,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={themeMode}>
-      <div className="App">
+      <div className="App" id="appContainer">
         <GlobalStyles />
 
         <Switch>

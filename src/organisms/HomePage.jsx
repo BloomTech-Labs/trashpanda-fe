@@ -16,8 +16,20 @@ const TopContainer = styled.div`
 `;
 
 const HomePage = ({ theme, toggleTheme, searchFocus, toggleSearchFocus }) => {
+  useEffect(() => {
+    document.getElementById("homeContainer").addEventListener(
+      "click",
+      function() {
+        document.documentElement.requestFullscreen();
+        screen.orientation.lock("natural");
+      },
+      false
+    );
+    console.log(window.screen.orientation.type);
+  }, []);
+
   return (
-    <Container onClick={() => toggleSearchFocus(false)}>
+    <Container id="homeContainer" onClick={() => toggleSearchFocus(false)}>
       <TopContainer>
         <HomeSearchBar
           searchFocus={searchFocus}
