@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
     max-width= "575px";
-    width: ${window.innerWidth > 575 ? "567px" : window.innerWidth};
+    width: ${window.innerWidth > 575 ? "567px" : "100%"};
     position:absolute;
     bottom: 0;
     display: flex;
