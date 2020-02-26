@@ -62,14 +62,6 @@ const App = () => {
     }
   }, []);
 
-  const toggleShutterPress = () => {
-    return setShutterPress(!shutterPress);
-  };
-
-  const toggleSearchFocus = focused => {
-    return setSearchFocus(focused);
-  };
-
   return (
     <ThemeProvider theme={themeMode}>
       <div className="App">
@@ -79,7 +71,7 @@ const App = () => {
           <Route exact path="/">
             <HomePage
               toggleTheme={toggleTheme}
-              toggleSearchFocus={toggleSearchFocus}
+              setSearchFocus={setSearchFocus}
               searchFocus={searchFocus}
               theme={theme}
             />
@@ -105,12 +97,13 @@ const App = () => {
             <CameraPage
               setAppCluster={setAppCluster}
               shutterPress={shutterPress}
-              toggleSearchFocus={toggleSearchFocus}
+              setSearchFocus={setSearchFocus}
+              setShutterPress={setShutterPress}
             />
             <CameraNav
               shutterPress={shutterPress}
-              toggleShutterPress={toggleShutterPress}
-              toggleSearchFocus={toggleSearchFocus}
+              setShutterPress={setShutterPress}
+              setSearchFocus={setSearchFocus}
             />
           </Route>
           <Route exact path="/camera/results">

@@ -80,7 +80,7 @@ const getLoadingState = ClusterData => {
   }
 };
 
-const ClusterResult = ({ ClusterData, toggleSearchFocus }) => {
+const ClusterResult = ({ ClusterData, setSearchFocus }) => {
   const history = useHistory();
   const [expanded, setExpanded] = useState(false);
   const theme = useRef(() => localStorage.getItem("theme")).current;
@@ -90,7 +90,7 @@ const ClusterResult = ({ ClusterData, toggleSearchFocus }) => {
   const toggleExpanded = () => setExpanded(!expanded);
 
   const handleSearchReturn = async () => {
-    await toggleSearchFocus(true);
+    await setSearchFocus(true);
     history.push(`/`);
   };
 

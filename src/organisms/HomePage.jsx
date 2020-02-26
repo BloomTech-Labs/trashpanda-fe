@@ -15,13 +15,13 @@ const TopContainer = styled.div`
   justify-content: flex-start;
 `;
 
-const HomePage = ({ theme, toggleTheme, searchFocus, toggleSearchFocus }) => {
+const HomePage = ({ theme, toggleTheme, searchFocus, setSearchFocus }) => {
   return (
     <Container onClick={() => toggleSearchFocus(false)}>
       <TopContainer>
         <HomeSearchBar
           searchFocus={searchFocus}
-          toggleSearchFocus={toggleSearchFocus}
+          setSearchFocus={setSearchFocus}
         />
         <Toggle theme={theme} toggleTheme={toggleTheme} />
       </TopContainer>

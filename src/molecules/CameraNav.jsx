@@ -62,7 +62,7 @@ const CameraImage = styled.img`
   cursor: pointer;
 `;
 
-const CameraNav = ({ toggleShutterPress, toggleSearchFocus }) => {
+const CameraNav = ({ setShutterPress, setSearchFocus }) => {
   const [isHome, setIsHome] = useState(true);
   const location = useLocation();
   const history = useHistory();
@@ -72,21 +72,23 @@ const CameraNav = ({ toggleShutterPress, toggleSearchFocus }) => {
   const [searchBtn, setSearchBtn] = useState(searchIconLightMode);
 
   useEffect(() => {
-    toggleSearchFocus(false);
+    setSearchFocus(false);
   }, []);
 
   useEffect(() => {
+    setShutterPress(false);
     setIsHome(location.pathname === "/");
   }, [location.pathname]);
 
   const handleBackClick = () => {
+    setSearchFocus(true);
+    setShutterPress(false);
     history.push("/");
-    toggleSearchFocus(true);
   };
 
   const handleCameraBtn = () => {
     //pass in the function that captures the base 64 on the canvas/CameraPage
-    toggleShutterPress();
+    setShutterPress(true);
   };
 
   useEffect(() => {
