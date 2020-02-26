@@ -142,7 +142,7 @@ function renderLocations(locations, loaded, theme) {
 const LocationsPage = ({ theme }) => {
   const { materialId } = useParams();
   const [zip, setZip] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const gps = JSON.parse(localStorage.getItem("gps"));
   const [getLocations, locationInfo] = useLazyQuery(GET_LOCATIONS);
@@ -200,12 +200,12 @@ const LocationsPage = ({ theme }) => {
     }
   }, [postalInfo]);
 
-  // useEffect(() => {
-  //   if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
-  //     setLocations(locationInfo.data.locations);
-  //     setLoading(false);
-  //   }
-  // }, [locationInfo.loading, locationInfo.called, locationInfo.data]);
+  useEffect(() => {
+    if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
+      setLocations(locationInfo.data.locations);
+      setLoading(false);
+    }
+  }, [locationInfo.loading, locationInfo.called, locationInfo.data]);
 
   const handleClick = () => {
     if (
