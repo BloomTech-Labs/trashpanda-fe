@@ -62,7 +62,7 @@ const CameraImage = styled.img`
   cursor: pointer;
 `;
 
-const CameraNav = ({ setShutterPress, setSearchFocus }) => {
+const CameraNav = ({ setShutterPress, setSearchFocus, shutterPress }) => {
   const [isHome, setIsHome] = useState(true);
   const location = useLocation();
   const history = useHistory();
@@ -106,7 +106,9 @@ const CameraNav = ({ setShutterPress, setSearchFocus }) => {
   return (
     <Container>
       <InnerContainer>
-        <CameraImage src={cameraBtn} onClick={handleCameraBtn} alt="camera" />
+        {!shutterPress && (
+          <CameraImage src={cameraBtn} onClick={handleCameraBtn} alt="camera" />
+        )}
 
         {isHome ? null : (
           <Img
