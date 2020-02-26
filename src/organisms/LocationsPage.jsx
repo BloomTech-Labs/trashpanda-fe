@@ -122,27 +122,27 @@ function renderLocations(locations, loaded, theme) {
       ))}
     </CardsContainer>
   ) : (
-    <div>
-      {loaded ? (
-        <div>
-          <NoResults>Sorry</NoResults>
-          <NoResultsP>There are no results in your area</NoResultsP>
-        </div>
-      ) : (
-        ""
-      )}
-      <Img
-        src={loaded ? theme.sadManImg : walkingImage}
-        marginTop={loaded ? "51" : "108"}
-      />
-    </div>
-  );
+      <div>
+        {loaded ? (
+          <div>
+            <NoResults>Sorry</NoResults>
+            <NoResultsP>There are no results in your area</NoResultsP>
+          </div>
+        ) : (
+            ""
+          )}
+        <Img
+          src={loaded ? theme.sadManImg : walkingImage}
+          marginTop={loaded ? "51" : "108"}
+        />
+      </div>
+    );
 }
 
 const LocationsPage = ({ theme }) => {
   const { materialId } = useParams();
   const [zip, setZip] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [locations, setLocations] = useState([]);
   const gps = JSON.parse(localStorage.getItem("gps"));
   const [getLocations, locationInfo] = useLazyQuery(GET_LOCATIONS);
@@ -200,12 +200,12 @@ const LocationsPage = ({ theme }) => {
     }
   }, [postalInfo]);
 
-  useEffect(() => {
-    if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
-      setLocations(locationInfo.data.locations);
-      setLoading(false);
-    }
-  }, [locationInfo.loading, locationInfo.called, locationInfo.data]);
+  // useEffect(() => {
+  //   if (locationInfo.called && locationInfo.data && !locationInfo.loading) {
+  //     setLocations(locationInfo.data.locations);
+  //     setLoading(false);
+  //   }
+  // }, [locationInfo.loading, locationInfo.called, locationInfo.data]);
 
   const handleClick = () => {
     if (
@@ -245,8 +245,8 @@ const LocationsPage = ({ theme }) => {
       {loading ? (
         <Spinner />
       ) : (
-        renderLocations(locations, locationInfo.called, theme)
-      )}
+          renderLocations(locations, locationInfo.called, theme)
+        )}
     </Container>
   );
 };

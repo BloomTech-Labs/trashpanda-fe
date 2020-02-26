@@ -14,8 +14,14 @@ const rotate = keyframes`
 
 const SpinnerImage = styled.img`
   animation: ${rotate} 1.4s linear infinite;
-  margin: 0 auto;
-  margin-top: 134px;
+  
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -50px; 
+
+
 `;
 
 const Spinner = ({ theme }) => {
