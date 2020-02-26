@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
@@ -61,6 +61,19 @@ const App = () => {
       history.push("/intro");
     }
   }, []);
+
+  // useEffect(() => {
+  //   // if ("orientation" in screen) {
+  //   //   const element = document.documentElement;
+  //   document.getElementsById("button")
+  //   console.log(window.screen.orientation.type);
+  //   //   // element.requestFullscreen();
+  //   window.screen.orientation.lock("natural"); //.then(null, function(error) {
+  //   //  document.exitFullscreen();
+  //   //   });
+  //   // }
+  //   console.log(window.screen.orientation.type);
+  // }, []);
 
   const toggleShutterPress = () => {
     return setShutterPress(!shutterPress);

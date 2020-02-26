@@ -10,7 +10,7 @@ import cameraBtnImgDarkMode from "../images/camera_icon_camera.svg";
 import cameraBtnImgLightMode from "../images/camera_icon_camera_light.svg";
 
 const Container = styled.div`
-  max-width: 575px;
+  max-width: 700px;
   width: 100vw;
   height: 56px;
 
@@ -41,7 +41,7 @@ const InnerContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   position: relative;
-  max-width: 573px;
+  max-width: 693px;
 `;
 
 const CameraImage = styled.img`
