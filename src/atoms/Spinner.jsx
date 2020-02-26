@@ -13,15 +13,12 @@ const rotate = keyframes`
 `;
 
 const SpinnerImage = styled.img`
-  height: 193px;
-  width: 200px;
   animation: ${rotate} 1.4s linear infinite;
   margin: 0 auto;
   margin-top: 134px;
 `;
 
 const Spinner = ({ theme }) => {
-  console.log("theme: ", theme);
   return <SpinnerImage src={theme ? theme.loadingImg : spinnerImg} alt="loading spinner" />;
 };
 
