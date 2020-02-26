@@ -62,16 +62,16 @@ const App = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if ("orientation" in screen) {
-  //     const element = document.documentElement;
-  //     console.log("test");
-  //     // element.requestFullscreen();
-  //     screen.orientation.lock("portrait-primary").then(null, function(error) {
-  //       //  document.exitFullscreen();
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if ("orientation" in screen) {
+      const element = document.documentElement;
+      console.log("test");
+      // element.requestFullscreen();
+      ScreenOrientation.lock("portrait-primary").then(null, function(error) {
+        //  document.exitFullscreen();
+      });
+    }
+  }, []);
 
   const toggleShutterPress = () => {
     return setShutterPress(!shutterPress);
