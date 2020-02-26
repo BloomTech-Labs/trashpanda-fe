@@ -85,7 +85,6 @@ const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
   }, [videoRef]);
 
   useEffect(() => {
-    console.log(shutterPress);
     const facingMode = FACING_MODES.ENVIRONMENT;
 
     //set width to height to fix mobile camera

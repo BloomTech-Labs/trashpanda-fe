@@ -82,10 +82,6 @@ const ClusterResult = ({ ClusterData, setSearchFocus }) => {
     toggleExpanded();
   }, []);
 
-  useEffect(() => {
-    console.log({ expanded });
-  }, [expanded]);
-
   return (
     <Container onClick={() => history.push("/camera/results")}>
       <Collapse isOpened={expanded}>
