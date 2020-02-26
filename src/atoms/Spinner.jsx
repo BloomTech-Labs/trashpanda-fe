@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, withTheme } from "styled-components";
 import spinnerImg from "../images/loading.svg";
 
 const rotate = keyframes`
@@ -20,8 +20,9 @@ const SpinnerImage = styled.img`
   margin-top: 134px;
 `;
 
-const Spinner = () => {
-  return <SpinnerImage src={spinnerImg} alt="loading spinner" />;
+const Spinner = ({ theme }) => {
+  console.log("theme: ", theme);
+  return <SpinnerImage src={theme ? theme.loadingImg : spinnerImg} alt="loading spinner" />;
 };
 
-export default Spinner;
+export default withTheme(Spinner);
