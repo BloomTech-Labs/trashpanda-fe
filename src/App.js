@@ -5,6 +5,7 @@ import CategoryPage from "./organisms/CategoryPage";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import MaterialPage from "./organisms/MaterialPage";
+import { useQuery } from "@apollo/react-hooks";
 
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
@@ -49,6 +50,9 @@ const App = () => {
   const [searchFocus, setSearchFocus] = useState(false);
   const [appCluster, setAppCluster] = useState();
 
+  const categories = useQuery(GET_CATEGORIES);
+  const materials = useQuery(GET_MATERIALS);
+
   useEffect(() => {
     const permissions = JSON.parse(localStorage.getItem("permissions"));
 
@@ -79,7 +83,7 @@ const App = () => {
             <BottomNav />
           </Route>
           <Route exact path="/category/:categoryId">
-            <CategoryPage />
+            <CategoryPage categories={categories} materials={materials} />
             <BottomNav />
           </Route>
           <Route exact path="/material/:materialId">
