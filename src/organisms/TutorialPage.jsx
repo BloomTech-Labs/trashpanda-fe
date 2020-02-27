@@ -47,6 +47,7 @@ const SubTitle = styled.h3`
   margin-bottom: 11px;
   margin-left: 30px;
   margin-right: 30px;
+  height: 50px;
 `;
 
 const Img = styled.img`
@@ -67,6 +68,8 @@ const PText = styled.p`
   margin-right: 60px;
   margin-top: 0px;
   margin-bottom: ${props => props.marginBottom}px;
+
+  height: 76px;
 `;
 
 const CenterContainer = styled.div`
@@ -125,13 +128,13 @@ function getCamera(onSuccess, onError) {
       .getUserMedia(constraints)
       .then(stream => {
         if (onSuccess) onSuccess();
-        stream.getTracks().forEach(function(track) {
+        stream.getTracks().forEach(function (track) {
           track.stop();
         });
       })
       .catch(err => {
         if (onError) onError(err);
-        stream.getTracks().forEach(function(track) {
+        stream.getTracks().forEach(function (track) {
           track.stop();
         });
       });
