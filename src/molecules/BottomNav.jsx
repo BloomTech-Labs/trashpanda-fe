@@ -112,7 +112,8 @@ const CameraButton = styled.button`
   outline: none;
   border: none;
   background-color: ${({ theme }) => theme.bottomNavCameraPg};
-
+  width: 66px;
+  height: 66px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 16px;
   border-radius: 100px;
