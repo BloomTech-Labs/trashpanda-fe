@@ -41,7 +41,7 @@ const InnerContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   position: relative;
-  max-width: 573px;
+  max-width: 800px;
 `;
 
 const CameraImage = styled.img`
