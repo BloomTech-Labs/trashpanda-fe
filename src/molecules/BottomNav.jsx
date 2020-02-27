@@ -10,15 +10,15 @@ const Container = styled.div`
   max-width: 573px;
   width: 100vw;
   height: 56px;
+  display: flex;
 
-  //hide navbar on mobile if search focused
-  display: ${({ searchFocus }) => {
+  //force navbar to bottom on mobile if search focused
+  position: ${({ searchFocus }) => {
     if (searchFocus && window.innerWidth < 575) {
-      return "none";
+      return "absolute";
     }
-    return "flex";
+    return "fixed";
   }};
-  position: fixed;
   bottom: 0;
   align-items: center;
   justify-content: center;
