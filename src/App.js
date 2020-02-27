@@ -76,19 +76,19 @@ const App = () => {
               theme={theme}
             />
 
-            <BottomNav />
+            <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/category/:categoryId">
             <CategoryPage />
-            <BottomNav />
+            <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/material/:materialId">
             <MaterialPage />
-            <BottomNav />
+            <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/material/:materialId/locations">
             <LocationsPage />
-            <BottomNav />
+            <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/intro">
             <TutorialPage />
@@ -108,7 +108,7 @@ const App = () => {
           </Route>
           <Route exact path="/camera/results">
             <ClusterPage appCluster={appCluster} />
-            <BottomNav />
+            <BottomNav searchFocus={searchFocus} />
           </Route>
         </Switch>
       </div>

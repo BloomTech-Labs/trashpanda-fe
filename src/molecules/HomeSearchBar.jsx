@@ -93,6 +93,31 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
     }
   }, [searchFocus]);
 
+  useEffect(() => {
+    //detect whether the input field has focus and set a flag that we can use to hide the navbar.
+
+    const searchField = document.querySelector('input[type="text"]');
+
+    searchField.addEventListener("focus", () => {
+      setSearchFocus(true);
+    });
+
+    searchField.addEventListener("blur", () => {
+      setSearchFocus(false);
+    });
+
+    return function cleanup() {
+      setSearchFocus(false);
+
+      searchField.removeEventListener("focus", () => {
+        setSearchFocus(true);
+      });
+      searchField.removeEventListener("blur", () => {
+        setSearchFocus(false);
+      });
+    };
+  }, []);
+
   // gets the materials and filters the material to the search term
   useEffect(() => {
     if (data && !loading) {
