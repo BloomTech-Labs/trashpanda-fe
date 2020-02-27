@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { Collapse } from "react-collapse";
+
 import styled from "styled-components";
 import Button from "../atoms/Button";
-import resultBtnImage from "../images/results_button.svg";
 import chevron_lite from "../images/chevrons_up_lite.svg";
 import chevron_dark from "../images/chevrons_up_dark.svg";
 
@@ -9,30 +10,16 @@ import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
     max-width= "575px";
-    width: ${window.innerWidth > 575 ? "567px" : window.innerWidth};
+    width: ${window.innerWidth > 575 ? "567px" : "100%"};
     position:absolute;
     bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-`;
-
-const ResultsBox = styled.div`
-  max-width: 575px;
-  width: 98vw;
-  background-color: ${({ theme }) => theme.body};
-  color: ${({ theme }) => theme.text};
-  display: flex;
-  height: ${({ expanded }) => (expanded ? "500px" : "140px")};
-  flex-direction: column;
-  justify-content: top;
-  align-items: center;
-  border-radius: 15px 15px 0px 0px;
-  transition: height 2s;
-`;
-
-const ResultHandleImg = styled.img`
-  margin: 10px;
+    border-radius: 15px 15px 0px 0px;
+    padding-bottom: 40px;
+    background-color: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
 `;
 
 const ChevronsImg = styled.img`
@@ -70,9 +57,6 @@ const resultText = loadingState => {
 };
 
 const getLoadingState = ClusterData => {
-  if (ClusterData.loading) {
-    return "loading";
-  }
   if (ClusterData.data && ClusterData.data.getCluster.materials.length > 0) {
     return "found";
   } else {
@@ -83,7 +67,7 @@ const getLoadingState = ClusterData => {
 const ClusterResult = ({ ClusterData, setSearchFocus }) => {
   const history = useHistory();
   const [expanded, setExpanded] = useState(false);
-  const theme = useRef(() => localStorage.getItem("theme")).current;
+  const theme = localStorage.getItem("theme");
 
   const loadingState = getLoadingState(ClusterData);
 
@@ -95,18 +79,14 @@ const ClusterResult = ({ ClusterData, setSearchFocus }) => {
   };
 
   useEffect(() => {
-    if (!ClusterData.loading && ClusterData.data) {
-      toggleExpanded();
-    }
-  }, [ClusterData]);
+    toggleExpanded();
+  }, []);
 
   return (
-    <Container>
-      <ResultsBox expanded={expanded}>
-        <ResultHandleImg src={resultBtnImage} onClick={toggleExpanded} />
+    <Container onClick={() => history.push("/camera/results")}>
+      <Collapse isOpened={expanded}>
         {expanded && (
-          <Results onClick={() => history.push("/camera/results")}>
-            <ResultBoxText>{resultText(loadingState)}</ResultBoxText>
+          <Results>
             {loadingState === "found" && (
               <>
                 <ResultName>
@@ -118,13 +98,19 @@ const ClusterResult = ({ ClusterData, setSearchFocus }) => {
               </>
             )}
             {loadingState === "none" && (
-              <Button style={{ marginTop: "6vh" }} onClick={handleSearchReturn}>
-                Search
-              </Button>
+              <>
+                <ResultBoxText>{resultText(loadingState)}</ResultBoxText>
+                <Button
+                  style={{ marginTop: "6vh", marginBottom: "6vh" }}
+                  onClick={handleSearchReturn}
+                >
+                  Search
+                </Button>
+              </>
             )}
           </Results>
         )}
-      </ResultsBox>
+      </Collapse>
     </Container>
   );
 };

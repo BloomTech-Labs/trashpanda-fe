@@ -85,7 +85,6 @@ const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
   }, [videoRef]);
 
   useEffect(() => {
-    console.log(shutterPress);
     const facingMode = FACING_MODES.ENVIRONMENT;
 
     //set width to height to fix mobile camera
@@ -125,7 +124,7 @@ const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
       {loading && <Spinner />}
       <StyledVideo hidden={image || !videoRef} ref={videoRef} autoPlay={true} />
       {image && <img src={image.dataUri} alt="camera image" />}
-      {ClusterData && (
+      {!ClusterData.loading && ClusterData.data && (
         <ClusterResult
           ClusterData={ClusterData}
           setSearchFocus={setSearchFocus}
