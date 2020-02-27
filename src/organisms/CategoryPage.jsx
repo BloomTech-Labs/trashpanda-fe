@@ -34,6 +34,7 @@ const CategoryPage = ({ categories, materials }) => {
 
   const [currentFamily, setCurrentFamily] = useState();
   const [materialList, setMaterialList] = useState();
+  const [plasticList, setPlasticList] = useState([]);
 
   useEffect(() => {
     if (categories && !categories.loading && categories.data) {
@@ -53,7 +54,100 @@ const CategoryPage = ({ categories, materials }) => {
           }
         })
         .filter(exists => exists);
-      setMaterialList(familyMaterials);
+
+      if (categoryId == 9) {
+        setPlasticList([
+          {
+            title: "Plastic Bags",
+            image_url: getImageURL(familyMaterials, 445)
+          },
+          {
+            title: "Plastic Bottles",
+            image_url: getImageURL(familyMaterials, 60)
+            // materialIds: [60,455,63,64,65,66,67]
+          },
+          {
+            title: "Plastic Caps",
+            image_url: getImageURL(familyMaterials, 619)
+          },
+          {
+            title: "Plastic Clamshells",
+            image_url: getImageURL(familyMaterials, 446)
+          },
+          {
+            title: "Plastic Cups",
+            image_url: getImageURL(familyMaterials, 466)
+          },
+          {
+            title: "Plastic Film",
+            image_url: getImageURL(familyMaterials, 447)
+          },
+          {
+            title: "Rigid Plastics",
+            image_url: getImageURL(familyMaterials, 448)
+          }
+        ]);
+
+        //Remove overwhelming #'d plastic type material ids
+        //Plastic bottles: 60, 455, 63, 64, 65, 66, 67
+        //Plastic Bags: 445, 93, 456, 429 ,464, 470, 477
+        //Plastic Clamshells: 446, 452, 465, 472,
+        //Plastic Film: 447, 413, 457, 461, 467, 473, 478
+        //Rigid plastics: 448, 454, 458, 463, 468, 475, 476,
+        //Plastic cups: 466, 621, 471
+        //Plastic caps: 619, 361
+        setMaterialList(
+          removeMaterials(familyMaterials, [
+            //Remove plastic bottles
+            60,
+            449,
+            455,
+            63,
+            64,
+            65,
+            66,
+            67,
+            //Remove Plastic Bags
+            445,
+            93,
+            456,
+            429,
+            464,
+            470,
+            477,
+            //Remove plastic caps
+            619,
+            361,
+            //Remove Plastic clamshells
+            446,
+            452,
+            465,
+            472,
+            //Remove Plastic film
+            447,
+            413,
+            457,
+            461,
+            467,
+            473,
+            478,
+            //Remove rigid plastics
+            448,
+            454,
+            458,
+            463,
+            468,
+            475,
+            476,
+            //Remove plastic cups
+            466,
+            621,
+            471
+          ])
+        );
+      } else {
+        setMaterialList(familyMaterials);
+      }
     }
   }, [categories, materials, currentFamily]);
 
@@ -65,6 +159,14 @@ const CategoryPage = ({ categories, materials }) => {
     <Root>
       {currentFamily && <HeaderTitle>{currentFamily.description}</HeaderTitle>}
       <MaterialGrid>
+        {plasticList &&
+          plasticList.map((mat, key) => (
+            <GridCard
+              image={mat.image_url.length > 0 ? mat.image_url : placeholderImg}
+              name={mat.title}
+              key={key}
+            />
+          ))}
         {materialList &&
           materialList.map((mat, key) => (
             <GridCard
@@ -78,6 +180,22 @@ const CategoryPage = ({ categories, materials }) => {
     </Root>
   );
 };
+
+function getImageURL(materialList, materialId) {
+  const found = materialList.find(material => {
+    return material.material_id === materialId;
+  });
+  return found ? found.image_url : "";
+}
+
+function removeMaterials(materialList, idsToRemove) {
+  console.log("removing? ");
+  return materialList.filter(material => {
+    if (idsToRemove.includes(material.material_id)) {
+    }
+    return !idsToRemove.includes(material.material_id);
+  });
+}
 
 export default CategoryPage;
 
