@@ -10,7 +10,7 @@ import cameraBtnImgDarkMode from "../images/camera_icon_camera.svg";
 import cameraBtnImgLightMode from "../images/camera_icon_camera_light.svg";
 
 const Container = styled.div`
-  max-width: 575px;
+  max-width: 700px;
   width: 100vw;
   height: 56px;
 
