@@ -9,7 +9,7 @@ import Spinner from "../atoms/Spinner";
 import ClusterResult from "../molecules/ClusterResult";
 
 const Root = styled.div`
-  max-width: 700px;
+  max-width: 800px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -88,7 +88,7 @@ const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
     const facingMode = FACING_MODES.ENVIRONMENT;
 
     //set width to height to fix mobile camera
-    const height = window.innerWidth > 700 ? 700 : window.innerWidth;
+    const height = window.innerWidth > 800 ? 800 : window.innerWidth;
     const idealResolution = {
       height,
       width: window.innerHeight

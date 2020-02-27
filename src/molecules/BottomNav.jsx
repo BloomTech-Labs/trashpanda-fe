@@ -7,13 +7,13 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import cameraImg from "../images/camera_center_icon.svg";
 
 const Container = styled.div`
-  max-width: 700px;
+  max-width: 800px;
   width: 100vw;
   height: 56px;
 
   //hide navbar on mobile if search focused
   display: ${({ searchFocus }) => {
-    if (searchFocus && window.innerWidth < 700) {
+    if (searchFocus && window.innerWidth < 800) {
       return "none";
     }
     return "flex";
@@ -110,7 +110,7 @@ const InnerContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   position: relative;
-  max-width: 700px;
+  max-width: 800px;
 `;
 
 const CameraButton = styled.button`
