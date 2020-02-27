@@ -9,8 +9,8 @@ import chevron_dark from "../images/chevrons_up_dark.svg";
 import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
-    max-width= "575px";
-    width: ${window.innerWidth > 575 ? "567px" : "100%"};
+    max-width= "800px";
+    width: ${window.innerWidth > 800 ? "800px" : "100%"};
     position:absolute;
     bottom: 0;
     display: flex;
