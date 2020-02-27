@@ -23,7 +23,7 @@ const mocksQuery = [
           description: "first",
           long_description: "teh primary",
           bin_trash: false,
-          bin_recycle: true,
+          bin_recycle: false,
           bin_compost: true,
           dropoff: "event",
           pickup: "no",
@@ -44,6 +44,8 @@ jest.mock("react-router-dom", () => ({
     materialId: 1
   })
 }));
+
+jest.mock("../../molecules/Badge.jsx");
 
 describe("MaterialPage", () => {
   afterEach(cleanup);
