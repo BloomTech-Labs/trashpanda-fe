@@ -11,10 +11,15 @@ const Container = styled.div`
   width: 100vw;
   height: 56px;
 
+  //hide navbar on mobile if search focused
+  display: ${({ searchFocus }) => {
+    if (searchFocus && window.innerWidth < 575) {
+      return "none";
+    }
+    return "flex";
+  }};
   position: fixed;
   bottom: 0;
-
-  display: flex;
   align-items: center;
   justify-content: center;
 `;
@@ -128,7 +133,7 @@ const CameraButton = styled.button`
 
 const CameraImage = styled.img``;
 
-const BottomNav = () => {
+const BottomNav = ({ searchFocus }) => {
   const [isHome, setIsHome] = useState(true);
   const location = useLocation();
   const history = useHistory();
@@ -146,7 +151,7 @@ const BottomNav = () => {
   };
 
   return (
-    <Container>
+    <Container searchFocus={searchFocus}>
       <InnerContainer>
         <BottomBandSquare />
         <BottomBandLeft />
