@@ -68,7 +68,7 @@ const Blurb = styled.h2`
   font-size: 26px;
   text-align: center;
   margin: 0;
-  margin-top: 10px;
+  margin-top: 10vh;
   pading: 0;
   color: ${({ theme }) => theme.text};
 `;
