@@ -83,7 +83,7 @@ let p1, p2, p3;
 
 let startingX;
 
-function renderPage(step, theme) {
+function renderPage(step, theme, handleNext) {
   function handleTouchStart(e, prev, current, next) {
     startingX = e.touches[0].clientX;
     console.log("e touches starting", startingX); /////////////OK
@@ -102,7 +102,7 @@ function renderPage(step, theme) {
     const change = startingX - touch.clientX;
     // console.log("move", touch.clientX);
     // console.log("move change", change);
-    e.preventDefault();
+    //e.preventDefault();
     if ((current === p1 && change < 0) || (current === p3 && change > 0)) {
       return;
     } else if ((current === p1 || current === p2) && change > 0) {
@@ -115,7 +115,7 @@ function renderPage(step, theme) {
       prev.style.display = "flex";
       current.style.left = screen.width - change + "px"; //should already be a negative number
       next.style.display = "none";
-      console.log("current.style.left", current.style.left);
+      //console.log("current.style.left", current.style.left);
     } else if (current === p3 && change < 0) {
       prev.style.left -= change + "px"; //plus negative
       prev.style.display = "flex";
@@ -134,7 +134,7 @@ function renderPage(step, theme) {
     // console.log("screenThreshold", screenThreshold);
     const invertedChange = change * -1;
     // console.log("ic", invertedChange);
-    e.preventDefault();
+    //e.preventDefault();
     if (0 < change && change < screenThreshold && next !== "out of bounds") {
       current.style.left = 0;
       next.style.left = "100%";
@@ -171,10 +171,14 @@ function renderPage(step, theme) {
     }
   }
 
-  // switch (step) {
-  //   case 1:
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end"
+      }}
+    >
       <CenterContainer
         id="first"
         style={{
@@ -240,6 +244,14 @@ function renderPage(step, theme) {
         </PText>
         <Img marginBottom="60" src={photoImg} />
       </CenterContainer>
+      <Stepper
+        amount={3}
+        currentStep={step}
+        style={{ position: "absolute", bottom: "10px" }}
+      />
+      <Button marginTop="75" marginBottom="70" onClick={handleNext}>
+        Next
+      </Button>
     </div>
   );
 }
@@ -281,9 +293,20 @@ const DraftTutorialPage = ({ theme }) => {
     p2 = document.getElementById("second");
 
     p3 = document.getElementById("third");
-  });
-  console.log("p1", p1);
+  }, []);
 
+  useEffect(() => {
+    if (p3.style.left == 0) {
+      setStep(step + 1);
+    }
+    if (p2.style.left < 0) {
+      setStep(step + 1);
+    }
+    if (p2.style.left === 0) {
+      setStep(step + 1);
+    }
+  }, [p2, p3]);
+  console.log("step", step);
   const handleNext = () => {
     switch (step) {
       case 3: {
@@ -312,15 +335,7 @@ const DraftTutorialPage = ({ theme }) => {
     }
   };
 
-  return (
-    <Container>
-      {renderPage(step, theme)}
-      <Stepper amount={3} currentStep={step} />
-      <Button marginTop="75" marginBottom="70" onClick={handleNext}>
-        Next
-      </Button>
-    </Container>
-  );
+  return <Container>{renderPage(step, theme, handleNext)}</Container>;
 };
 
 export default withTheme(DraftTutorialPage);
