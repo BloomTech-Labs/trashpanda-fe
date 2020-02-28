@@ -18,6 +18,7 @@ import { lightTheme, darkTheme } from "./molecules/theme";
 import { useDarkMode } from "./molecules/useDarkMode";
 import { GlobalStyles } from "./molecules/global";
 import CameraNav from "./molecules/CameraNav";
+import DraftTutorialPage from "./organisms/DraftTutorialPage";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -113,6 +114,9 @@ const App = () => {
           <Route exact path="/camera/results">
             <ClusterPage appCluster={appCluster} />
             <BottomNav searchFocus={searchFocus} />
+          </Route>
+          <Route exact path="/tutorial">
+            <DraftTutorialPage />
           </Route>
         </Switch>
       </div>
