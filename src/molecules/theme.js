@@ -15,7 +15,6 @@ import walkingGraphicDark from "../images/walking_graphic_dark.svg";
 import loadingImg from "../images/loading.svg";
 import loadingDarkImg from "../images/loading_dark.svg";
 
-
 import locationIllustrationImg from "../images/location_illustration.svg";
 import locationIllustrationDarkImg from "../images/location_illustration_dark.svg";
 
@@ -34,7 +33,8 @@ export const lightTheme = {
   bottomNav: "#336b68",
   bottomNavCameraPg: "#404040",
   locationBorder: "#d9d9d9",
-  border: "1px solid #404040",
+  focusedBorder: "1px solid #336b68",
+  border: "1px solid #d9d9d9",
   stepperColor: "rgba(51, 107, 104, 0.2)",
   trashManImg,
   landfillImg,
@@ -45,7 +45,7 @@ export const lightTheme = {
   loadingImg,
   locationIllustrationImg,
   locationIllustrationMargin: "32",
-  sadManImg,
+  sadManImg
 };
 
 export const darkTheme = {
@@ -58,7 +58,8 @@ export const darkTheme = {
   bottomNav: "#404040",
   bottomNavCameraPg: "#336b68",
   locationBorder: "#737373",
-  border: "none",
+  focusedBorder: "1px solid #404040",
+  border: "1px solid #404040",
   stepperColor: "#737373",
   trashManImg: trashManDarkImg,
   landfillImg: landfillDarkImg,

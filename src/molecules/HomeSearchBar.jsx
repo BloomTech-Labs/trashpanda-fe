@@ -18,7 +18,9 @@ const SearchContainer = styled.form`
   display: flex;
   flex-direction: start;
   align-items: center;
-  border: ${({ theme }) => theme.border};
+  border: ${({ theme, searchFocus }) =>
+    searchFocus ? theme.focusedBorder : theme.border};
+  // searchFocus ? theme.focusedBorder : theme.border};
   background: ${({ theme }) => theme.searchBackground};
   width: 100%;
   box-sizing: border-box;
@@ -165,6 +167,7 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
   return (
     <SearchPageContainer>
       <SearchContainer
+        searchFocus={searchFocus}
         onSubmit={handleSubmit}
         searchTerm={searchTerm}
         style={{
