@@ -4,21 +4,12 @@ import { useParams } from "react-router-dom";
 import data from "../SubCategoryData";
 import { useLazyQuery } from "@apollo/react-hooks";
 import Spinner from "../atoms/Spinner";
-import placeholderImg from "../images/category_placeholder.png";
 import GridCard from "../molecules/GridCard";
 import gql from "graphql-tag";
 import { useHistory } from "react-router-dom";
-import { withTheme } from "styled-components";
 
 //Plastic type images
 import Plastic from "../atoms/Plastic";
-// import plastic2 from "../images/plastics/plastic2.png";
-// import plastic3 from "../images/plastics/plastic3.png";
-// import plastic4 from "../images/plastics/plastic4.png";
-// import plastic5 from "../images/plastics/plastic5.png";
-// import plastic6 from "../images/plastics/plastic6.png";
-// import plastic7 from "../images/plastics/plastic7.png";
-// import Plastic1 from "../atoms/Plastic1";
 
 const Container = styled.div`
   display: grid;
@@ -40,6 +31,17 @@ const Title = styled.h2`
   color: ${({ theme }) => theme.titleText};
 `;
 
+const Blurb = styled.p`
+  font-family: Muli;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 65px 16px;
+
+  color: ${({ theme }) => theme.titleText};
+`;
+
 export const GET_MATERIALS = gql`
   query getMaterialList($idList: [Int]) {
     getMaterialByIDS(idList: $idList) {
@@ -49,7 +51,7 @@ export const GET_MATERIALS = gql`
   }
 `;
 
-const SubCategoryPage = ({ theme }) => {
+const SubCategoryPage = () => {
   const { subCategoryId } = useParams();
   const [currentData, setCurrentData] = useState(null);
   const history = useHistory();
@@ -80,17 +82,16 @@ const SubCategoryPage = ({ theme }) => {
   return (
     <div>
       <Title>{currentData && currentData.title}</Title>
+      <Blurb>
+        You can find which type of plastic your item is by looking for the
+        numbered stamp, usually located near the bottom.
+      </Blurb>
       <Container>
         {materialList &&
           materialList.map((material, key) => (
             <GridCard
-              // image={
-              //   theme.name === "Dark"
-              //     ? convertToDarkMode(getPlasticTypeImage(material.description))
-              //     : getPlasticTypeImage(material.description)
-              // }
               svg={getPlasticTypeImage(material.description)}
-              name={material.description}
+              name={getPlasticName(material.description)}
               key={key}
               onClick={() => history.push(`/material/${material.material_id}`)}
             />
@@ -100,16 +101,43 @@ const SubCategoryPage = ({ theme }) => {
   );
 };
 
-function getPlasticTypeImage(name) {
-  if (name.includes("#1")) return <Plastic number={1} />;
-  if (name.includes("#2")) return <Plastic number={2} />;
-  if (name.includes("#3")) return <Plastic number={3} />;
-  if (name.includes("#4")) return <Plastic number={4} />;
-  if (name.includes("#5")) return <Plastic number={5} />;
-  if (name.includes("#6")) return <Plastic number={6} />;
-  if (name.includes("#7")) return <Plastic number={7} />;
+function getPlasticName(materialName) {
+  if (materialName === "#6 Plastic Cups - Expanded") return "PS - Styrofoam";
 
-  return <Plastic />;
+  const type = getPlasticNumberFromName(materialName);
+  switch (type) {
+    case 1:
+      return "PET";
+    case 2:
+      return "HDPE";
+    case 3:
+      return "V";
+    case 4:
+      return "LDPE";
+    case 5:
+      return "PP";
+    case 6:
+      return "PS";
+    case 7:
+      return "Other";
+  }
 }
 
-export default withTheme(SubCategoryPage);
+function getPlasticNumberFromName(name) {
+  if (name.includes("#1")) return 1;
+  if (name.includes("#2")) return 2;
+  if (name.includes("#3")) return 3;
+  if (name.includes("#4")) return 4;
+  if (name.includes("#5")) return 5;
+  if (name.includes("#6")) return 6;
+  if (name.includes("#7")) return 7;
+
+  return 7;
+}
+
+function getPlasticTypeImage(name) {
+  const typeNumber = getPlasticNumberFromName(name);
+  return <Plastic number={typeNumber} />;
+}
+
+export default SubCategoryPage;
