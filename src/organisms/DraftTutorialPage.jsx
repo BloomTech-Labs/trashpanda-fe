@@ -12,6 +12,8 @@ import { useHistory } from "react-router-dom";
 
 import photoImg from "../images/photo_illustration.svg";
 
+// CURRENT ISSUES: next button no longer working on desktop view, button and stepper misaligned on desktop
+
 const Container = styled.div`
   display: flex;
   width: 100vw;
@@ -83,10 +85,10 @@ let p1, p2, p3;
 
 let startingX;
 
-function renderPage(step, theme, handleNext) {
+function renderPage(step, theme, handleNext, setStep) {
   function handleTouchStart(e, prev, current, next) {
     startingX = e.touches[0].clientX;
-    console.log("e touches starting", startingX); /////////////OK
+    // console.log("e touches starting", startingX); /////////////OK
     if (current === p1) {
       return;
     } else {
@@ -109,7 +111,7 @@ function renderPage(step, theme, handleNext) {
       current.style.left -= change + "px"; //"-" +
       next.style.display = "flex";
       next.style.left -= change + "px"; //was screen not current.style, screen.width -
-      console.log("nexty", next.style.left);
+      //console.log("nexty", next.style.left);
     } else if (current === p2 && change < 0) {
       prev.style.left -= change + "px"; //plus negative
       prev.style.display = "flex";
@@ -123,7 +125,7 @@ function renderPage(step, theme, handleNext) {
     }
   }
 
-  function handleTouchEnd(e, prev, current, next) {
+  async function handleTouchEnd(e, prev, current, next) {
     // console.log("e end", e.changedTouches[0].clientX); /////OK
     // console.log("current end", current);
     // console.log("next end", next);
@@ -149,8 +151,8 @@ function renderPage(step, theme, handleNext) {
       next.style.display = "flex";
       current.style.left = "-100%";
       next.style.left = 0;
-
       current.style.display = "none";
+      handleNext();
     } else if (
       change < 0 &&
       invertedChange < screenThreshold &&
@@ -166,9 +168,18 @@ function renderPage(step, theme, handleNext) {
       current.style.left = "100%";
       prev.style.left = 0;
       prev.style.display = "flex";
+      setStep(step - 1);
     } else {
       return "error on touchend negative change";
     }
+  }
+
+  let nextButtonDisplay;
+
+  nextButtonDisplay = screen.width < 800 ? "none" : "flex";
+
+  if (step === 3) {
+    handleNext();
   }
 
   return (
@@ -183,9 +194,14 @@ function renderPage(step, theme, handleNext) {
           width: "100%",
           height: "90vh"
         }}
-        onTouchStart={e => handleTouchStart(e, "out of bounds", p1, p2)}
+        onTouchStart={e => {
+          handleTouchStart(e, "out of bounds", p1, p2);
+          setStep(1);
+        }}
         onTouchMove={e => handleTouchMove(e, "out of bounds", p1, p2)}
-        onTouchEnd={e => handleTouchEnd(e, "out of bounds", p1, p2)}
+        onTouchEnd={e => {
+          handleTouchEnd(e, "out of bounds", p1, p2);
+        }}
       >
         <Title>Trash Panda</Title>
         <PText marginBottom="60">
@@ -204,9 +220,13 @@ function renderPage(step, theme, handleNext) {
           width: "100%",
           height: "90vh"
         }}
-        onTouchStart={e => handleTouchStart(e, p1, p2, p3)}
+        onTouchStart={e => {
+          handleTouchStart(e, p1, p2, p3);
+        }}
         onTouchMove={e => handleTouchMove(e, p1, p2, p3)}
-        onTouchEnd={e => handleTouchEnd(e, p1, p2, p3)}
+        onTouchEnd={async e => {
+          handleTouchEnd(e, p1, p2, p3);
+        }}
       >
         <SubTitle>Certain areas have different regulations.</SubTitle>
         <PText marginBottom="35">
@@ -228,9 +248,14 @@ function renderPage(step, theme, handleNext) {
           width: "100%",
           height: "90vh"
         }}
-        onTouchStart={e => handleTouchStart(e, p2, p3, "out of bounds")}
+        onTouchStart={e => {
+          handleTouchStart(e, p2, p3, "out of bounds");
+          setStep(3);
+        }}
         onTouchMove={e => handleTouchMove(e, p2, p3, "out of bounds")}
-        onTouchEnd={e => handleTouchEnd(e, p2, p3, "out of bounds")}
+        onTouchEnd={e => {
+          handleTouchEnd(e, p2, p3, "out of bounds");
+        }}
       >
         <SubTitle>Snap a photo of the item you want to recycle.</SubTitle>
         <PText marginBottom="49">
@@ -247,7 +272,10 @@ function renderPage(step, theme, handleNext) {
         }}
       >
         <Stepper amount={3} currentStep={step} />
-        <Button onClick={handleNext} style={{ marginTop: "20px" }}>
+        <Button
+          onClick={handleNext}
+          style={{ marginTop: "20px", zIndex: 3, display: nextButtonDisplay }}
+        >
           Next
         </Button>
       </div>
@@ -295,17 +323,19 @@ const DraftTutorialPage = ({ theme }) => {
     p3 = document.getElementById("third");
   }, []);
 
-  useEffect(() => {
-    if (p3.style.left == 0) {
-      setStep(step + 1);
-    }
-    if (p2.style.left < 0) {
-      setStep(step + 1);
-    }
-    if (p2.style.left === 0) {
-      setStep(step + 1);
-    }
-  }, [p2, p3]);
+  // useEffect(() => {
+  //   //NOT WORKING!!!
+  //   if (p3.style.left == 0) {
+  //     setStep(step + 1);
+  //   }
+  //   if (p2.style.left < 0) {
+  //     setStep(step + 1);
+  //   }
+  //   if (p2.style.left === 0) {
+  //     setStep(step + 1);
+  //   }
+  // }, [p2, p3]);
+
   console.log("step", step);
   const handleNext = () => {
     switch (step) {
@@ -330,12 +360,13 @@ const DraftTutorialPage = ({ theme }) => {
           }
         );
         break;
+
       default:
         setStep(step + 1);
     }
   };
 
-  return <Container>{renderPage(step, theme, handleNext)}</Container>;
+  return <Container>{renderPage(step, theme, handleNext, setStep)}</Container>;
 };
 
 export default withTheme(DraftTutorialPage);
