@@ -20,7 +20,6 @@ const SearchContainer = styled.form`
   align-items: center;
   border: ${({ theme, searchFocus }) =>
     searchFocus ? theme.focusedBorder : theme.border};
-  // searchFocus ? theme.focusedBorder : theme.border};
   background: ${({ theme }) => theme.searchBackground};
   width: 100%;
   box-sizing: border-box;
@@ -37,6 +36,7 @@ const InputField = styled.input`
   outline: none;
   color: ${({ theme }) => theme.searchText};
   background: ${({ theme }) => theme.searchBackground};
+  font-family: Muli;
   font-size: 18px;
   line-height: 25px;
   width: inherit;
