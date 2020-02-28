@@ -58,7 +58,7 @@ export const darkTheme = {
   bottomNav: "#404040",
   bottomNavCameraPg: "#336b68",
   locationBorder: "#737373",
-  focusedBorder: "0.5px solid #fff",
+  focusedBorder: "0.5px solid #d9d9d9",
   border: "1px solid #404040",
   stepperColor: "#737373",
   trashManImg: trashManDarkImg,
