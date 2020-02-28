@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import searchImage from "../images/lens.svg";
+import { inputFocused } from "../utils/inputFocused";
 
 const Container = styled.div`
   display: flex;
@@ -9,7 +10,8 @@ const Container = styled.div`
   margin: 31px 16px;
   margin-bottom: 40px;
   height: 40px;
-  border: 0.5px solid #404040;
+  border: ${({ theme, focused }) =>
+    focused ? theme.focusedBorder : theme.border};
   border-radius: 50px;
   box-sizing: border-box;
 `;
@@ -66,10 +68,18 @@ const Button = styled.button`
 `;
 
 const ZipSearchBar = props => {
+  const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    //detect whether the input field has focus and set a flag that we can use to hide the navbar.
+
+    inputFocused(setFocused);
+  }, []);
+
   return (
-    <Container>
+    <Container focused={focused}>
       <Img src={searchImage} />
-      <Input {...props} placeholder="enter zip code" />
+      <Input type="text" {...props} placeholder="enter zip code" />
       <Button disabled={props.btnDisabled} onClick={props.handleClick}>
         GO
       </Button>
