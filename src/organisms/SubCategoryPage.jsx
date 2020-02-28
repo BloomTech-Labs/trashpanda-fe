@@ -89,7 +89,7 @@ const SubCategoryPage = ({ theme }) => {
               //     ? convertToDarkMode(getPlasticTypeImage(material.description))
               //     : getPlasticTypeImage(material.description)
               // }
-              svg={convertToDarkMode(getPlasticTypeImage(material.description))}
+              svg={getPlasticTypeImage(material.description)}
               name={material.description}
               key={key}
               onClick={() => history.push(`/material/${material.material_id}`)}
@@ -99,10 +99,6 @@ const SubCategoryPage = ({ theme }) => {
     </div>
   );
 };
-
-function convertToDarkMode(plasticSvg) {
-  return plasticSvg;
-}
 
 function getPlasticTypeImage(name) {
   if (name.includes("#1")) return <Plastic number={1} />;
