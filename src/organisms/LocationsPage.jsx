@@ -68,7 +68,7 @@ const Blurb = styled.h2`
   font-size: 26px;
   text-align: center;
   margin: 0;
-  margin-top: 10px;
+  margin-top: 10vh;
   pading: 0;
   color: ${({ theme }) => theme.text};
 `;
@@ -122,21 +122,21 @@ function renderLocations(locations, loaded, theme) {
       ))}
     </CardsContainer>
   ) : (
-      <div>
-        {loaded ? (
-          <div>
-            <NoResults>Sorry</NoResults>
-            <NoResultsP>There are no results in your area</NoResultsP>
-          </div>
-        ) : (
-            ""
-          )}
-        <Img
-          src={loaded ? theme.sadManImg : walkingImage}
-          marginTop={loaded ? "51" : "108"}
-        />
-      </div>
-    );
+    <div>
+      {loaded ? (
+        <div>
+          <NoResults>Sorry</NoResults>
+          <NoResultsP>There are no results in your area</NoResultsP>
+        </div>
+      ) : (
+        ""
+      )}
+      <Img
+        src={loaded ? theme.sadManImg : walkingImage}
+        marginTop={loaded ? "51" : "108"}
+      />
+    </div>
+  );
 }
 
 const LocationsPage = ({ theme }) => {
@@ -245,8 +245,8 @@ const LocationsPage = ({ theme }) => {
       {loading ? (
         <Spinner />
       ) : (
-          renderLocations(locations, locationInfo.called, theme)
-        )}
+        renderLocations(locations, locationInfo.called, theme)
+      )}
     </Container>
   );
 };
