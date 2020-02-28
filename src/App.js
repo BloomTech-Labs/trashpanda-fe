@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import HomePage from "./organisms/HomePage";
 import CategoryPage from "./organisms/CategoryPage";
+import SubCategoryPage from "./organisms/SubCategoryPage";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import MaterialPage from "./organisms/MaterialPage";
@@ -92,6 +93,10 @@ const App = () => {
           </Route>
           <Route exact path="/material/:materialId/locations">
             <LocationsPage />
+            <BottomNav searchFocus={searchFocus} />
+          </Route>
+          <Route exact path="/subcategory/:subCategoryId">
+            <SubCategoryPage />
             <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/intro">

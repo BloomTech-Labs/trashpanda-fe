@@ -34,10 +34,11 @@ const Name = styled.p`
       : ""}
 `;
 
-const CategoryGridCard = ({ image, name, onClick, bold }) => {
+const CategoryGridCard = ({ image, name, onClick, bold, svg }) => {
   return (
     <Container onClick={onClick}>
-      <Img src={image} alt={`${name} category`} />
+      {svg ? svg : <Img src={image} alt={`${name} category`} />}
+
       <Name bold={bold}>{name}</Name>
     </Container>
   );

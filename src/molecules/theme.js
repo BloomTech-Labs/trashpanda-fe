@@ -24,6 +24,7 @@ import sadManDarkImg from "../images/sad_man_dark.svg";
 // themes for light mode and dark mode
 
 export const lightTheme = {
+  name: "Light",
   titleText: "#000000",
   text: "#404040",
   body: "#FFFFFF",
@@ -45,10 +46,14 @@ export const lightTheme = {
   loadingImg,
   locationIllustrationImg,
   locationIllustrationMargin: "32",
-  sadManImg
+  sadManImg,
+  plasticSvgOuter: "#336B68",
+  plasticSvgOuterOpacity: "0.1",
+  plasticSvgAccent: "#404040"
 };
 
 export const darkTheme = {
+  name: "Dark",
   titleText: "#FFFFFF",
   text: "#FFFFFF",
   resultsText: "#FFFFFF",
@@ -71,5 +76,9 @@ export const darkTheme = {
   locationIllustrationMargin: "56",
 
   loadingImg: loadingDarkImg,
-  sadManImg: sadManDarkImg
+  sadManImg: sadManDarkImg,
+
+  plasticSvgOuter: "#404040",
+  plasticSvgOuterOpacity: "1",
+  plasticSvgAccent: "#D9D9D9"
 };
