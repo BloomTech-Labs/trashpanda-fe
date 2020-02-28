@@ -5,6 +5,7 @@ import lensImg from "../images/lens.svg";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
+import {inputFocused} from "../utils/inputFocused";
 
 const SearchPageContainer = styled.div`
   position: relative;
@@ -98,26 +99,7 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
   useEffect(() => {
     //detect whether the input field has focus and set a flag that we can use to hide the navbar.
 
-    const searchField = document.querySelector('input[type="text"]');
-
-    searchField.addEventListener("focus", () => {
-      setSearchFocus(true);
-    });
-
-    searchField.addEventListener("blur", () => {
-      setSearchFocus(false);
-    });
-
-    return function cleanup() {
-      setSearchFocus(false);
-
-      searchField.removeEventListener("focus", () => {
-        setSearchFocus(true);
-      });
-      searchField.removeEventListener("blur", () => {
-        setSearchFocus(false);
-      });
-    };
+    inputFocused(setSearchFocus);
   }, []);
 
   // gets the materials and filters the material to the search term
