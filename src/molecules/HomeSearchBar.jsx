@@ -25,7 +25,7 @@ const SearchContainer = styled.form`
   width: 100%;
   box-sizing: border-box;
   border-radius: ${props =>
-    props.searchTerm !== "" ? "20px 20px 0 0" : "20px"};
+    props.searchTerm !== "" ? "5px 5px 0 0" : "5px"};
   height: 36px;
   font-size: 18px;
   margin-top: 20px;
@@ -63,7 +63,7 @@ const DropList = styled.ul`
   padding: 0;
   background-color: ${({ theme }) => theme.searchBackground};
   box-sizing: border-box;
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 5px 5px;
 `;
 const DropListItem = styled.li`
   margin: 0;
@@ -154,7 +154,7 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
         searchTerm={searchTerm}
         style={{
           borderRadius:
-            searchTerm !== "" && filtered.length === 0 ? "20px" : null
+            searchTerm !== "" && filtered.length === 0 ? "5px" : null
         }}
       >
         <Img src={lensImg} alt="lens" />

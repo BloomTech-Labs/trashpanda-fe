@@ -12,7 +12,7 @@ const Container = styled.div`
   height: 40px;
   border: ${({ theme, focused }) =>
     focused ? theme.focusedBorder : theme.border};
-  border-radius: 50px;
+  border-radius: 5px;
   box-sizing: border-box;
 `;
 
@@ -42,7 +42,7 @@ const Button = styled.button`
   height: 99%;
 
   background: #336b68;
-  border-radius: 0px 50px 50px 0px;
+  border-radius: 0px 5px 5px 0px;
   margin-right: 0.1px;
   font-family: Muli;
   font-style: normal;
