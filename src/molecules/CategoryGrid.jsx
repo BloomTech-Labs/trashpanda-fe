@@ -13,9 +13,10 @@ const GridContainer = styled.div`
   gap: 26px 25px;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   margin-bottom: 100px;
+  opacity: ${({ searchFocus }) => (searchFocus ? "0.2" : "1")}};
 `;
 
-const CategoryGrid = () => {
+const CategoryGrid = ({ searchFocus }) => {
   const history = useHistory();
   const categories = useQuery(GET_CATEGORIES);
 
@@ -25,7 +26,7 @@ const CategoryGrid = () => {
   return (
     <>
       {categories && !categories.loading && (
-        <GridContainer>
+        <GridContainer searchFocus={searchFocus}>
           {categories.data.families.map((category, key) => (
             <GridCard
               image={
