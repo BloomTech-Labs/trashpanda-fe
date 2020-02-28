@@ -25,7 +25,7 @@ const HomePage = ({ theme, toggleTheme, searchFocus, setSearchFocus }) => {
         />
         <Toggle theme={theme} toggleTheme={toggleTheme} />
       </TopContainer>
-      <CategoryGrid />
+      <CategoryGrid searchFocus={searchFocus} />
     </Container>
   );
 };
