@@ -27,6 +27,17 @@ const Container = styled.div`
   margin-bottom: 100px;
 `;
 
+const Title = styled.h2`
+  font-family: Muli;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 25px;
+
+  text-align: center;
+  color: #000000;
+`;
+
 export const GET_MATERIALS = gql`
   query getMaterialList($idList: [Int]) {
     getMaterialByIDS(idList: $idList) {
@@ -65,17 +76,20 @@ const SubCategoryPage = () => {
   if (materialInfo.loading) return <Spinner />;
 
   return (
-    <Container>
-      {materialList &&
-        materialList.map((material, key) => (
-          <GridCard
-            image={getPlasticTypeImage(material.description)}
-            name={material.description}
-            key={key}
-            onClick={() => history.push(`/material/${material.material_id}`)}
-          />
-        ))}
-    </Container>
+    <div>
+      <Title>{currentData && currentData.title}</Title>
+      <Container>
+        {materialList &&
+          materialList.map((material, key) => (
+            <GridCard
+              image={getPlasticTypeImage(material.description)}
+              name={material.description}
+              key={key}
+              onClick={() => history.push(`/material/${material.material_id}`)}
+            />
+          ))}
+      </Container>
+    </div>
   );
 };
 
