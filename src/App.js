@@ -96,7 +96,7 @@ const App = () => {
             <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/intro">
-            <TutorialPage />
+            <DraftTutorialPage />
           </Route>
           <Route exact path="/camera">
             <CameraPage
