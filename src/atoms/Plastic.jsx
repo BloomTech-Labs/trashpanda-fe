@@ -38,12 +38,12 @@ const Plastic = ({ theme, number }) => {
         height="100"
         rx="50"
         fill={theme.plasticSvgOuter}
-        fill-opacity={theme.plasticSvgOuterOpacity}
+        fillOpacity={theme.plasticSvgOuterOpacity}
       />
       <path d={getNumberPath(number)} fill={theme.plasticSvgAccent} />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M43.8515 10.4948C46.63 5.84085 53.3687 5.83367 56.1572 10.4817L66.3791 27.5206L60.9134 30.7995L50.6915 13.7607C50.3816 13.2442 49.6329 13.245 49.3242 13.7621L34.9307 37.8705L29.458 34.6032L43.8515 10.4948ZM83.5025 68.7452L66.9757 41.0636L72.4484 37.7963L88.9752 65.4778C91.8287 70.2574 88.385 76.3241 82.8184 76.3241H61.1188V69.9503H82.8184C83.4369 69.9503 83.8196 69.2762 83.5025 68.7452ZM28.4712 48.6897L16.4975 68.7452C16.1804 69.2762 16.5631 69.9503 17.1816 69.9503H50V76.3241H17.1816C11.6149 76.3241 8.17126 70.2574 11.0248 65.4778L22.9986 45.4224L28.4712 48.6897Z"
         fill={theme.plasticSvgAccent}
       />

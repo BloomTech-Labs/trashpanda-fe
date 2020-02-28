@@ -26,6 +26,7 @@ const Title = styled.h2`
   font-weight: bold;
   font-size: 20px;
   line-height: 25px;
+  margin-top: 20px;
 
   text-align: center;
   color: ${({ theme }) => theme.titleText};
@@ -38,6 +39,8 @@ const Blurb = styled.p`
   font-size: 16px;
   line-height: 20px;
   margin: 65px 16px;
+
+  text-align: center;
 
   color: ${({ theme }) => theme.titleText};
 `;
