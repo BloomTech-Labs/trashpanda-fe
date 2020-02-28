@@ -172,13 +172,7 @@ function renderPage(step, theme, handleNext) {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-end"
-      }}
-    >
+    <div>
       <CenterContainer
         id="first"
         style={{
@@ -187,7 +181,7 @@ function renderPage(step, theme, handleNext) {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100vh"
+          height: "90vh"
         }}
         onTouchStart={e => handleTouchStart(e, "out of bounds", p1, p2)}
         onTouchMove={e => handleTouchMove(e, "out of bounds", p1, p2)}
@@ -208,7 +202,7 @@ function renderPage(step, theme, handleNext) {
           top: 0,
           left: "100%",
           width: "100%",
-          height: "100vh"
+          height: "90vh"
         }}
         onTouchStart={e => handleTouchStart(e, p1, p2, p3)}
         onTouchMove={e => handleTouchMove(e, p1, p2, p3)}
@@ -232,7 +226,7 @@ function renderPage(step, theme, handleNext) {
           top: 0,
           left: "200%",
           width: "100%",
-          height: "100vh"
+          height: "90vh"
         }}
         onTouchStart={e => handleTouchStart(e, p2, p3, "out of bounds")}
         onTouchMove={e => handleTouchMove(e, p2, p3, "out of bounds")}
@@ -244,18 +238,24 @@ function renderPage(step, theme, handleNext) {
         </PText>
         <Img marginBottom="60" src={photoImg} />
       </CenterContainer>
-      <Stepper
-        amount={3}
-        currentStep={step}
-        style={{ position: "absolute", bottom: "10px" }}
-      />
-      <Button marginTop="75" marginBottom="70" onClick={handleNext}>
-        Next
-      </Button>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          marginTop: "450%"
+        }}
+      >
+        <Stepper amount={3} currentStep={step} />
+        <Button onClick={handleNext} style={{ marginTop: "20px" }}>
+          Next
+        </Button>
+      </div>
     </div>
   );
 }
-
+//style={{ position: "absolute", bottom: "15vh" }}
+//style={{ position: "absolute", bottom: "10vh" }}
 function getCamera(onSuccess, onError) {
   const constraints = (window.constraints = {
     audio: false,
