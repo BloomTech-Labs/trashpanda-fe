@@ -84,40 +84,40 @@ const App = () => {
             <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/category/:categoryId">
-            <CategoryPage categories={categories} materials={materials} />
             <BottomNav searchFocus={searchFocus} />
+            <CategoryPage categories={categories} materials={materials} />
           </Route>
           <Route exact path="/material/:materialId">
-            <MaterialPage />
             <BottomNav searchFocus={searchFocus} />
+            <MaterialPage />
           </Route>
           <Route exact path="/material/:materialId/locations">
-            <LocationsPage />
             <BottomNav searchFocus={searchFocus} />
+            <LocationsPage />
           </Route>
           <Route exact path="/subcategory/:subCategoryId">
-            <SubCategoryPage />
             <BottomNav searchFocus={searchFocus} />
+            <SubCategoryPage />
           </Route>
           <Route exact path="/intro">
             <TutorialPage />
           </Route>
           <Route exact path="/camera">
+            <CameraNav
+              shutterPress={shutterPress}
+              setShutterPress={setShutterPress}
+              setSearchFocus={setSearchFocus}
+            />
             <CameraPage
               setAppCluster={setAppCluster}
               shutterPress={shutterPress}
               setSearchFocus={setSearchFocus}
               setShutterPress={setShutterPress}
             />
-            <CameraNav
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-              setSearchFocus={setSearchFocus}
-            />
           </Route>
           <Route exact path="/camera/results">
-            <ClusterPage appCluster={appCluster} />
             <BottomNav searchFocus={searchFocus} />
+            <ClusterPage appCluster={appCluster} />
           </Route>
         </Switch>
       </div>

@@ -171,7 +171,6 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
       >
         {renderFiltered()}
       </FilteredContainer>
-      {/* <Toggle toggleTheme={toggleTheme} theme={theme} /> */}
     </SearchPageContainer>
   );
 };
