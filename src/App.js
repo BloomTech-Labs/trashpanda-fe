@@ -11,6 +11,7 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import BottomNav from "./molecules/BottomNav";
+import TopNav from "./molecules/TopNav";
 import TutorialPage from "./organisms/TutorialPage";
 import CameraPage from "./organisms/CameraPage";
 import ClusterPage from "./organisms/ClusterPage";
@@ -81,22 +82,22 @@ const App = () => {
               theme={theme}
             />
 
-            <BottomNav searchFocus={searchFocus} />
+            <TopNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/category/:categoryId">
-            <BottomNav searchFocus={searchFocus} />
+            <TopNav searchFocus={searchFocus} />
             <CategoryPage categories={categories} materials={materials} />
           </Route>
           <Route exact path="/material/:materialId">
-            <BottomNav searchFocus={searchFocus} />
+            <TopNav searchFocus={searchFocus} />
             <MaterialPage />
           </Route>
           <Route exact path="/material/:materialId/locations">
-            <BottomNav searchFocus={searchFocus} />
+            <TopNav searchFocus={searchFocus} />
             <LocationsPage />
           </Route>
           <Route exact path="/subcategory/:subCategoryId">
-            <BottomNav searchFocus={searchFocus} />
+            <TopNav searchFocus={searchFocus} />
             <SubCategoryPage />
           </Route>
           <Route exact path="/intro">
@@ -116,7 +117,7 @@ const App = () => {
             />
           </Route>
           <Route exact path="/camera/results">
-            <BottomNav searchFocus={searchFocus} />
+            <TopNav searchFocus={searchFocus} />
             <ClusterPage appCluster={appCluster} />
           </Route>
         </Switch>

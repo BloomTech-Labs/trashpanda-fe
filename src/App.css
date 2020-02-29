@@ -2,6 +2,7 @@
   margin: 0 auto;
   max-width: 800px;
   width: 100%;
+  position: relative;
   /* ^^ Temporary constraint so it's mobile view all the time, will remove for tablet/desktop view once we get it */
 }
 
