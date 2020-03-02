@@ -12,8 +12,7 @@ const SearchPageContainer = styled.div`
   z-index: 1;
   align-items: center;
   padding-top: 34px;
-  width: 85%;
-  margin: auto;
+  margin: 0 16px;
 `;
 const SearchContainer = styled.form`
   display: flex;
@@ -24,8 +23,7 @@ const SearchContainer = styled.form`
   background: ${({ theme }) => theme.searchBackground};
   width: 100%;
   box-sizing: border-box;
-  border-radius: ${props =>
-    props.searchTerm !== "" ? "5px 5px 0 0" : "5px"};
+  border-radius: ${props => (props.searchTerm !== "" ? "5px 5px 0 0" : "5px")};
   height: 36px;
   font-size: 18px;
   color: red;
