@@ -30,9 +30,8 @@ const Title = styled.h2`
   font-weight: bold;
   font-size: 20px;
   line-height: 25px;
-  margin-top: 20px;
-
   text-align: center;
+  margin: 0;
   color: ${({ theme }) => theme.titleText};
 `;
 
