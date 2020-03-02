@@ -41,12 +41,96 @@ export const GET_CLUSTER = gql`
   }
 `;
 
-const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
+const ShutterButton = ({ theme }) => {
+  if (theme.name === "Light") {
+    return (
+      <svg
+        width="70"
+        height="70"
+        viewBox="0 0 70 70"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="35"
+          cy="35"
+          r="31.5"
+          fill="#D9D9D9"
+          stroke="#336B68"
+          strokeWidth="3"
+        />
+        <circle cx="35" cy="35" r="33.5" stroke="white" strokeWidth="3" />
+      </svg>
+    );
+  } else {
+    return (
+      <svg
+        width="70"
+        height="70"
+        viewBox="0 0 70 70"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="35"
+          cy="35"
+          r="31.5"
+          fill="#D9D9D9"
+          stroke="#336B68"
+          strokeWidth="3"
+        />
+        <circle cx="35" cy="35" r="33.5" stroke="white" strokeWidth="3" />
+      </svg>
+    );
+  }
+};
+
+const StyledShutterButton = styled.div`
+  position: absolute;
+  z-index: 7;
+  margin: auto;
+  bottom: 20px;
+`;
+
+const startCam = (cameraInstance, setLoading) => {
+  const facingMode = FACING_MODES.ENVIRONMENT;
+
+  //set width to height to fix mobile camera
+  const height = window.innerWidth > 800 ? 800 : window.innerWidth;
+  const idealResolution = {
+    height,
+    width: window.innerHeight
+  };
+
+  if (cameraInstance) {
+    cameraInstance
+      .startCamera(facingMode, idealResolution)
+      .then(() => {
+        console.log("camera is started !");
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Camera not started!", error);
+      });
+  }
+};
+
+const CameraPage = ({
+  theme,
+  setShutterPress,
+  shutterPress,
+  setAppCluster,
+  setSearchFocus
+}) => {
   const [image, setImage] = useState();
   const videoRef = useRef(null);
   const [cameraInstance, setCameraInstance] = useState();
   const [loading, setLoading] = useState(true);
   const [getCluster, ClusterData] = useLazyQuery(GET_CLUSTER);
+
+  const handleShutterButton = () => {
+    setShutterPress(true);
+  };
 
   useEffect(() => {
     if (!ClusterData.loading && ClusterData.data) {
@@ -73,6 +157,7 @@ const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
     } else {
       setImage(null);
       setLoading(true);
+      startCam(cameraInstance, setLoading);
     }
   }, [shutterPress]);
 
@@ -85,26 +170,7 @@ const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
   }, [videoRef]);
 
   useEffect(() => {
-    const facingMode = FACING_MODES.ENVIRONMENT;
-
-    //set width to height to fix mobile camera
-    const height = window.innerWidth > 800 ? 800 : window.innerWidth;
-    const idealResolution = {
-      height,
-      width: window.innerHeight
-    };
-
-    if (cameraInstance) {
-      cameraInstance
-        .startCamera(facingMode, idealResolution)
-        .then(() => {
-          console.log("camera is started !");
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error("Camera not started!", error);
-        });
-    }
+    startCam(cameraInstance, setLoading);
 
     return function cleanup() {
       if (cameraInstance && cameraInstance.stream) {
@@ -122,13 +188,24 @@ const CameraPage = ({ shutterPress, setAppCluster, setSearchFocus }) => {
   return (
     <Root>
       {loading && <Spinner />}
-      <StyledVideo hidden={image || !videoRef} ref={videoRef} autoPlay={true} />
+      <StyledVideo
+        hidden={shutterPress || !videoRef}
+        ref={videoRef}
+        autoPlay={true}
+      />
       {image && <img src={image.dataUri} alt="camera image" />}
-      {!ClusterData.loading && ClusterData.data && (
+      {!ClusterData.loading && (ClusterData.data || ClusterData.error) && (
         <ClusterResult
+          shutterPress={shutterPress}
+          setShutterPress={setShutterPress}
           ClusterData={ClusterData}
           setSearchFocus={setSearchFocus}
         />
+      )}
+      {!shutterPress && (
+        <StyledShutterButton onClick={handleShutterButton}>
+          <ShutterButton theme={theme} />
+        </StyledShutterButton>
       )}
     </Root>
   );

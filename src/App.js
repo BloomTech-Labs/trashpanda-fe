@@ -10,7 +10,7 @@ import { useQuery } from "@apollo/react-hooks";
 
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
-import BottomNav from "./molecules/BottomNav";
+import TopNav from "./molecules/TopNav";
 import TutorialPage from "./organisms/TutorialPage";
 import CameraPage from "./organisms/CameraPage";
 import ClusterPage from "./organisms/ClusterPage";
@@ -18,7 +18,7 @@ import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
 import { useDarkMode } from "./molecules/useDarkMode";
 import { GlobalStyles } from "./molecules/global";
-import CameraNav from "./molecules/CameraNav";
+// import CameraNav from "./molecules/CameraNav";
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -74,50 +74,92 @@ const App = () => {
 
         <Switch>
           <Route exact path="/">
-            <HomePage
-              toggleTheme={toggleTheme}
-              setSearchFocus={setSearchFocus}
+            <TopNav
               searchFocus={searchFocus}
               theme={theme}
+              toggleTheme={toggleTheme}
+              shutterPress={shutterPress}
+              setShutterPress={setShutterPress}
             />
-
-            <BottomNav searchFocus={searchFocus} />
+            <HomePage
+              setSearchFocus={setSearchFocus}
+              searchFocus={searchFocus}
+            />
           </Route>
           <Route exact path="/category/:categoryId">
+            <TopNav
+              searchFocus={searchFocus}
+              theme={theme}
+              toggleTheme={toggleTheme}
+              shutterPress={shutterPress}
+              setShutterPress={setShutterPress}
+            />
             <CategoryPage categories={categories} materials={materials} />
-            <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/material/:materialId">
+            <TopNav
+              searchFocus={searchFocus}
+              theme={theme}
+              toggleTheme={toggleTheme}
+              shutterPress={shutterPress}
+              setShutterPress={setShutterPress}
+            />
             <MaterialPage />
-            <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/material/:materialId/locations">
+            <TopNav
+              searchFocus={searchFocus}
+              theme={theme}
+              toggleTheme={toggleTheme}
+              shutterPress={shutterPress}
+              setShutterPress={setShutterPress}
+            />
             <LocationsPage />
-            <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/subcategory/:subCategoryId">
+            <TopNav
+              searchFocus={searchFocus}
+              theme={theme}
+              toggleTheme={toggleTheme}
+              shutterPress={shutterPress}
+              setShutterPress={setShutterPress}
+            />
             <SubCategoryPage />
-            <BottomNav searchFocus={searchFocus} />
           </Route>
           <Route exact path="/intro">
             <TutorialPage />
           </Route>
           <Route exact path="/camera">
-            <CameraPage
-              setAppCluster={setAppCluster}
+            <TopNav
+              searchFocus={searchFocus}
+              theme={theme}
+              toggleTheme={toggleTheme}
               shutterPress={shutterPress}
-              setSearchFocus={setSearchFocus}
               setShutterPress={setShutterPress}
             />
-            <CameraNav
+
+            <CameraPage
+              theme={theme}
+              setAppCluster={setAppCluster}
               shutterPress={shutterPress}
               setShutterPress={setShutterPress}
               setSearchFocus={setSearchFocus}
+              setShutterPress={setShutterPress}
             />
           </Route>
           <Route exact path="/camera/results">
-            <ClusterPage appCluster={appCluster} />
-            <BottomNav searchFocus={searchFocus} />
+            <TopNav
+              searchFocus={searchFocus}
+              theme={theme}
+              toggleTheme={toggleTheme}
+              shutterPress={shutterPress}
+              setShutterPress={setShutterPress}
+            />
+
+            <ClusterPage
+              setShutterPress={setShutterPress}
+              appCluster={appCluster}
+            />
           </Route>
         </Switch>
       </div>

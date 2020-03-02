@@ -11,6 +11,10 @@ import { useHistory } from "react-router-dom";
 //Plastic type images
 import Plastic from "../atoms/Plastic";
 
+const Root = styled.div`
+  padding-top: 20px;
+`;
+
 const Container = styled.div`
   display: grid;
   margin-top: 36px;
@@ -83,7 +87,7 @@ const SubCategoryPage = () => {
   if (materialInfo.loading) return <Spinner />;
 
   return (
-    <div>
+    <Root>
       <Title>{currentData && currentData.title}</Title>
       <Blurb>
         You can find which type of plastic your item is by looking for the
@@ -100,7 +104,7 @@ const SubCategoryPage = () => {
             />
           ))}
       </Container>
-    </div>
+    </Root>
   );
 };
 

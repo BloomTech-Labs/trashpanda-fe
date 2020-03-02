@@ -5,15 +5,14 @@ import lensImg from "../images/lens.svg";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
-import {inputFocused} from "../utils/inputFocused";
+import { inputFocused } from "../utils/inputFocused";
 
 const SearchPageContainer = styled.div`
   position: relative;
   z-index: 1;
   align-items: center;
-  margin-top: 0;
-  width: 85%;
-  margin-left: 1%;
+  padding-top: 34px;
+  margin: 0 16px;
 `;
 const SearchContainer = styled.form`
   display: flex;
@@ -24,11 +23,9 @@ const SearchContainer = styled.form`
   background: ${({ theme }) => theme.searchBackground};
   width: 100%;
   box-sizing: border-box;
-  border-radius: ${props =>
-    props.searchTerm !== "" ? "5px 5px 0 0" : "5px"};
+  border-radius: ${props => (props.searchTerm !== "" ? "5px 5px 0 0" : "5px")};
   height: 36px;
   font-size: 18px;
-  margin-top: 20px;
   color: red;
 `;
 
@@ -171,7 +168,6 @@ const HomeSearchBar = ({ searchFocus, setSearchFocus }) => {
       >
         {renderFiltered()}
       </FilteredContainer>
-      {/* <Toggle toggleTheme={toggleTheme} theme={theme} /> */}
     </SearchPageContainer>
   );
 };
