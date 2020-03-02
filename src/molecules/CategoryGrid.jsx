@@ -5,6 +5,7 @@ import styled from "styled-components";
 import GridCard from "./GridCard";
 import placeholderImg from "../images/category_placeholder.png";
 import { GET_CATEGORIES } from "../App.js";
+import Spinner from "../atoms/Spinner";
 
 const GridContainer = styled.div`
   display: grid;
@@ -25,6 +26,7 @@ const CategoryGrid = ({ searchFocus }) => {
   };
   return (
     <>
+      {categories && categories.loading && <Spinner />}
       {categories && !categories.loading && (
         <GridContainer searchFocus={searchFocus}>
           {categories.data.families.map((category, key) => (

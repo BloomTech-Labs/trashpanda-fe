@@ -41,6 +41,8 @@ const Title = styled.h2`
   text-align: center;
   line-height: 30px;
   color: ${({ theme }) => theme.titleText};
+  margin: 0;
+  padding-top: 20px;
 `;
 
 const ButtonContainer = styled.div`

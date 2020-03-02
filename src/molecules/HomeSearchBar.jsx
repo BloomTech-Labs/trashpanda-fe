@@ -5,15 +5,15 @@ import lensImg from "../images/lens.svg";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
-import {inputFocused} from "../utils/inputFocused";
+import { inputFocused } from "../utils/inputFocused";
 
 const SearchPageContainer = styled.div`
   position: relative;
   z-index: 1;
   align-items: center;
-  margin-top: 0;
+  padding-top: 34px;
   width: 85%;
-  margin-left: 1%;
+  margin: auto;
 `;
 const SearchContainer = styled.form`
   display: flex;
@@ -28,7 +28,6 @@ const SearchContainer = styled.form`
     props.searchTerm !== "" ? "20px 20px 0 0" : "20px"};
   height: 36px;
   font-size: 18px;
-  margin-top: 20px;
   color: red;
 `;
 

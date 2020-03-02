@@ -4,7 +4,9 @@ import { useParams, useHistory } from "react-router-dom";
 import GridCard from "../molecules/GridCard";
 import placeholderImg from "../images/category_placeholder.png";
 
-const Root = styled.div``;
+const Root = styled.div`
+  padding-top: 20px;
+`;
 
 const HeaderTitle = styled.h2`
   font-family: Muli;
@@ -16,7 +18,7 @@ const HeaderTitle = styled.h2`
 
   color: ${({ theme }) => theme.titleText};
 
-  margin: 20px 0px 39px 0px;
+  margin: 0px 0px 39px 0px;
   padding: 0;
 `;
 

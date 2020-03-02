@@ -10,21 +10,23 @@ const Img = styled.img`
   width: 25px;
 `;
 
-const ToggleContainer = styled.div`
-  width: 0px;
-  height: 0px;
-  margin-left: 5%;
-`;
+// const ToggleContainer = styled.div`
+//   width: 0px;
+//   height: 0px;
+//   margin-left: 5%;
+// `;
 
 const Toggle = ({ theme, toggleTheme }) => {
   return (
-    <ToggleContainer>
+    // <ToggleContainer>
+    <>
       {theme === "light" ? (
         <Img src={Moon} alt="Moon" onClick={toggleTheme} />
       ) : (
         <Img src={Sun} alt="Sun" onClick={toggleTheme} />
       )}
-    </ToggleContainer>
+    </>
+    // </ToggleContainer>
   );
 };
 

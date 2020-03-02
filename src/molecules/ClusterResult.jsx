@@ -57,6 +57,7 @@ const resultText = loadingState => {
 };
 
 const getLoadingState = ClusterData => {
+  console.log(ClusterData);
   if (ClusterData.data && ClusterData.data.getCluster.materials.length > 0) {
     return "found";
   } else {
@@ -64,7 +65,7 @@ const getLoadingState = ClusterData => {
   }
 };
 
-const ClusterResult = ({ ClusterData, setSearchFocus }) => {
+const ClusterResult = ({ ClusterData, setSearchFocus, shutterPress }) => {
   const history = useHistory();
   const [expanded, setExpanded] = useState(false);
   const theme = localStorage.getItem("theme");
@@ -80,7 +81,7 @@ const ClusterResult = ({ ClusterData, setSearchFocus }) => {
 
   useEffect(() => {
     toggleExpanded();
-  }, []);
+  }, [shutterPress]);
 
   return (
     <Container onClick={() => history.push("/camera/results")}>
@@ -92,9 +93,6 @@ const ClusterResult = ({ ClusterData, setSearchFocus }) => {
                 <ResultName>
                   {ClusterData.data.getCluster.cluster_name}
                 </ResultName>
-                <ChevronsImg
-                  src={theme === "light" ? chevron_lite : chevron_dark}
-                />
               </>
             )}
             {loadingState === "none" && (
