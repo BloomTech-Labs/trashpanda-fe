@@ -1,0 +1,23 @@
+{
+  "packageId": "com.thetrashpanda.twa",
+  "host": "thetrashpanda.com",
+  "name": "Trash Panda: Recycling made easy",
+  "launcherName": "Trash Panda",
+  "themeColor": "#FFFFFF",
+  "navigationColor": "#000000",
+  "backgroundColor": "#FFFFFF",
+  "enableNotifications": false,
+  "startUrl": "/",
+  "iconUrl": "https://thetrashpanda.com/android-chrome-512x512.8a29abaa.png?v=PYqlOBb5Yz",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "alias": "android",
+    "path": "./android.keystore"
+  },
+  "appVersionName": "1",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "llama-pack-cli",
+  "webManifestUrl": "https://thetrashpanda.com/manifest.webmanifest",
+  "appVersion": "1"
+}
