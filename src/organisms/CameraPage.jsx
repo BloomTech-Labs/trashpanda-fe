@@ -133,6 +133,10 @@ const CameraPage = ({
   };
 
   useEffect(() => {
+    if (!ClusterData.loading) {
+      setLoading(false);
+    }
+
     if (!ClusterData.loading && ClusterData.data) {
       setAppCluster(ClusterData.data.getCluster);
     }
@@ -153,6 +157,7 @@ const CameraPage = ({
             imageData: dataUri
           }
         });
+        setLoading(true);
       }
     } else {
       setImage(null);
