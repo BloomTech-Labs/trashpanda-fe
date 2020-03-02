@@ -14,18 +14,29 @@ const rotate = keyframes`
 
 const SpinnerImage = styled.img`
   animation: ${rotate} 1.4s linear infinite;
-  
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -50px;
-  margin-top: -50px; 
+`;
 
+const SpinnerContainer = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Spinner = ({ theme }) => {
-  return <SpinnerImage src={theme ? theme.loadingImg : spinnerImg} alt="loading spinner" />;
+  return (
+    <SpinnerContainer>
+      <SpinnerImage
+        src={theme ? theme.loadingImg : spinnerImg}
+        alt="loading spinner"
+      />
+    </SpinnerContainer>
+  );
 };
 
 export default withTheme(Spinner);
