@@ -57,7 +57,6 @@ const resultText = loadingState => {
 };
 
 const getLoadingState = ClusterData => {
-  console.log(ClusterData);
   if (ClusterData.error) {
     return "none";
   }
@@ -92,8 +91,23 @@ const ClusterResult = ({
     toggleExpanded();
   }, [shutterPress]);
 
+  const handleResultsClick = () => {
+    console.log(ClusterData);
+    if (
+      !ClusterData.loading &&
+      ClusterData.data.getCluster.materials.length === 1
+    ) {
+      history.push(
+        `/material/${ClusterData.data.getCluster.materials[0].material_id}`
+      );
+    } else {
+      history.push("/camera/results");
+    }
+    setShutterPress(false);
+  };
+
   return (
-    <Container onClick={() => history.push("/camera/results")}>
+    <Container onClick={handleResultsClick}>
       <Collapse isOpened={expanded}>
         {expanded && (
           <Results>
