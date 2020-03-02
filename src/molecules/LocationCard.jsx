@@ -42,7 +42,7 @@ const FlexContainer = styled.div`
 `;
 
 const Address = styled.div`
-  width: 177px;
+  width: 98px;
 
   margin-top: 9px;
   margin-bottom: 8px;
