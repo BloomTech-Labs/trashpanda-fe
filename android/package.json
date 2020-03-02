@@ -1,0 +1,13 @@
+{
+  "name": "trash-panda-apk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "init": "llama-pack init --manifest https://thetrashpanda.com/manifest.webmanifest",
+    "build": "llama-pack build"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@llama-pack/cli": "^0.4.3"
+  }
+}
