@@ -57,7 +57,6 @@ const resultText = loadingState => {
 };
 
 const getLoadingState = ClusterData => {
-  console.log(ClusterData);
   if (ClusterData.error) {
     return "none";
   }
