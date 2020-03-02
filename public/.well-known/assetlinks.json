@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.thetrashpanda.twa",
+      "sha256_cert_fingerprints": [
+        "29:AA:CF:1A:F8:F0:4F:5F:16:FC:C6:49:2C:6C:1A:B7:BA:F6:C0:0D"
+      ]
+    }
+  }
+]
