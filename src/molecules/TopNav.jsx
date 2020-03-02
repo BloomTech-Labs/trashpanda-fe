@@ -1,48 +1,99 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import arrowImg from "../images/back_arrow_lite.svg";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Route, Switch, Link, useLocation, useHistory } from "react-router-dom";
+import Toggle from "./ToggleTheme";
+import cameraBtnImgDarkMode from "../images/camera_icon_camera.svg";
+import cameraBtnImgLightMode from "../images/camera_icon_camera_light.svg";
 
 const NavBar = styled.div`
   position: absolute;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  align-items: center;
   left: 16px;
   right: 16px;
+  z-index: 7;
+  margin-top: 20px;
 `;
 
-const TopNav = ({ searchFocus }) => {
-  const [isHome, setIsHome] = useState(true);
-  const location = useLocation();
-  const history = useHistory();
+const Title = styled.h1`
+  font-family: Muli;
+  font-size: 20px;
+  color: ${({ theme }) => (theme.name === "Light" ? "#404040" : "#FFFFFF")};
+  margin: 0;
+`;
 
-  useEffect(() => {
-    setIsHome(location.pathname === "/");
-  }, [location.pathname]);
+const HomeIcon = ({ onClick }) => {
+  return (
+    <div onClick={onClick}>
+      <svg
+        width="22"
+        height="24"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="#404040"
+      >
+        <path d="M13.852 15.325h-5.94a.882.882 0 00-.882.882V24h1.764v-6.91h4.176V24h1.764v-7.793a.882.882 0 00-.882-.882z" />
+        <path d="M11.465.222l9.998 8.851c.19.167.298.408.298.66v13.38a.882.882 0 01-.883.882h-5.991c-.975 0-1.764-.79-1.764-1.764h6.873v-12.1L10.88 2.06l-9.116 8.07v12.1h7.047v1.764H.882A.882.882 0 010 23.113V9.733c0-.252.108-.493.297-.66L10.295.222a.882.882 0 011.17 0z" />
+      </svg>
+    </div>
+  );
+};
+
+const BackArrowIcon = ({ onClick }) => {
+  return (
+    <div onClick={onClick}>
+      <svg
+        width="22"
+        height="20"
+        viewBox="0 0 22 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M22 9.54545H2.69388L10.8922 1.01372L9.87755 0L0 10L9.87755 20L10.8788 18.9872L2.69388 10.9091H22V9.54545Z"
+          fill="#404040"
+        />
+      </svg>
+    </div>
+  );
+};
+
+const TopNav = ({ theme, toggleTheme, setShutterPress, shutterPress }) => {
+  const history = useHistory();
 
   const handleBackClick = () => {
     history.goBack();
   };
 
+  const handleCameraBackClick = () => {
+    shutterPress ? setShutterPress(false) : history.goBack();
+  };
+
+  const handleHome = () => {
+    setShutterPress(false);
+    history.push("/");
+  };
+
   return (
     <NavBar>
-      {!isHome && <img onClick={handleBackClick} src={arrowImg} />}
+      <Switch>
+        <Route exact path="/">
+          <Title>Trash Panda</Title>
+          <Toggle theme={theme} toggleTheme={toggleTheme} />
+        </Route>
 
-      {!isHome && (
-        <Link to="/">
-          <svg
-            width="22"
-            height="24"
-            viewBox="0 0 22 24"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="#404040"
-          >
-            <path d="M13.8521 15.3252H7.91207C7.4248 15.3252 7.02991 15.7201 7.02991 16.2074V24H8.79427V17.0896H12.9697V24H14.734H14.7343V16.2074C14.7343 15.7201 14.3394 15.3252 13.8521 15.3252Z" />
-            <path d="M11.4649 0.221758L21.463 9.07297C21.6523 9.24033 21.7606 9.48084 21.7606 9.73345V23.1132C21.7606 23.6005 21.3657 23.9954 20.8784 23.9954H14.8869C13.9124 23.9954 13.1225 23.2055 13.1225 22.2311H19.9962V10.1307L10.8803 2.0605L1.76441 10.1307V22.2311H8.81081V23.9954H0.882206C0.39494 23.9954 0 23.6005 0 23.1132V9.73345C0 9.48084 0.108214 9.24028 0.297318 9.07297L10.2954 0.221758C10.6292 -0.07406 11.1311 -0.0737788 11.4649 0.221758Z" />
-          </svg>
-        </Link>
-      )}
+        <Route exact path="/camera">
+          <BackArrowIcon onClick={() => handleCameraBackClick()} />
+          <HomeIcon onClick={handleHome} />
+        </Route>
+
+        <Route>
+          <BackArrowIcon onClick={handleBackClick} />
+          <HomeIcon onClick={handleHome} />
+        </Route>
+      </Switch>
     </NavBar>
   );
 };
