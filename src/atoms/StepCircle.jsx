@@ -9,7 +9,7 @@ const Sphere = styled.div`
       : `background: ${props.theme.stepperColor}`};
   width: 10px;
   height: 10px;
-  border-radius: 50px;
+  border-radius: 5px;
 
   margin-right: ${props => props.marginRight}px;
 `;

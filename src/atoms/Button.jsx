@@ -8,7 +8,7 @@ const Container = styled.button`
   // border: 0.5px solid #336b68;
   border: none;
   box-sizing: border-box;
-  border-radius: 50px;
+  border-radius: 5px;
   ${props => (props.inverted ? `color: #336B68;` : `color: #ffffff;`)}
 
   font-family: Muli;
