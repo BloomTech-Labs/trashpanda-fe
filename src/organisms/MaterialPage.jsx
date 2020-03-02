@@ -74,7 +74,7 @@ const LocationButton = styled.button`
 
   border: 0.5px solid #336b68;
   box-sizing: border-box;
-  border-radius: 100px;
+  border-radius: 5px;
 
   background: #336b68;
   margin-bottom: 48px;
