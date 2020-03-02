@@ -33,10 +33,6 @@ const MaterialGrid = styled.div`
 const ClusterPage = ({ appCluster }) => {
   const history = useHistory();
 
-  if (appCluster && appCluster.materials.length === 1) {
-    history.push(`/material/${appCluster.materials[0].material_id}`);
-  }
-
   const onClick = materialId => {
     history.push(`/material/${materialId}`);
   };

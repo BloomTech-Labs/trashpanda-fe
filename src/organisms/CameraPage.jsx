@@ -175,6 +175,9 @@ const CameraPage = ({
     return function cleanup() {
       if (cameraInstance && cameraInstance.stream) {
         console.log("running cleanup");
+        setImage(null);
+        setShutterPress(false);
+
         cameraInstance
           .stopCamera()
           .then(() => {
