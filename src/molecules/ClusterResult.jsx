@@ -58,6 +58,9 @@ const resultText = loadingState => {
 
 const getLoadingState = ClusterData => {
   console.log(ClusterData);
+  if (ClusterData.error) {
+    return "none";
+  }
   if (ClusterData.data && ClusterData.data.getCluster.materials.length > 0) {
     return "found";
   } else {
@@ -65,7 +68,12 @@ const getLoadingState = ClusterData => {
   }
 };
 
-const ClusterResult = ({ ClusterData, setSearchFocus, shutterPress }) => {
+const ClusterResult = ({
+  ClusterData,
+  setSearchFocus,
+  shutterPress,
+  setShutterPress
+}) => {
   const history = useHistory();
   const [expanded, setExpanded] = useState(false);
   const theme = localStorage.getItem("theme");
@@ -76,6 +84,7 @@ const ClusterResult = ({ ClusterData, setSearchFocus, shutterPress }) => {
 
   const handleSearchReturn = async () => {
     await setSearchFocus(true);
+    await setShutterPress(false);
     history.push(`/`);
   };
 

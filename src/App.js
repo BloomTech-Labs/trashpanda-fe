@@ -156,7 +156,10 @@ const App = () => {
               setShutterPress={setShutterPress}
             />
 
-            <ClusterPage appCluster={appCluster} />
+            <ClusterPage
+              setShutterPress={setShutterPress}
+              appCluster={appCluster}
+            />
           </Route>
         </Switch>
       </div>

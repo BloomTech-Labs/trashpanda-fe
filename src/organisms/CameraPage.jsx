@@ -129,7 +129,6 @@ const CameraPage = ({
   const [getCluster, ClusterData] = useLazyQuery(GET_CLUSTER);
 
   const handleShutterButton = () => {
-    console.log({ shutterPress });
     setShutterPress(true);
   };
 
@@ -195,9 +194,10 @@ const CameraPage = ({
         autoPlay={true}
       />
       {image && <img src={image.dataUri} alt="camera image" />}
-      {!ClusterData.loading && ClusterData.data && (
+      {!ClusterData.loading && (ClusterData.data || ClusterData.error) && (
         <ClusterResult
           shutterPress={shutterPress}
+          setShutterPress={setShutterPress}
           ClusterData={ClusterData}
           setSearchFocus={setSearchFocus}
         />
