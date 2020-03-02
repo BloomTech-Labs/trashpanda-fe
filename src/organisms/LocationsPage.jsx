@@ -73,6 +73,7 @@ const Blurb = styled.h2`
   color: ${({ theme }) => theme.text};
 `;
 const CardsContainer = styled.div`
+  margin: 0;
   margin-bottom: 70px;
 `;
 
