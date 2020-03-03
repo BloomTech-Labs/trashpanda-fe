@@ -26,7 +26,14 @@ const Title = styled.h1`
 `;
 
 const Svg = styled.svg`
-  fill: ${({ theme }) => (theme.name === "Light" ? "#404040" : "#FFFFFF")};
+  fill: ${({ theme }) => {
+    console.log(theme);
+    if (theme === "light") {
+      return "#404040";
+    } else {
+      return "#FFFFFF";
+    }
+  }};
 `;
 const HomeIcon = ({ onClick, theme }) => {
   return (
@@ -85,11 +92,8 @@ const TopNav = ({ theme, toggleTheme, setShutterPress, shutterPress }) => {
         </Route>
 
         <Route exact path="/camera">
-          <BackArrowIcon
-            theme={{ theme: { name: "Dark" } }}
-            onClick={handleCameraBackClick}
-          />
-          <HomeIcon theme={{ theme: { name: "Dark" } }} onClick={handleHome} />
+          <BackArrowIcon onClick={handleCameraBackClick} />
+          <HomeIcon onClick={handleHome} />
         </Route>
 
         <Route>
