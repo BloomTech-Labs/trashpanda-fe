@@ -20,6 +20,7 @@ const PhotoButton = styled.button`
   align-items: center;
   border: ${({ theme }) =>
     theme.name === "Light" ? "1.5px dashed #404040" : "1.5px dashed #D9D9D9"};
+  border-radius: 5px;
   background-color: transparent;
   margin: 0 16px;
   padding: 0;
