@@ -4,12 +4,13 @@ import styled from "styled-components";
 import playBadgeImg from "../images/google-play-badge.png";
 
 const Container = styled.div`
-  margin-top: 5px;
+  margin-top: 25px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   padding: 0px 30px;
   width: 100%;
+  box-sizing: border-box;
 `;
 
 const FlexContainer = styled.div`
@@ -75,7 +76,9 @@ const SplashNav = () => {
           <Link to="/splash/team">Meet the Team</Link>
         </NavLink>
       </FlexContainer>
-      <PlayBadge src={playBadgeImg} />
+      <a href="https://play.google.com/store/apps/details?id=com.thetrashpanda.twa">
+        <PlayBadge src={playBadgeImg} />
+      </a>
     </Container>
   );
 };

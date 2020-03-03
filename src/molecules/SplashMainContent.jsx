@@ -2,6 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 import splashImg from "../images/splash_image.svg";
+import playBadgeImg from "../images/google-play-badge.png";
 
 const Container = styled.div`
   position: relative;
@@ -13,6 +14,12 @@ const Container = styled.div`
 `;
 
 const Image = styled.img``;
+
+const PlayBadge = styled.img`
+  height: 50px;
+  transform: translateY(28px);
+  margin-left: 140px;
+`;
 
 const OverlapTitle = styled.h2`
   position: absolute;
@@ -33,7 +40,7 @@ const Title = styled.h2`
   font-weight: 800;
   font-size: 32px;
   line-height: 40px;
-  width: 640px;
+  // width: 640px;
 
   color: #404040;
   margin-top: 85px;
@@ -42,7 +49,7 @@ const Title = styled.h2`
 const PText = styled.p`
   font-family: Muli;
   font-style: normal;
-  //   font-weight: bold;
+  font-weight: bold;
   font-size: 26px;
   line-height: 33px;
 
@@ -51,6 +58,12 @@ const PText = styled.p`
 
 const ContentContainer = styled.div`
   width: 650px;
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 140px;
 `;
 
 const SplashMainContent = () => {
@@ -82,6 +95,12 @@ const SplashMainContent = () => {
           different ways, then we’ll let you know what it’s made of and how you
           can recycle it in your area.
         </PText>
+        <FlexContainer>
+          <Title>Amazing, right?</Title>
+          <a href="https://play.google.com/store/apps/details?id=com.thetrashpanda.twa">
+            <PlayBadge src={playBadgeImg} />
+          </a>
+        </FlexContainer>
       </ContentContainer>
     </Container>
   );

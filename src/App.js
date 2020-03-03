@@ -74,10 +74,16 @@ const App = () => {
     //remove persisted cache from apollo if exists
     localStorage.removeItem("apollo-cache-persist");
 
-    if (permissions && permissions.firstVisit === false) {
-      location.setGps();
+    const vw = window.innerWidth;
+
+    if (vw > 875) {
+      history.push("/splash");
     } else {
-      history.push("/intro");
+      if (permissions && permissions.firstVisit === false) {
+        location.setGps();
+      } else {
+        history.push("/intro");
+      }
     }
   }, []);
 
