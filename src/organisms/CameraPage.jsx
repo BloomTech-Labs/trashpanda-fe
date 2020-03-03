@@ -92,6 +92,16 @@ const StyledShutterButton = styled.div`
   bottom: 20px;
 `;
 
+const FullFrame = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+`;
+
 const startCam = (cameraInstance, setLoading) => {
   const facingMode = FACING_MODES.ENVIRONMENT;
 
@@ -211,9 +221,11 @@ const CameraPage = ({
         />
       )}
       {!shutterPress && (
-        <StyledShutterButton onClick={handleShutterButton}>
-          <ShutterButton theme={theme} />
-        </StyledShutterButton>
+        <FullFrame>
+          <StyledShutterButton onClick={handleShutterButton}>
+            <ShutterButton theme={theme} />
+          </StyledShutterButton>
+        </FullFrame>
       )}
     </Root>
   );
