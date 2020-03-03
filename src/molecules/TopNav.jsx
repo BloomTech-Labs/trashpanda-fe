@@ -31,7 +31,12 @@ const Svg = styled.svg`
 const HomeIcon = ({ onClick, theme }) => {
   return (
     <div onClick={onClick}>
-      <Svg width="22" height="24" xmlns="http://www.w3.org/2000/svg">
+      <Svg
+        theme={theme}
+        width="22"
+        height="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path d="M13.852 15.325h-5.94a.882.882 0 00-.882.882V24h1.764v-6.91h4.176V24h1.764v-7.793a.882.882 0 00-.882-.882z" />
         <path d="M11.465.222l9.998 8.851c.19.167.298.408.298.66v13.38a.882.882 0 01-.883.882h-5.991c-.975 0-1.764-.79-1.764-1.764h6.873v-12.1L10.88 2.06l-9.116 8.07v12.1h7.047v1.764H.882A.882.882 0 010 23.113V9.733c0-.252.108-.493.297-.66L10.295.222a.882.882 0 011.17 0z" />
       </Svg>
@@ -40,11 +45,10 @@ const HomeIcon = ({ onClick, theme }) => {
 };
 
 const BackArrowIcon = ({ onClick, theme }) => {
-  const color = theme.name === "Light" ? "#404040" : "white";
-
   return (
     <div onClick={onClick}>
       <Svg
+        theme={theme}
         width="22"
         height="20"
         viewBox="0 0 22 20"
@@ -81,8 +85,11 @@ const TopNav = ({ theme, toggleTheme, setShutterPress, shutterPress }) => {
         </Route>
 
         <Route exact path="/camera">
-          <BackArrowIcon theme={theme} onClick={handleCameraBackClick} />
-          <HomeIcon theme={theme} onClick={handleHome} />
+          <BackArrowIcon
+            theme={{ theme: { name: "Dark" } }}
+            onClick={handleCameraBackClick}
+          />
+          <HomeIcon theme={{ theme: { name: "Dark" } }} onClick={handleHome} />
         </Route>
 
         <Route>
