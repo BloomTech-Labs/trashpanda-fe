@@ -49,7 +49,6 @@ const Title = styled.h2`
 const PText = styled.p`
   font-family: Muli;
   font-style: normal;
-  font-weight: bold;
   font-size: 26px;
   line-height: 33px;
 
