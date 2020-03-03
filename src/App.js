@@ -32,6 +32,7 @@ const DesktopConstraint = styled.div`
   max-width: 1040px;
   width: 100%;
   margin: 0 auto;
+  background-color: white;
 `;
 
 export const GET_CATEGORIES = gql`
@@ -57,6 +58,12 @@ export const GET_MATERIALS = gql`
   }
 `;
 
+export function isDesktop() {
+  const vw = window.innerWidth;
+
+  return vw > 875;
+}
+
 const App = () => {
   const history = useHistory();
   const [theme, toggleTheme] = useDarkMode();
@@ -74,9 +81,7 @@ const App = () => {
     //remove persisted cache from apollo if exists
     localStorage.removeItem("apollo-cache-persist");
 
-    const vw = window.innerWidth;
-
-    if (vw > 875) {
+    if (isDesktop()) {
       history.push("/splash");
     } else {
       if (permissions && permissions.firstVisit === false) {
