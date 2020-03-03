@@ -29,7 +29,7 @@ const MobileConstraint = styled.div`
 `;
 
 const DesktopConstraint = styled.div`
-  max-width: 1113px;
+  max-width: 1040px;
   width: 100%;
   margin: 0 auto;
 `;

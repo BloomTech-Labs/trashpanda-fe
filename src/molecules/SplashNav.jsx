@@ -4,10 +4,12 @@ import styled from "styled-components";
 import playBadgeImg from "../images/google-play-badge.png";
 
 const Container = styled.div`
-  margin-top: 40px;
+  margin-top: 5px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  padding: 0px 30px;
+  width: 100%;
 `;
 
 const FlexContainer = styled.div`
@@ -42,8 +44,9 @@ const NavLink = styled.div`
 `;
 
 const PlayBadge = styled.img`
-  height: 70px;
-  transform: translateY(23px);
+  height: 50px;
+  transform: translateY(10px);
+  margin-right: 70px;
 `;
 
 const SplashNav = () => {
