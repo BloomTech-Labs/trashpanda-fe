@@ -95,6 +95,7 @@ const ClusterResult = ({
     console.log(ClusterData);
     if (
       !ClusterData.loading &&
+      ClusterData.data &&
       ClusterData.data.getCluster.materials.length === 1
     ) {
       history.push(
