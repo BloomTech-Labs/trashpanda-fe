@@ -7,7 +7,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import MaterialPage from "./organisms/MaterialPage";
 import { useQuery } from "@apollo/react-hooks";
-
+import SplashPage from "./organisms/SplashPage";
 import gql from "graphql-tag";
 import LocationsPage from "./organisms/LocationsPage";
 import TopNav from "./molecules/TopNav";
@@ -18,7 +18,21 @@ import location from "./utils/UserLocation";
 import { lightTheme, darkTheme } from "./molecules/theme";
 import { useDarkMode } from "./molecules/useDarkMode";
 import { GlobalStyles } from "./molecules/global";
+import SplashTeam from "./molecules/SplashTeam";
 // import CameraNav from "./molecules/CameraNav";
+import styled from "styled-components";
+
+const MobileConstraint = styled.div`
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+`;
+
+const DesktopConstraint = styled.div`
+  max-width: 1040px;
+  width: 100%;
+  margin: 0 auto;
+`;
 
 export const GET_CATEGORIES = gql`
   query getAllFamilies {
@@ -60,10 +74,16 @@ const App = () => {
     //remove persisted cache from apollo if exists
     localStorage.removeItem("apollo-cache-persist");
 
-    if (permissions && permissions.firstVisit === false) {
-      location.setGps();
+    const vw = window.innerWidth;
+
+    if (vw > 875) {
+      history.push("/splash");
     } else {
-      history.push("/intro");
+      if (permissions && permissions.firstVisit === false) {
+        location.setGps();
+      } else {
+        history.push("/intro");
+      }
     }
   }, []);
 
@@ -72,96 +92,106 @@ const App = () => {
       <div className="App">
         <GlobalStyles />
 
-        <Switch>
-          <Route exact path="/">
-            <TopNav
-              searchFocus={searchFocus}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-            />
-            <HomePage
-              setSearchFocus={setSearchFocus}
-              searchFocus={searchFocus}
-            />
-          </Route>
-          <Route exact path="/category/:categoryId">
-            <TopNav
-              searchFocus={searchFocus}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-            />
-            <CategoryPage categories={categories} materials={materials} />
-          </Route>
-          <Route exact path="/material/:materialId">
-            <TopNav
-              searchFocus={searchFocus}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-            />
-            <MaterialPage />
-          </Route>
-          <Route exact path="/material/:materialId/locations">
-            <TopNav
-              searchFocus={searchFocus}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-            />
-            <LocationsPage />
-          </Route>
-          <Route exact path="/subcategory/:subCategoryId">
-            <TopNav
-              searchFocus={searchFocus}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-            />
-            <SubCategoryPage />
-          </Route>
-          <Route exact path="/intro">
-            <TutorialPage />
-          </Route>
-          <Route exact path="/camera">
-            <TopNav
-              searchFocus={searchFocus}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-            />
+        <MobileConstraint>
+          <Switch>
+            <Route exact path="/">
+              <TopNav
+                searchFocus={searchFocus}
+                theme={theme}
+                toggleTheme={toggleTheme}
+                shutterPress={shutterPress}
+                setShutterPress={setShutterPress}
+              />
+              <HomePage
+                setSearchFocus={setSearchFocus}
+                searchFocus={searchFocus}
+              />
+            </Route>
+            <Route exact path="/category/:categoryId">
+              <TopNav
+                searchFocus={searchFocus}
+                theme={theme}
+                toggleTheme={toggleTheme}
+                shutterPress={shutterPress}
+                setShutterPress={setShutterPress}
+              />
+              <CategoryPage categories={categories} materials={materials} />
+            </Route>
+            <Route exact path="/material/:materialId">
+              <TopNav
+                searchFocus={searchFocus}
+                theme={theme}
+                toggleTheme={toggleTheme}
+                shutterPress={shutterPress}
+                setShutterPress={setShutterPress}
+              />
+              <MaterialPage />
+            </Route>
+            <Route exact path="/material/:materialId/locations">
+              <TopNav
+                searchFocus={searchFocus}
+                theme={theme}
+                toggleTheme={toggleTheme}
+                shutterPress={shutterPress}
+                setShutterPress={setShutterPress}
+              />
+              <LocationsPage />
+            </Route>
+            <Route exact path="/subcategory/:subCategoryId">
+              <TopNav
+                searchFocus={searchFocus}
+                theme={theme}
+                toggleTheme={toggleTheme}
+                shutterPress={shutterPress}
+                setShutterPress={setShutterPress}
+              />
+              <SubCategoryPage />
+            </Route>
+            <Route exact path="/intro">
+              <TutorialPage />
+            </Route>
+            <Route exact path="/camera">
+              <TopNav
+                searchFocus={searchFocus}
+                theme={theme}
+                toggleTheme={toggleTheme}
+                shutterPress={shutterPress}
+                setShutterPress={setShutterPress}
+              />
 
-            <CameraPage
-              theme={theme}
-              setAppCluster={setAppCluster}
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-              setSearchFocus={setSearchFocus}
-              setShutterPress={setShutterPress}
-            />
-          </Route>
-          <Route exact path="/camera/results">
-            <TopNav
-              searchFocus={searchFocus}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              shutterPress={shutterPress}
-              setShutterPress={setShutterPress}
-            />
+              <CameraPage
+                theme={theme}
+                setAppCluster={setAppCluster}
+                shutterPress={shutterPress}
+                setShutterPress={setShutterPress}
+                setSearchFocus={setSearchFocus}
+                setShutterPress={setShutterPress}
+              />
+            </Route>
+            <Route exact path="/camera/results">
+              <TopNav
+                searchFocus={searchFocus}
+                theme={theme}
+                toggleTheme={toggleTheme}
+                shutterPress={shutterPress}
+                setShutterPress={setShutterPress}
+              />
 
-            <ClusterPage
-              setShutterPress={setShutterPress}
-              appCluster={appCluster}
-            />
+              <ClusterPage
+                setShutterPress={setShutterPress}
+                appCluster={appCluster}
+              />
+            </Route>
+          </Switch>
+        </MobileConstraint>
+        <DesktopConstraint>
+          <Route exact path="/splash">
+            <SplashPage />
           </Route>
-        </Switch>
+          <Route exact path="/splash/team">
+            <SplashTeam />
+          </Route>
+        </DesktopConstraint>
       </div>
     </ThemeProvider>
   );
