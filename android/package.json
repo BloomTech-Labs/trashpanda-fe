@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "init": "llama-pack init --manifest https://thetrashpanda.com/manifest.webmanifest",
+    "update": "llama-pack update",
     "build": "llama-pack build"
   },
   "license": "MIT",
